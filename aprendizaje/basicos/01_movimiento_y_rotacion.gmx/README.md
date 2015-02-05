@@ -20,4 +20,4 @@ x-=2; // mueve 2px a la izquierda
 image_angle+=1; // rotación anti-horaria 1 grado
 ```
 ### Resultado
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/basicos/01_movimiento_y_rotacion.gmx/captura.jpg)]()
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/basicos/01_movimiento_y_rotacion.gmx/captura.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/basicos/01_movimiento_y_rotacion.gmx/captura.jpg)
