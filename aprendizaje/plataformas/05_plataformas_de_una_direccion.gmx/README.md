@@ -18,5 +18,10 @@ if (instance_exists(obj_hero))
 }
 ```
 
+### Evento Draw
+```javascript
+draw_sprite(spr_platform,0,x,y); // dibujamos sin máscara de colisión
+```
+
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/05_plataformas_de_una_direccion.gmx/captura.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/05_plataformas_de_una_direccion.gmx/captura.jpg)
