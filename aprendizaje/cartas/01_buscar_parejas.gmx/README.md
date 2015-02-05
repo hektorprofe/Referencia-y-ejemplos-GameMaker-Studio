@@ -23,7 +23,7 @@ for (var i=0; i<8; i+=1)
 ```javascript
 randomize(); // Sin esto no se hace el aleatorio real
 ds_list_shuffle(global.baraja);
-
+```
 
 ### Recorremos las cartas y las mostramos en 2 filas de 4 columnas 
 ```javascript
