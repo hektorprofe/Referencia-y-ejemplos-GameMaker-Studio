@@ -2,9 +2,11 @@
 ### Movimiento horizontal
 * x+=n: Hacia la derecha n píxels
 * x-=n: Hacia la izquierda n píxels
+
 ### Movimiento vertical
 * y-=n: Hacia arriba n píxels
 * y+=n: Hacia abajo n píxels
+
 ### Rotación
 * image_angle+=n: Rotación anti-horaria n grados
 * image_angle-=n: Rotación horaria n grados
