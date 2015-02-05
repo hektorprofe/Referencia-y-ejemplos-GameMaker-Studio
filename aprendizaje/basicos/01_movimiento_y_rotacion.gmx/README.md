@@ -1,13 +1,11 @@
 ## Tutorial básico de GML
-Para mover un objeto utilizamos eventos, por ejemplo capturando las teclas del teclado.
 ### Movimiento horizontal
 * x+=n: Hacia la derecha n píxels
 * x-=n: Hacia la izquierda n píxels
 ### Movimiento vertical
 * y-=n: Hacia arriba n píxels
 * y+=n: Hacia abajo n píxels
-También podemos rotar objetos.
-### Rotación de un objeto
+### Rotación
 * image_angle+=n: Rotación anti-horaria n grados
 * image_angle-=n: Rotación horaria n grados
 
