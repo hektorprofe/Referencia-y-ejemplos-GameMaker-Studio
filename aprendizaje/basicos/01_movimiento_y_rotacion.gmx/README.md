@@ -12,11 +12,11 @@
 * image_angle-=n: Rotación horaria n grados
 
 ## Código
-```delphi
+```javascript
 x+=2; // mueve 2px a la derecha
 x-=2; // mueve 2px a la izquierda
 ```
-```delphi
+```javascript
 image_angle+=1; // rotación anti-horaria 1 grado
 ```
 ### Resultado

@@ -13,21 +13,21 @@
 
 
 ### Eventos de movimiento del héroe
-```delphi
+```javascript
 key_right = keyboard_check(vk_right);     //  0 o 1
 key_left = -keyboard_check(vk_left);      // -1 o 0
 key_jump = keyboard_check_pressed(vk_up); //  0 o 1
 ```
 
 ### Establecemos los cambios de movimiento
-```delphi
+```javascript
 move = key_left + key_right; // será -1, 0 o 1
 hsp = move * movespeed;		 // será -movespeed o +movespeed
 if (vsp < 10) vsp += grav;   // máximo será 10
 ```
 
 ### Detección del salto
-```delphi
+```javascript
 // si hay colisión con pared 1 pixel debajo del heroe
 if (place_meeting(x,y+1,obj_wall))
 {
@@ -38,7 +38,7 @@ if (place_meeting(x,y+1,obj_wall))
 ```
 
 ### Colisión horizontal y rectificación
-```delphi
+```javascript
 // si hay una pared en la dirección que nos movemos en la distancia hsp
 if (place_meeting(x+hsp,y,obj_wall))
 {
@@ -54,7 +54,7 @@ if (place_meeting(x+hsp,y,obj_wall))
 
 
 ### Colisión vertical y rectificación
-```delphi
+```javascript
 if (place_meeting(x,y+vsp,obj_wall))
 {
     while(!place_meeting(x+sign(hsp),y,obj_wall))
@@ -66,7 +66,7 @@ if (place_meeting(x,y+vsp,obj_wall))
 ```
 
 ### Movimiento final del objeto héroe
-```delphi
+```javascript
 x += hsp;
 y += vsp;
 ```
