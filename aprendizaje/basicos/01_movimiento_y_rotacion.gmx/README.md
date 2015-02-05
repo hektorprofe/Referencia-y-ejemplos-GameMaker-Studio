@@ -13,9 +13,11 @@ También podemos rotar objetos.
 
 ## Código
 ```delphi
-x-=2;
-x+=2;
-image_angle+=1;
+x+=2; // mueve 2px a la derecha
+x-=2; // mueve 2px a la izquierda
+```
+```delphi
+image_angle+=1; // rotación anti-horaria 1 grado
 ```
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/basicos/01_movimiento_y_rotacion.gmx/captura.jpg)]()
