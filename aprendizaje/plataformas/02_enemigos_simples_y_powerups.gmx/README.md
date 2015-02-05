@@ -88,7 +88,7 @@ with(obj_hero)
 instance_destroy();
 ```
 
-### Al rato la alarma cambia de nuevo el jumspeed del héroe
+### Al rato la alarma cambia de nuevo el jumpspeed del héroe
 ```javascript
 jumpspeed = jumpspeed_normal;
 sprite_index = spr_hero; // y el sprite si es necesario
