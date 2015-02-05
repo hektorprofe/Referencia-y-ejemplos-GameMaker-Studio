@@ -23,5 +23,13 @@ if (instance_exists(obj_hero))
 draw_sprite(spr_platform,0,x,y); // dibujamos sin máscara de colisión
 ```
 
+### Finalmente inicializamos la variable key_down en create del héroe y la añadimos al step
+```javascript
+key_down = 0; //bajar una plataforma
+```
+```javascript
+key_down = keyboard_check(vk_down);
+```
+
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/05_plataformas_de_una_direccion.gmx/captura.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/05_plataformas_de_una_direccion.gmx/captura.jpg)

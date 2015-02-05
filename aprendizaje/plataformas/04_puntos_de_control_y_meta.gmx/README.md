@@ -40,6 +40,17 @@ if (global.checkpointR == room)
     if (global.checkpoint == id) image_index = 1; else image_index = 0;
 }
 ```
+
+### Ponemos al héroe en la posición guardada en su Create event
+```javascript
+// Si hemos guardado un lugar en la room actual
+if ( global.checkpointR == room)
+{
+    x = global.checkpointx;
+    y = global.checkpointy;
+}
+```
+
 ## Punto de Meta
 ### Colisión de la meta contra el héroe
 ```javascript
