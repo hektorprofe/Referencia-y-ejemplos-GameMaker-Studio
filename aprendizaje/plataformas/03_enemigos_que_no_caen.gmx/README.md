@@ -13,8 +13,8 @@ if (place_meeting(x,y+vsp,obj_wall))
     // comprobamos si no hay colisión contra el suelo a  
     // una distancia que es la mitad del tamaño del sprite
     if (!position_meeting(
-            x+(sprite_width/2)*dir,
-            y+(sprite_height/2)+8, // comprueba 8px extra más abajo 
+            x+(sprite_width/2)*dir, // sprite_width/2 hacia el lado
+            y+(sprite_height/2)+8,  // sprite_height/2 + 8px más abajo 
             obj_wall))
     {
         // si el lugar está vacío, daremos media vuelta 
