@@ -83,4 +83,4 @@ draw_sprite(spr_platform,0,x,y); // dibujamos sin máscara de colisión
 ```
 
 ### Resultado
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/06_plataformas_en_movimiento/captura.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/06_plataformas_en_movimiento/captura.jpg)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/06_plataformas_en_movimiento.gmx/captura.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/06_plataformas_en_movimiento.gmx/captura.jpg)
