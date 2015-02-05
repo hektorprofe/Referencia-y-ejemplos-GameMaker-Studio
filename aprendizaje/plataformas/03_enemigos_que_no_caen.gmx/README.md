@@ -45,7 +45,8 @@ if (global.checkpointR == room)
 ```javascript
 if (place_meeting(x,y,obj_hero))
 {
-    room_goto_next(); // avanzamos a la siguiente room
+    // avanzamos a la siguiente room
+    room_goto_next(); 
 }
 ```
 
