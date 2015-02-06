@@ -3,18 +3,18 @@ Este código no es totalmente funcional debido a que cuando una escalera se encu
 
 ### Modificamos el Create del héroe
 ```javascript
-// Añadimos una variable para indiciar si estamos en una escalera
+// Añadimos una variable para indicar si estamos en una escalera
 ladder = false;
 ```
 
 ### Modificamos el Step del héroe
 ```javascript
-// Añadimos un evento para capturar la tecla abajo
-key_down = keyboard_check(vk_down);
+// Añadimos un evento para capturar la tecla arriba
+key_up = keyboard_check(vk_up);
 ```
 
 ```javascript
-// Añadimos la detección para saber si el jugador quiere escalar 
+// Añadimos la detección para saber si el jugador quiere escalar arriba o abajo
 if (key_up || key_down) 
 {
     // Si estamos sobre unas escaleras activamos el modo ladder
