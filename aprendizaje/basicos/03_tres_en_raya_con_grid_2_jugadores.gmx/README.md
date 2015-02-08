@@ -3,7 +3,7 @@ Este es un juego muy simple para practicar las grid, unos arrays 2D que tiene GM
 
 ### Al crear el controlador
 ```javascript
-/// Create
+/// Creamos una grid 
 grid = ds_grid_create(3,3);
 ds_grid_set_region(grid,0,0,2,2,-1); // -1 es nulo, 0 es O y 1 es X
 ```
