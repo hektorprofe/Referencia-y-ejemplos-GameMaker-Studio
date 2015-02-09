@@ -59,4 +59,4 @@ También sería interesante comprobar la longitud de este texto y pasarle una va
 
 
 ### Resultado
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/basicos/05_textos_y_carteles.project.gmx/captura.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/basicos/05_textos_y_carteles.project.gmx/captura.jpg)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/basicos/05_textos_y_carteles.gmx/captura.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/basicos/05_textos_y_carteles.gmx/captura.jpg)
