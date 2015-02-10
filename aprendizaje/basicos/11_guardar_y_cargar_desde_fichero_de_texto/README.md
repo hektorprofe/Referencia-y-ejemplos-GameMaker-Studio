@@ -1,5 +1,5 @@
 ## Guardar y cargar utilizando un fichero de texto
-Utilizando por ejemplo el obj_heroe, que es el personaje del cual queremos guardar el progreso. Hay que tener en cuenta que este método guarda el fichero en crudo, así que se puede modificar fácilmente. También tener en cuenta que sólo funciona en PC.
+Utilizando por ejemplo el obj_heroe, que es el personaje del cual queremos guardar el progreso. Hay que tener en cuenta que este método guarda el fichero en crudo, así que se puede modificar fácilmente. Sólo se ha probado en PC.
 
 ### scr_save()
 ```javascript
