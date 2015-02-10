@@ -14,7 +14,7 @@ ini_close();
 ### scr_load()
 ```javascript
 // Cargamos la room del juego
-if (file_exists("Save.ini")) file_delete("Save.ini");
+if file_exists("Save.ini")
 {
 	ini_open("Save.ini");
 	var LoadedRoom = ini_read_real("Save", "room", SavedRoom);
