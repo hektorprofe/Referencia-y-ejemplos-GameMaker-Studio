@@ -55,3 +55,44 @@ draw_set_color(0); // Reiniciamos el color
 
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img1.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img1.jpg)
+
+Ahora que sé que es posible crear un polígono en Game Maker lo útil sería contar con una función propia capaz de crear un polígono a partir de una coordenada, un radio y un número de vértices. Esta función se puede encontrar por [internet](http://stackoverflow.com/questions/3436453/calculate-coordinates-of-a-regular-polygons-vertices) y lo único que hago es adaptarla a Game Maker:
+
+### scr_polygon(x,y,radius,edges,color)
+```javascript
+// Creado por Héctor Costa Guzmán
+
+// Script polígno: Dibuja un polígono en una coordenada.
+// Utiliza una coordenada x-y, un radio y un número de lados.
+
+// argument0 = x 
+// argument1 = y
+// argument2 = radius
+// argument3 = edges
+// argument4 = color
+
+draw_set_color(argument4);
+draw_primitive_begin_texture(pr_trianglefan,background_get_texture(back)) 
+
+for (var i=0; i<=argument3;i++) 
+{
+
+    var edgeX = argument0 + argument2 * cos(2 * pi * i / argument3);
+    var edgeY = argument1 + argument2 * sin(2 * pi * i / argument3);
+
+    draw_vertex_texture(edgeX, edgeY, 1, 1);
+}
+
+draw_primitive_end();
+draw_set_color(0);
+```
+
+### Utilización:
+```javascript
+scr_polygon(room_width/2, room_height/2, 225, 4, c_green); // cuadrado con 250 px de radio
+scr_polygon(room_width/2, room_height/2, 180, 3, c_blue);  // triángulo con 180px de radio
+scr_polygon(room_width/2, room_height/2, 50, 6, c_red);    // hexagono con 35px de radio
+```
+
+### Resultado
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img2.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img2.jpg)
