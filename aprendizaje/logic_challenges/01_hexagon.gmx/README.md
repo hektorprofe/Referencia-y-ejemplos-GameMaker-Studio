@@ -74,7 +74,7 @@ Ahora que sé que es posible crear un polígono en Game Maker lo útil sería co
 draw_set_color(argument4);
 draw_primitive_begin_texture(pr_trianglefan,background_get_texture(back)) 
 
-for (var i=0; i<=argument3;i++) 
+for (var i=0; i<argument3; i++) 
 {
 
     var edgeX = argument0 + argument2 * cos(2 * pi * i / argument3);
@@ -89,10 +89,72 @@ draw_set_color(0);
 
 ### Utilización:
 ```javascript
-scr_polygon(room_width/2, room_height/2, 225, 4, c_green); // cuadrado con 250 px de radio
+scr_polygon(room_width/2, room_height/2, 225, 4, c_green); // cuadrado con 225px de radio
 scr_polygon(room_width/2, room_height/2, 180, 3, c_blue);  // triángulo con 180px de radio
 scr_polygon(room_width/2, room_height/2, 50, 6, c_red);    // hexagono con 35px de radio
 ```
 
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img2.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img2.jpg)
+
+El próximo paso es conseguir aplicar una rotación al polígono. Para hacerlo debemos saber varias cosas:
+* Coordenada sobre la cual queremos rotar.
+* Ángulo en radianes que vamos a rotar. 
+
+El cálculo de las nuevos coordenadas se consigue utilizando la fórmula de rotación de matrices y aplicarla sobre cada punto tal como se explica [en este enlace](http://stackoverflow.com/questions/9043391/html5-canvas-calculating-a-x-y-point-when-rotated?answertab=active#tab-top).
+
+Modificando ligeramente nuestra función podemos pasarle además un ángulo de rotación inicial:
+
+### Utilización:
+```javascript
+// Creado por Héctor Costa Guzmán
+
+// Script polígno: Dibuja un polígono en una coordenada.
+// Utiliza una coordenada x-y, un radio y un número de lados.
+// Además se puede indicar el ángulo de rotación respecto al centro.
+
+// argument0 = x 
+// argument1 = y
+// argument2 = radius
+// argument3 = edges
+// argument4 = color
+// argument5 = angle in degrees
+
+var rads = degtorad(argument5); // A radianos
+
+draw_set_color(argument4);
+draw_primitive_begin_texture(pr_trianglefan,background_get_texture(back)) 
+
+for (var i=0; i<argument3;i++) 
+{
+    var edgeX = argument0  + argument2 * cos(2 * pi * i / argument3);
+    var edgeY = argument1  + argument2 * sin(2 * pi * i / argument3);
+    
+    // La rotación determina el nuevo punto (dx,dy) = (x2-x1, y2-y1)
+    var newX = edgeX - argument0;
+    var newY = edgeY - argument1;
+    
+    edgeX = newX * cos(rads) - newY * sin(rads);
+    edgeY = newX * sin(rads) + newY * cos(rads);
+    
+    // Sumamos la distancia hasta el centro
+    edgeX = edgeX + argument0;
+    edgeY = edgeY + argument1;
+    
+    draw_vertex_texture(edgeX , edgeY, 1, 1);
+    //draw_text(room_width-150,(100+(i*15)) , string(round(argument5)) + " - " +string(round(edgeX)) + "," + string(round(edgeY)) );
+}
+
+draw_primitive_end();
+draw_set_color(0);
+```
+
+### Utilización:
+```javascript
+scr_polygon(room_width/2, room_height/2, 225, 6, c_green, 50); // hexágono con 225px de radio rotado 45º
+scr_polygon(room_width/2, room_height/2, 180, 3, c_blue, 0);   // triángulo con 180px de radio rotado 0º
+scr_polygon(room_width/2, room_height/2, 50, 4, c_red, 280);   // cuadrado con 50px de radio rotado 280º
+```
+
+### Resultado
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img3.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img3.jpg)
