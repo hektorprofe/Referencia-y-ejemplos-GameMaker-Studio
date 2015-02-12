@@ -54,4 +54,4 @@ draw_set_color(0); // Reiniciamos el color
 [Documentación de las primitivas](http://docs.yoyogames.com/source/dadiospice/002_reference/drawing/drawing%20primitives/draw_primitive_begin.html)
 
 ### Resultado
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/logic_challenges/01_hexagon.gmx/docs/img1.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img1.jpg)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img1.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img1.jpg)
