@@ -62,7 +62,7 @@ Ahora que sé que es posible crear un polígono en Game Maker lo útil sería co
 ```javascript
 // Creado por Héctor Costa Guzmán
 
-// Script polígno: Dibuja un polígono en una coordenada.
+// Script polígono: Dibuja un polígono en una coordenada.
 // Utiliza una coordenada x-y, un radio y un número de lados.
 
 // argument0 = x 
@@ -109,7 +109,7 @@ Modificando ligeramente nuestra función podemos pasarle además un ángulo de r
 ```javascript
 // Creado por Héctor Costa Guzmán
 
-// Script polígno: Dibuja un polígono en una coordenada.
+// Script polígono: Dibuja un polígono en una coordenada.
 // Utiliza una coordenada x-y, un radio y un número de lados.
 // Además se puede indicar el ángulo de rotación respecto al centro.
 
@@ -158,3 +158,59 @@ scr_polygon(room_width/2, room_height/2, 50, 4, c_red, 280);   // cuadrado con 5
 
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img3.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img3.jpg)
+
+A continuación vamos a intentar dibujar el fondo con los 6 triángulos. No será muy difícil ya que Game Maker trae consigo una versión específica de nuestra función polígono pero para dibujar triángulos.
+
+Lo que haremos es generar un bucle for y crear 6 puntos que determinarán el lugar de cada nuevo triágulo, compartiendo todos ellos el vértice central en medio de la sala:
+* i == 0
+* i == 60
+* i == 120
+* i == 180
+* i == 240
+* i == 300
+
+En cada caso tomaremos la i como el ángulo y utilizando las funciones coseno y seno generaremos las otras dos coordenadas, tomando que los costados de los triángulos sean de 800px de largo, lo suficiente para verse en la pantalla todo el rato. 
+
+Aprovecharemos además para sumar 1 grado a una variable angle en cada Draw, de manera que generaremos el efecto de rotación. Para rotar nuestros triángulos desde el vértice del centro, simplemente sumaremos esa variable ángulo en radianes a los cálculos del coseno y el seno.
+
+Por último una condición nos permitirá cambiar el color de cada triángulo de manera que no queden dos iguales seguidos y además añadiremos un pequeño hexágono que rotará a la par que nuestros triángulos, utilizando nuestra función de polígonos y pasándole la misma variable angle.
+
+### obj_controller: Draw
+```javascript
+angle += 1.5; // Incremento del ángulo en grados en cada Draw
+if (angle > 360) angle = 0;
+
+// Dibujamos los triángulos de fondo, con unos costados de 800px
+var size = 800;
+var firstColor = make_color_rgb(250, 250, 250);
+var secondColor = make_color_rgb(24, 201, 245);
+var currentColor = firstColor;
+
+for(var i = 0; i < 360; i += 360 / 6) {
+
+    // Determinamos el color
+    if(i mod 2 == 0) {
+        if (currentColor == firstColor) currentColor = secondColor;
+        else currentColor = firstColor;
+    }
+    draw_set_color(currentColor);
+    
+    // Generamos las coordenadas triángulo y le sumamos el ángulo de rotación deseado (en radianes)
+    var posX = room_width/2 + cos( degtorad(i - 360 / 6) + degtorad(angle) ) * size;
+    var posY = room_height/2 + sin( degtorad(i - 360 / 6) + degtorad(angle) ) * size;;
+    
+    var maxX = room_width/2 + cos( degtorad(i) + degtorad(angle) ) * size;
+    var maxY = room_height/2 + sin( degtorad(i) + degtorad(angle) ) * size;
+
+    // Dibujamos el triángulo, necesitamos tres puntos
+    // Partimos que el triángulo empieza justo en medio de la pantalla
+    draw_triangle(room_width/2,room_height/2,posX,posY,maxX,maxY,false);
+    
+}
+   
+// Creamos un pequeño hexágono en el centro y encima de los triángulos
+scr_polygon(room_width/2, room_height/2, 35, 6, c_orange, angle);
+```
+
+### Resultado
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img4.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img4.jpg)
