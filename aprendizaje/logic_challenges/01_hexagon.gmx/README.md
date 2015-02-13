@@ -279,6 +279,8 @@ draw_text(room_width/2 - 150,room_height/2+90, "("+string(x4)+","+string(y4)+")"
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img5.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img5.jpg)
 
+###
+
 Ahora la cuestión es, ¿cómo crear automáticamente un trapecio en una posición que concuerde en anchura con la anchura de uno de los triángulos que dan la vuelta? Y todavía más importante, ¿qué hay acerca de la rotación de estos trapecios?
 
 Vamos por partes... Teniendo en cuenta que el punto de rotación de estos trapecios es el centro de la room, podría indicar esta coordenada como offset y aplicar una rotación de la misma manera que lo hicimos con los pólígonos. De manera que tendríamos que crear el trapecio con la forma deseada en base a la distancia que estamos del centro.
@@ -313,6 +315,8 @@ scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, make_color_rgb(219, 3, 17));
 ¿Pero como se ha conseguido este resultado?
 
 ### Repaso trigonométrico
+
+Aquí hay unos apuntos sobre [las razones trigonométricas](http://www.vitutor.com/al/trigo/tri_2.html) por si hay que repasar.
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img7.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img7.jpg)
 
