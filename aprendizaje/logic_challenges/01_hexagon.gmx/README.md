@@ -214,3 +214,67 @@ scr_polygon(room_width/2, room_height/2, 35, 6, c_orange, angle);
 
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img4.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img4.jpg)
+
+Ya tenemos el fondo y nuestro personaje girando parejos (más o menos). Ahora es el momento de investigar como crear esos trapecios que tanto trabajo nos van a dar...
+
+Voy a empezar creando un trapecio. Un trapecio es una figura geométrica parecida a un rectángulo pero en la que uno de sus costados es más pequeño que su opuesto. Es precisamente esta peculiaridad la que no nos permite crear el trapecio con la función draw_rectangle, ya que ésta solo necesita dos coordenadas opuestas para formar el rectángulo perfecto. 
+
+La función de polígono tampoco nos sirve en este caso, ya que necesitamos crear el trapecio a partir de 4 coordenadas en lugar de generarlo alrededor de una circunferencia.
+
+Así que vamos a crear una función para crear nuestro trapecio pasándole las cuatro coordenadas, de una forma similar a los polígonos y utilizando primitivas. Realmente nos serviría para cualquier figura geométrica con 4 costados.
+
+### scr_quad():
+```javascript
+// Creado por Héctor Costa Guzmán
+
+// Script quad: Dibuja un polígono de 4 costados
+// a partir de cuatro coordenadas usando primitivas.
+
+// argument0 = c1x 
+// argument1 = c1y
+// argument2 = c2x 
+// argument3 = c2y
+// argument4 = c3x 
+// argument5 = c3y
+// argument6 = c4x 
+// argument7 = c4y
+// argument8 = color
+
+draw_set_color(argument8);
+draw_primitive_begin_texture(pr_trianglefan,background_get_texture(back));
+
+draw_vertex_texture(argument0, argument1, 1, 1);
+draw_vertex_texture(argument2, argument3, 1, 1);
+draw_vertex_texture(argument4, argument5, 1, 1);
+draw_vertex_texture(argument6, argument7, 1, 1);
+
+draw_primitive_end();
+draw_set_color(0);
+```
+
+Voy a probar de dibujar un trapecio empezando en medio de la room.
+
+```javascript
+var x1 = room_width/2;
+var y1 = room_height/2;
+
+var x2 = room_width/2 + 50;
+var y2 = room_height/2 - 150;
+
+var x3 = room_width/2 + 150;
+var y3 = room_height/2 - 150;
+
+var x4 = room_width/2 + 200;
+var y4 = room_height/2;
+
+scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, make_color_rgb(219, 3, 17));
+
+draw_set_color(c_white);
+draw_text(room_width/2 - 150,room_height/2, "("+string(x1)+","+string(y1)+")");
+draw_text(room_width/2 - 150,room_height/2+30, "("+string(x2)+","+string(y2)+")");
+draw_text(room_width/2 - 150,room_height/2+60, "("+string(x3)+","+string(y3)+")");
+draw_text(room_width/2 - 150,room_height/2+90, "("+string(x4)+","+string(y4)+")");
+```
+
+### Resultado
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img5.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img5.jpg)
