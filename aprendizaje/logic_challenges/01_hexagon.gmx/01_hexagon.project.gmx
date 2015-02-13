@@ -12,11 +12,17 @@
     <background>background\back</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_polygon.gml</script>
+    <script>scripts\scr_rotate_coord.gml</script>
+    <script>scripts\scr_quad.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\obj_controller</object>
+    <object>objects\obj_zoom</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room0</room>
+    <room>rooms\room</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

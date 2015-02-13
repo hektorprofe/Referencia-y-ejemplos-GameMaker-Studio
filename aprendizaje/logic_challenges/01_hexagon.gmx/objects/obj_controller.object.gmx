@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>texid = background_get_texture(back);
+angle = 0;
 </string>
           </argument>
         </arguments>
@@ -48,24 +49,127 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*draw_set_color(c_white); // default is black
-draw_primitive_begin_texture(pr_trianglefan, texid); // two triangles, previously gotten texture id
-draw_vertex_texture(0, 0, 0, 0); // top left of screen, top left of texture
-draw_vertex_texture(640, 0, 1, 0); // top right of screen, top right of texture
-draw_vertex_texture(640, 480, 1, 1); // bottom right of screen, bottom right of texture
-//draw_vertex_texture(0, 480, 0, 1); // bottom left of screen, bottom left of texture
-draw_primitive_end(); // end discription, draw primitive
-draw_set_color(0); // reset color */
+            <string>//draw_clear(c_black);
+//angle += 1.5;
+if (angle &gt; 360) angle = 0;
 
-// random color: color = make_color_rgb(floor(random(256)),floor(random(256)),floor(random(256)))
-draw_set_color(c_red); // default is black
-draw_primitive_begin_texture(pr_trianglefan, texid); // two triangles, previously gotten texture id
-draw_vertex_texture(320, 120, 0, 0); // top left of screen, top left of texture
-draw_vertex_texture(160, 360, 0, 0); // top right of screen, top right of texture
-draw_vertex_texture(480, 360, 0, 0); // bottom right of screen, bottom right of texture
-//draw_vertex_texture(0, 480, 0, 1); // bottom left of screen, bottom left of texture
-draw_primitive_end(); // end discription, draw primitive
-draw_set_color(0); // reset color */
+// Triángulos de fondo
+var size = 800;
+var firstColor = make_color_rgb(115, 25, 25);
+var secondColor = make_color_rgb(75, 15, 15);
+var currentColor = firstColor;
+
+for(var i = 0; i &lt; 360; i += 360 / 6) {
+
+    // Determinamos el color
+    if(i mod 2 == 0) {
+        if (currentColor == firstColor) currentColor = secondColor;
+        else currentColor = firstColor;
+    }
+    draw_set_color(currentColor);
+   
+    // Generamos los 6 triángulos, sumando el ángulo de rotación deseado
+    var posX = room_width/2 + cos( degtorad(i - 360 / 6) + degtorad(angle) ) * size;
+    var posY = room_height/2 + sin( degtorad(i - 360 / 6) + degtorad(angle) ) * size;;
+    
+    var maxX = room_width/2 + cos( degtorad(i) + degtorad(angle) ) * size;
+    var maxY = room_height/2 + sin( degtorad(i) + degtorad(angle) ) * size;;
+   
+    //draw_text(100,100, string(room_width/2) + "," + string(room_height/2));
+    //draw_text(100,125, string(newCoord1[0]) + "," + string(newCoord1[1]));
+    //draw_text(100,150, string(newCoord2[0]) + "," + string(newCoord2[1]));
+    //draw_text(100,100, string(angle) );
+    //draw_text(100,125, string(room_width/2) + " " +string(room_height/2) + " " + string(newCoord1[0]) + " " + string(newCoord1[1]) +" " + string(newCoord2[0]) + " " + string(newCoord2[1]) );
+     
+    // Dibujamos el triángulo
+    draw_triangle(room_width/2,room_height/2,posX,posY,maxX,maxY,false);
+    
+    // break;
+    
+}
+
+   
+
+
+// Dibujamos el jugador
+scr_polygon(room_width/2, room_height/2, 35, 6, make_color_rgb(200, 5, 5), angle);
+
+
+
+
+
+
+//old_angle = angle;
+//angle = 60;
+
+
+/*
+var x1 = room_width/2 + cos(degtorad(angle)) * 250;
+var y1 = room_height/2 + sin(degtorad(angle)) * 250;
+
+var x2 = room_width/2 + cos(degtorad(angle + (360 / 6))) * 250;
+var y2 = room_height/2 + sin(degtorad(angle + (360 / 6))) * 250;
+
+var x3 = room_width/2 + cos(degtorad(angle + (360 / 6))) * (250 + 30);
+var y3 = room_height/2 + sin(degtorad(angle + (360 / 6))) * (250 + 30);
+
+var x4 = room_width/2 + cos(degtorad(angle)) * (250 + 30);
+var y4 = room_height/2 + sin(degtorad(angle)) * (250 + 30);
+*/
+
+// Creamos un trapecio
+var offset_x = room_width/2;
+var offset_y = room_height/2;
+var distance = 150;
+var height = 35;
+
+var x1 = offset_x + cos(degtorad(angle)) * distance ;
+var y1 = offset_y + sin(degtorad(angle)) * distance ;
+
+var x2 = offset_x + cos(degtorad(angle + (360 / 6))) * distance;
+var y2 = offset_y + sin(degtorad(angle + (360 / 6))) * distance;
+
+var x3 = offset_x + cos(degtorad(angle + (360 / 6))) * (distance + height);
+var y3 = offset_y + sin(degtorad(angle + (360 / 6))) * (distance + height);
+
+var x4 = offset_x + cos(degtorad(angle)) * (distance + height);
+var y4 = offset_y + sin(degtorad(angle)) * (distance + height);
+
+scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, make_color_rgb(219, 3, 17));
+
+/*
+
+var x1 = offset_x;
+var y1 = offset_y;
+
+var x2 = offset_x + 50;
+var y2 = offset_y - 150;
+
+var x3 = offset_x + 150;
+var y3 = offset_y - 150;
+
+var x4 = offset_x + 200;
+var y4 = offset_y;
+*/
+
+
+draw_set_color(c_white);
+/*
+draw_text(room_width/2 - 150,room_height/2, "("+string(x1)+","+string(y1)+")");
+draw_text(room_width/2 - 150,room_height/2+30, "("+string(x2)+","+string(y2)+")");
+draw_text(room_width/2 - 150,room_height/2+60, "("+string(x3)+","+string(y3)+")");
+draw_text(room_width/2 - 150,room_height/2+90, "("+string(x4)+","+string(y4)+")");
+*/
+
+
+//draw_set_valign(fa_center);
+//draw_text(room_width/2,room_height/2, "("+string(x)+","+string(y)+")");
+
+/*
+scr_polygon(room_width/2, room_height/2, 225, 6, c_green, 50);  // hexágono con 225px de radio rotado 45º
+scr_polygon(room_width/2, room_height/2, 180, 3, c_blue, 0);    // triángulo con 180px de radio rotado 0º
+scr_polygon(room_width/2, room_height/2, 50, 4, c_red, 280);    // cuadrado con 35px de radio rotado 280º
+*/
 </string>
           </argument>
         </arguments>
