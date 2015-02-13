@@ -278,3 +278,43 @@ draw_text(room_width/2 - 150,room_height/2+90, "("+string(x4)+","+string(y4)+")"
 
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img5.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img5.jpg)
+
+Ahora la cuestión es, ¿cómo crear automáticamente un trapecio en una posición que concuerde en anchura con la anchura de uno de los triángulos que dan la vuelta? Y todavía más importante, ¿qué hay acerca de la rotación de estos trapecios?
+
+Vamos por partes... Teniendo en cuenta que el punto de rotación de estos trapecios es el centro de la room, podría indicar esta coordenada como offset y aplicar una rotación de la misma manera que lo hicimos con los pólígonos. De manera que tendríamos que crear el trapecio con la forma deseada en base a la distancia que estamos del centro.
+
+Por ejemplo, un trapecio con origen a 150,150 del centro, con altura de 35px y anchura determinada las razones trigonométricas y utilizando un ángulo de 60º, el mismo que tienen los 6 triángulos de fondo y que multiplicado por 6 nos daría una vuelta completa:
+
+```javascript
+// Creamos un trapecio
+var offset_x = room_width/2;
+var offset_y = room_height/2;
+var distance = 150;
+var height = 35;
+
+var x1 = offset_x + cos(degtorad(angle)) * distance ;
+var y1 = offset_y + sin(degtorad(angle)) * distance ;
+
+var x2 = offset_x + cos(degtorad(angle + (360 / 6))) * distance;
+var y2 = offset_y + sin(degtorad(angle + (360 / 6))) * distance;
+
+var x3 = offset_x + cos(degtorad(angle + (360 / 6))) * (distance + height);
+var y3 = offset_y + sin(degtorad(angle + (360 / 6))) * (distance + height);
+
+var x4 = offset_x + cos(degtorad(angle)) * (distance + height);
+var y4 = offset_y + sin(degtorad(angle)) * (distance + height);
+
+scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, make_color_rgb(219, 3, 17));
+```
+
+### Resultado
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img6.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img6.jpg)
+
+¿Pero como se ha conseguido este resultado?
+
+### Repaso trigonométrico
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img7.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img7.jpg)
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img8.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img8.jpg)
+
