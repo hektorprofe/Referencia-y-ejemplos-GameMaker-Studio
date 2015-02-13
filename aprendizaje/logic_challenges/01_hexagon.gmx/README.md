@@ -294,6 +294,8 @@ var offset_y = room_height/2;
 var distance = 150;
 var height = 35;
 
+angle = 0; // Si lo incremetamos la figura irá rotando alrededor del centro
+
 var x1 = offset_x + cos(degtorad(angle)) * distance ;
 var y1 = offset_y + sin(degtorad(angle)) * distance ;
 
@@ -316,9 +318,89 @@ scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, make_color_rgb(219, 3, 17));
 
 ### Repaso trigonométrico
 
-Aquí hay unos apuntos sobre [las razones trigonométricas](http://www.vitutor.com/al/trigo/tri_2.html) por si hay que repasar.
+Aquí hay unos apuntes sobre [las razones trigonométricas](http://www.vitutor.com/al/trigo/tri_2.html) por si hay que repasar.
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img7.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img7.jpg)
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img8.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img8.jpg)
 
+### Los 6 trapecios
+
+Para crear estas figuras de una forma más o menos consecutiva simplemente tenemos que incrementar el ángulo 60º al crear cada una de ellas. 
+
+Como no quiero acabar con mil líneas de código creo que me haré una función que me dibuje las 6 figuras consecutivamente. Como estas 6 figuras son como las ráfagas que más tarde tendremos que esquivar llamaré al script scr_burst (burst = ráfaga).
+
+### scr_burst()
+
+```javascript
+// Creado por Héctor Costa Guzmán
+
+// Script burst: Crea una ráfaga de 6 trapecios
+
+// argument0 = offset_x 
+// argument1 = offset_y
+// argument2 = angle 
+// argument3 = distance
+// argument4 = height
+// argument5 = color 
+
+var angle = argument2;
+
+for (var i=0;i<6;i++)
+{   
+    angle = 60*i + argument2;
+
+    var x1 = argument0 + cos(degtorad(angle)) * argument3 ;
+    var y1 = argument1 + sin(degtorad(angle)) * argument3 ;
+    
+    var x2 = argument0 + cos(degtorad(angle + (360 / 6))) * argument3;
+    var y2 = argument1 + sin(degtorad(angle + (360 / 6))) * argument3;
+    
+    var x3 = argument0 + cos(degtorad(angle + (360 / 6))) * (argument3 + argument4);
+    var y3 = argument1 + sin(degtorad(angle + (360 / 6))) * (argument3 + argument4);
+    
+    var x4 = argument0 + cos(degtorad(angle)) * (argument3 + argument4);
+    var y4 = argument1 + sin(degtorad(angle)) * (argument3 + argument4);
+    
+    scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, argument5);
+}
+````
+
+```javascript
+// Creamos una ráfaga
+scr_burst(room_width/2, room_height/2, angle, 180, 30, make_color_rgb(219, 3, 17) );
+````
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img9.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img9.jpg)
+
+Parece que lo tenemos bien encaminado. Ahora si añadimos una distancia variable que decremente un poco en cada Draw y hacemos que esta vuelva al máximo cuando sea muy pequeña ¡tendremos el efecto hacia adentro!
+
+```javascript
+// En el create
+distance = 350;
+````
+
+```javascript
+// En el step
+distance -= 5;
+if (distance <= 30) distance = 350;
+
+// Llamo la función burst con distancia variable
+scr_burst(room_width/2, room_height/2, angle, distance, 30, make_color_rgb(219, 3, 17) );
+````
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img10.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img10.jpg)
+
+¿Genial verdad? Entonces es cuando pienso que quizá creando 3 ráfagas diferentes, cada una un poco más lejos de la otra podemos crear el efecto del juego original.
+
+```javascript
+// Creamos una ráfaga
+scr_burst(room_width/2, room_height/2, angle, distance, 30, make_color_rgb(219, 3, 17) );
+scr_burst(room_width/2, room_height/2, angle, distance*3, 30, make_color_rgb(219, 3, 17) );
+scr_burst(room_width/2, room_height/2, angle, distance*6, 30, make_color_rgb(219, 3, 17) );
+````
+Pero el resultado no es para nada el esperado y las ráfagas acaban todas en el centro en el mismo instante...
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img11.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img11.jpg)
+
+¿Por qué ocurre este efecto? Pues, porque todas las ráfagas estan compartiendo algo que no deberían, y me estoy refiriendo a la distancia.
