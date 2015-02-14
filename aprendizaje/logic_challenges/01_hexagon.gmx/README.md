@@ -1,6 +1,6 @@
 ## Logic Challenge
 
-Los logic challenge son unos ejercicios de análisis que me he propuesto hacer a lo largo de mi arendizaje en el desarrollo de videojuegos. Se trata de observar, analizar e investigar un tipo de juego concreto, y determinar si se puede, o mejor dicho, soy capaz de crear un concepto similar en Game Maker. 
+Los logic challenge son unos ejercicios de análisis que me he propuesto hacer a lo largo de mi aprendizaje en el desarrollo de videojuegos. Se trata de observar, analizar e investigar un tipo de juego concreto, y determinar si se puede, o mejor dicho, soy capaz de crear un concepto similar en Game Maker. 
 
 # Logic Challenge 1: Hexagon
 
@@ -364,12 +364,12 @@ for (var i=0;i<6;i++)
     
     scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, argument5);
 }
-````
+```
 
 ```javascript
 // Creamos una ráfaga
 scr_burst(room_width/2, room_height/2, angle, 180, 30, make_color_rgb(219, 3, 17) );
-````
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img9.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img9.jpg)
 
@@ -378,7 +378,7 @@ Parece que lo tenemos bien encaminado. Ahora si añadimos una distancia variable
 ```javascript
 // En el create
 distance = 350;
-````
+```
 
 ```javascript
 // En el step
@@ -387,7 +387,7 @@ if (distance <= 30) distance = 350;
 
 // Llamo la función burst con distancia variable
 scr_burst(room_width/2, room_height/2, angle, distance, 30, make_color_rgb(219, 3, 17) );
-````
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img10.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img10.jpg)
 
@@ -398,9 +398,165 @@ scr_burst(room_width/2, room_height/2, angle, distance, 30, make_color_rgb(219, 
 scr_burst(room_width/2, room_height/2, angle, distance, 30, make_color_rgb(219, 3, 17) );
 scr_burst(room_width/2, room_height/2, angle, distance*3, 30, make_color_rgb(219, 3, 17) );
 scr_burst(room_width/2, room_height/2, angle, distance*6, 30, make_color_rgb(219, 3, 17) );
-````
+```
 Pero el resultado no es para nada el esperado y las ráfagas acaban todas en el centro en el mismo instante...
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img11.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img11.jpg)
 
 ¿Por qué ocurre este efecto? Pues, porque todas las ráfagas estan compartiendo algo que no deberían, y me estoy refiriendo a la distancia.
+
+### Ráfagas de trapecios en memoria
+
+La idea entonces es guardar de alguna forma todas las ráfagas, o mejor dicho, todos los trapecios que forman cada ráfaga y que hay que pintar en la pantalla en cada draw. 
+
+Cada uno de estos trapecios tendrá su ángulo y distancia variable. Entonces en lugar de tener una distancia global iremos restando la propia distancia de cada ráfaga y en cuanto ésta sea menor de 30 (por ejemplo), borraremos la ráfaga... bueno, los trapecios con distancia menor de 30.
+
+Hay varias formas de utilizar la memoria, por ejemplo usando arrays o listas. Si estuviera en Python o Javascript lo más cómodo sería crear un objeto y meterlo en una lista. Pero como estoy en Game Maker tengo la alternativa de utilizar grids (matrices), o varios arreglos para cada propiedad, lo cual sería óptimo. 
+
+Sin embargo ya que existien los objetos me voy a aventurar a hacer un experimento. Voy a replantear todo el juego utilizando los objetos de Game Makery y de paso haré un poco de limpieza.
+
+### Replanteado el juego con objetos
+
+Los objetos que voy a crear son básicamente los que me permiten dibujar el juego:
+
+* obj_background: Para dibujar los triángulos del fondo.
+* obj_trapezoid: Para dibujar las ráfagas de trapecios.
+* obj_player: Para dibujar el jugador.
+* obj_controller: Para gestionar todo el juego.
+
+Los scripts con los que cuento son:
+
+* scr_polygon: Dibuja un polígono de n lados a partir de una coordenada central utilizando una circunferencia.
+* scr_quad: Dibuja un polígono de 4 costados a partir de 4 coordenadas.
+* scr_rotate_coord: Toma una coordenada y le aplica una rotación en grados.
+* scr_burst: Genera varios trapecios para crear una ráfaga.
+
+De forma común voy a gestionar varias variables globales que me permitirán tener una referencia del ángulo de rotación general, de la distancia de los trapecios y de la velocidad de éstos.
+
+En Game Maker los objetos también pueden tener variables internas, es eso lo que me resulta útil en este caso. La parte inútil del montaje es que al instanciar un nuevo objeto también es necesario darle una coordenada para indicar dónde se van a crear dentro de la room. Como realmente no van a tener un sprite lo único que haré es crearlos fuera de la room y listo.
+
+En cuanto al obj_controller ahora se crean unas variables nuevas y el objeto queda así:
+
+```javascript
+// obj_controller: Create
+global.spd = 4;
+global.distance = 600;
+global.height = 35;
+global.angle = 0;
+burst = true; // indica si pintar una oleada de trapecios
+```
+
+```javascript
+// obj_controller: Draw Begin
+global.angle += 1.5;
+if (global.angle > 360) global.angle = 0;
+// Creamos una ráfaga cada 2 segundos
+if (burst)
+{
+    scr_burst();
+    burst = false;
+    alarm[0] = 60;
+}
+```
+
+```javascript
+// obj_controller: Alarm 0
+burst = true;
+```
+
+El objeto player sólo tendría un evento Draw y tendría una profunidad de 0:
+
+```javascript
+// obj_player: Draw End
+scr_polygon(room_width/2, room_height/2, 35, 6, make_color_rgb(255, 255, 255), global.angle);
+```
+
+El nuevo objeto background se encargará de los triángulos de fondo y también tendrá sólo un evento Draw. La profundidad deberá ser muy grande, por ejemplo 9999:
+
+```javascript
+// obj_background: Draw
+var size = 800;
+var firstColor = make_color_rgb(115, 25, 25);
+var secondColor = make_color_rgb(75, 15, 15);
+var currentColor = firstColor;
+
+for(var i = 0; i < 360; i += 360 / 6) {
+
+    // Determinamos el color
+    if(i mod 2 == 0) {
+        if (currentColor == firstColor) currentColor = secondColor;
+        else currentColor = firstColor;
+    }
+    draw_set_color(currentColor);
+   
+    // Generamos los 6 triángulos, sumando el ángulo de rotación deseado
+    var posX = room_width/2 + cos( degtorad(i - 360 / 6) + degtorad(global.angle) ) * size;
+    var posY = room_height/2 + sin( degtorad(i - 360 / 6) + degtorad(global.angle) ) * size;
+    
+    var maxX = room_width/2 + cos( degtorad(i) + degtorad(global.angle) ) * size;
+    var maxY = room_height/2 + sin( degtorad(i) + degtorad(global.angle) ) * size;;
+   
+    // Dibujamos el triángulo
+    draw_triangle(room_width/2,room_height/2,posX,posY,maxX,maxY,false);
+    
+}
+```
+
+El cambio más importante ocurre en el nuevo objeto trapezoid, encargado de definir y dibujar cada trapecio. Este objeto debe tener una profundidad inferior al background y mayor que el player:
+
+```javascript
+// obj_trapezoid: Create
+angle = 0;
+distance = global.distance;
+height = global.height;
+spd = global.spd;
+````
+
+```javascript
+// obj_trapezoid: Draw
+var offset_x = room_width/2;
+var offset_y = room_height/2;
+
+var x1 = offset_x + cos(degtorad(angle+global.angle)) * distance;
+var y1 = offset_y + sin(degtorad(angle+global.angle)) * distance;
+
+var x2 = offset_x + cos(degtorad(angle+global.angle + (360 / 6))) * distance;
+var y2 = offset_y + sin(degtorad(angle+global.angle + (360 / 6))) * distance;
+
+var x3 = offset_x + cos(degtorad(angle+global.angle + (360 / 6))) * (distance + height);
+var y3 = offset_y + sin(degtorad(angle+global.angle + (360 / 6))) * (distance + height);
+
+var x4 = offset_x + cos(degtorad(angle+global.angle)) * (distance + height);
+var y4 = offset_y + sin(degtorad(angle+global.angle)) * (distance + height);
+
+scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, make_color_rgb(219, 3, 17));
+
+distance -= global.spd;
+
+// si la distancia es menor que 1 borramos el objeto haciéndo que desaparezca
+if (distance < 1) instance_destroy();
+````
+
+Los trapecios se crean cada 2 segundos (60 steps por ejemplo) en la alarm[0] de controller y se crean al llamar el nuevo script burst:
+
+```javascript
+// scr_burst()
+// Creado por Héctor Costa Guzmán
+
+// Script burst: Crea una ráfaga de trapecios
+for (var i=0;i<6;i++)
+{   
+    trapezoid = instance_create(0, 0, obj_trapezoid); // no importa dónde lo creamos
+    with(trapezoid)
+    {
+        angle = i * 60; // a cada trapecio le damos 60º más de ángulo
+    }
+    
+}
+````
+
+Con todo ésto y poniendo los objetos en la room tenemos un primer concepto del juego ya muy parecido al original.
+
+### Resultado
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img12.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img12.jpg)
+
