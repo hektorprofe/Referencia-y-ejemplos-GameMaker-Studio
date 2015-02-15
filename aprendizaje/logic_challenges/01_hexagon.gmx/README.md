@@ -728,7 +728,7 @@ if (distance < 1) instance_destroy();
 
 Fijaros que es importante rectificar el ángulo del jugador sumándole 360 si es negativo, ya que sinó al desplazarnos a la izquierda y ser éste negativo, nunca nos daría el mismo valor y no habría colisión.
 
-### Ráfagas aleatorios
+### Ráfagas aleatorias
 
 Todo muy bien, pero ¿cómo vamos a probar el juego si no paran de salir ráfagas de 6 trapecios y no dejan sitio para esquivarlas?
 
@@ -755,3 +755,52 @@ for (var i=0;i<6;i++)
 ```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img16.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img16.jpg)
+
+Como se puede apreciar el concepto del juego está prácticamente hecho a falta de mejorar algunos detalles. Uno de ellos es el efecto zoom de pulsación constante que añade al juego algo más de movimiento y lo pone en sincronía con el sonido.
+
+### Zoom
+
+El efecto zoom que voy a recrer es muy sencillo de hacer en Game Maker y consiste simplemente en acerca un poco la cámara y alejarla. Eso se consigue configurando bien las vistas de la room y posteriormente utilizando un código tal como explican en [este vídeo de Youtube](https://www.youtube.com/watch?v=FIRr-BSko4Y).
+
+Voy a ir a la room y le añadiré una view tal como muestro en la siguiente imagen, teniendo en cuenta que la resolución del juego será 800x480 y el obj_controller estará en el punto 400,240.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img17.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img17.jpg)
+
+A continuación creo un objeto zoom y lo pongo en la room:
+
+```javascript
+// Obj_zoom: Create
+zoom_factor = 1;
+zoom_pulse = 0;
+```
+
+```javascript
+// Obj_zoom: Step
+if (zoom_factor >= 1) zoom_pulse = -0.01;
+if (zoom_factor < 0.95)  zoom_pulse = 0.01;
+zoom_factor += zoom_pulse;
+
+view_wview[0] = room_width * zoom_factor;
+view_hview[0] = room_height * zoom_factor;
+```
+
+Lo que hago es incrementar y decrementar el zoom cada ciertos instantes para crear el efecto de pulso. Lo haré utilizando una variable llamada zoom_pulse con la cantidad de zoom por step y otra zoom_factor con el zoom final.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img18.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img18.jpg)
+
+### Música maestro
+
+Sin duda lo más divertido del juego es que se puede lograr una sincronía perfecta con la música de fondo.
+
+El juego original utiliza una mezcla de música 8-bits con dubstep pero no puedo utilizarla porque está licenciada bajo costes de reutilización. Alternativamente hay muchisimos autores que ofrecen su música con licencias creative commons y dejan que las podamos reutilizar citando la fuente.
+
+La canción que he descargado para este Logic Challenge es de [teknoaxe]() y se llama [Beat Timed Grime Remastered](), la cual deja utilizar bajo Licencia Atribución de Creative Commons (reutilización permitida).
+
+Para introducir la música en el juego es tan sencillo como añadir un sonido, seleccionar el fichero mp3, bajarle un poco la calidad y en el objeto controller, añadir dos eventos; room start y room end iniciando y parando el fichero de audio.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img19.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img19.jpg)
+
+El resultado ya es genial y aún nos faltan los últimos detalles. ¡Gracias por la música mestro! :)
+
+
+

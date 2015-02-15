@@ -48,12 +48,34 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Controles
-if keyboard_check(vk_left)
+            <string>// Controles móviles hasta 3 dedos (no se bloquea)
+var mouse_pressed = 0;
+
+if device_mouse_check_button(0, mb_any)
+{
+    if (device_mouse_x(0) &lt; room_width/2) mouse_pressed = 1;
+    else mouse_pressed = -1;
+}
+
+if device_mouse_check_button(1, mb_any)
+{
+    if (device_mouse_x(1) &lt; room_width/2) mouse_pressed = 1;
+    else mouse_pressed = -1;
+}
+  
+if device_mouse_check_button(3, mb_any)
+{
+    if (device_mouse_x(2) &lt; room_width/2) mouse_pressed = 1;
+    else mouse_pressed = -1;
+}
+
+// Controles PC
+
+if keyboard_check(vk_left) || mouse_pressed == -1
 {
     angle -= 10;
 }
-else if keyboard_check(vk_right)
+else if keyboard_check(vk_right) || mouse_pressed == 1
 {
     angle += 10; 
 }
@@ -105,6 +127,7 @@ draw_triangle(c1[0], c1[1], c2[0], c2[1], c3[0], c3[1], false);
 
 //draw_text(100,175, "Global: " + string(tangle) );
 //draw_text(100,200, "Player: " + string(angle) );
+//draw_text(100,350, "Player: " + string(global.zoom_factor) );
 </string>
           </argument>
         </arguments>

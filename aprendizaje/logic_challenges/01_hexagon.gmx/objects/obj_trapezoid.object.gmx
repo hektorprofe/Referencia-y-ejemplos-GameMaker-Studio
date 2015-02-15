@@ -70,8 +70,24 @@ var y4 = offset_y + sin(degtorad(angle+global.angle)) * (distance + height);
 
 scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, make_color_rgb(219, 3, 17));
 
+// Detectamos colisiones, sólo múltiplos de 60
+var p_angle = floor(obj_player.angle / 60) * 60;
+var c_angle = floor(angle / 60) * 60;
+
+if (p_angle &lt; 0 ) p_angle = p_angle + 360; // si es negativo
+
+if(distance &lt;= 80 &amp;&amp; distance &gt;= 70) {
+    if (c_angle == p_angle) room_restart();
+}
+
+//draw_text(50,25,string(c_angle));
+//draw_text(50,75,string(p_angle));
+
+
+// Restamos spd de la distancia
 distance -= global.spd;
 if (distance &lt; 1) instance_destroy();
+
 </string>
           </argument>
         </arguments>

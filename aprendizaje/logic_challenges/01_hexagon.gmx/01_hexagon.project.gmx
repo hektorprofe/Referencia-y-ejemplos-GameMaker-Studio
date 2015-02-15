@@ -4,7 +4,9 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_music</sound>
+  </sounds>
   <sprites name="sprites"/>
   <backgrounds name="background">
     <background>background\back</background>

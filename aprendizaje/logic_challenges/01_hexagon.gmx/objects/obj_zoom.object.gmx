@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>zoom_factor = 1;
+zoomPulse = 0;
 </string>
           </argument>
         </arguments>
@@ -53,12 +54,16 @@ if (keyboard_check(vk_add))
 {
     zoom_factor -= 0.05;
 }
-   
+
 if (keyboard_check(vk_subtract))
 {
     //if (zoom_factor + 0.06 &lt;= 1) 
     zoom_factor += 0.05;
 }
+
+if (zoom_factor &gt;= 1) zoomPulse = -0.01;
+if (zoom_factor &lt; 0.95)  zoomPulse = 0.01;
+zoom_factor += zoomPulse;
 
 view_wview[0] = room_width * zoom_factor;
 view_hview[0] = room_height * zoom_factor;
