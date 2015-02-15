@@ -14,12 +14,12 @@
 // argument8 = color
 
 draw_set_color(argument8);   //pr_trianglefan  pr_linestrip
-draw_primitive_begin_texture(pr_linestrip,background_get_texture(back));
+draw_primitive_begin_texture(pr_trianglefan,background_get_texture(back));
 
 draw_vertex_texture(argument0, argument1, 1, 1);
 draw_vertex_texture(argument2, argument3, 1, 1);
 draw_vertex_texture(argument4, argument5, 1, 1);
-draw_primitive_end();
 draw_vertex_texture(argument6, argument7, 1, 1);
+draw_primitive_end();
 
 draw_set_color(0);

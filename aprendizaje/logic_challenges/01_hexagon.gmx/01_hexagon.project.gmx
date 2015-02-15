@@ -5,9 +5,7 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites">
-    <sprite>sprites\DoorSpr</sprite>
-  </sprites>
+  <sprites name="sprites"/>
   <backgrounds name="background">
     <background>background\back</background>
   </backgrounds>
@@ -16,13 +14,17 @@
     <script>scripts\scr_polygon.gml</script>
     <script>scripts\scr_rotate_coord.gml</script>
     <script>scripts\scr_quad.gml</script>
+    <script>scripts\scr_burst.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\obj_controller</object>
+    <object>objects\obj_trapezoid</object>
+    <object>objects\obj_player</object>
     <object>objects\obj_zoom</object>
+    <object>objects\obj_background</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room</room>
+    <room>rooms\rm_game</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

@@ -413,7 +413,7 @@ Cada uno de estos trapecios tendrá su ángulo y distancia variable. Entonces en
 
 Hay varias formas de utilizar la memoria, por ejemplo usando arrays o listas. Si estuviera en Python o Javascript lo más cómodo sería crear un objeto y meterlo en una lista. Pero como estoy en Game Maker tengo la alternativa de utilizar grids (matrices), o varios arreglos para cada propiedad, lo cual sería óptimo. 
 
-Sin embargo ya que existien los objetos me voy a aventurar a hacer un experimento. Voy a replantear todo el juego utilizando los objetos de Game Makery y de paso haré un poco de limpieza.
+Sin embargo ya que existien los objetos me voy a aventurar a hacer un experimento. Voy a replantear todo el juego utilizando los objetos de Game Maker y de paso haré un poco de limpieza.
 
 ### Replanteado el juego con objetos
 
@@ -559,4 +559,105 @@ Con todo ésto y poniendo los objetos en la room tenemos un primer concepto del 
 
 ### Resultado
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img12.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img12.jpg)
+
+Sin duda el juego está muy encaminado pero que un juego sea realmente un juego se necesita un que el jugador interactúe de alguna forma.
+
+### Creando el cursor del jugador
+
+Para crear el pequeño cursor del jugador se me ocurren varias cosas, pero creo que me voy a inclinar por dibujar un sencillo triángulo. Luego lo rotaré conjuntamente con el centro utilizando mi función de rotar coordenadas.
+
+Empezaré creando el triángulo en el evento Draw del jugador. El concepto para dibujarlo es el mismo que el que usé con los trapecios, ya que se basa en determinar un punto a cierta distancia del centro utilizando las razones trigonométricas y utilizando el ángulo de rotación global para crear el efecto de movimiento contínuo.
+
+```javascript
+// Dibujamos el hexágono central
+scr_polygon(room_width/2, room_height/2, 35, 6, make_color_rgb(255, 255, 255), global.angle);
+
+// Dibujamos el triángulo a 60px del centro
+var posX = room_width/2 + cos( degtorad(global.angle) ) * 60;  // distancia X
+var posY = room_height/2 + sin( degtorad(global.angle) ) * 60; // distancia Y
+draw_set_color(c_white);
+draw_triangle(posX,posY-6,posX,posY+6,posX+12,posY,false);
+draw_text(100,175, "Global: " + string(global.angle) );
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img13.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img13.jpg)
+
+Por ahora el triángulo aparece bien y rota junto con el fondo pero... no sobre si mismo.
+
+Es un buen momento para usar mi función de scr_rotate_coord para añadir la rotación global, así que voy a calcular las nuevas tres coordenadas después de aplicarles la rotación. ¡Ah! Y esta vez la rotación no se debe hacer sobre el punto central de la room, sinó sobre el propio triángulo.
+
+```javascript
+// Dibujamos el hexágono central
+scr_polygon(room_width/2, room_height/2, 35, 6, make_color_rgb(255, 255, 255), global.angle);
+
+// Calculamos las coordenadas del triángulo a 60px del centro
+var posX = room_width/2 + cos( degtorad(global.angle) ) * 60;  // distancia X
+var posY = room_height/2 + sin( degtorad(global.angle) ) * 60; // distancia Y
+
+// Rotación del triángulo sobre si mismo posX,posY
+var c1 = scr_rotate_coord(posX, posY-6,posX,posY, global.angle);
+var c2 = scr_rotate_coord(posX, posY+6,posX,posY, global.angle);
+var c3 = scr_rotate_coord(posX+12, posY,posX,posY, global.angle);
+
+// Lo dibujamos en las nuevas coordenadas rotadas
+draw_set_color(c_white);
+draw_triangle(c1[0], c1[1], c2[0], c2[1], c3[0], c3[1], false);
+draw_text(100,175, "Global: " + string(global.angle) );
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img14.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img14.jpg)
+
+Ya tengo el triangulito rotando en perfecta posición acompañando el fondo, pero no tiene mucho sentido si no podemos moverlo, así que voy a añadir un evento step para añadir rotación cuando se apreten las teclas izquierda y derecha y hacer el efecto de movimiento.
+
+Como lo que haremos realmente es sumar una rotación estática a la rotación global, me voy a crear una nueva variable interna de jugador llamada angle y le iré sumando y restando 10 todo el rato mientras se apretan las teclas.
+
+```javascript
+// obj_player: Create
+angle = 0;
+```
+
+```javascript
+// obj_player: Step
+if keyboard_check(vk_left)
+{
+    angle -= 10;
+}
+else if keyboard_check(vk_right)
+{
+    angle += 10; 
+}
+
+// Reiniciamos el ángulo si nos pasamos
+if (angle == 360) angle = 0;
+if (angle == -360) angle = 0;
+```
+
+Seguidamente haré una modificación en el draw para sumar este ángulo al ángulo global.
+
+```javascript
+// Dibujamos el hexágono central
+scr_polygon(room_width/2, room_height/2, 35, 6, make_color_rgb(255, 255, 255), global.angle);
+
+// Ángulo final
+var tangle = angle + global.angle;
+
+// Calculamos las coordenadas del triángulo a 60px del centro
+var posX = room_width/2 + cos( degtorad(tangle) ) * 60;  // distancia X
+var posY = room_height/2 + sin( degtorad(tangle) ) * 60; // distancia Y
+
+// Rotación del triángulo sobre si mismo posX,posY
+var c1 = scr_rotate_coord(posX, posY-6,posX,posY, tangle);
+var c2 = scr_rotate_coord(posX, posY+6,posX,posY, tangle);
+var c3 = scr_rotate_coord(posX+12, posY,posX,posY, tangle);
+
+// Lo dibujamos en las nuevas coordenadas rotadas
+draw_set_color(c_white);
+draw_triangle(c1[0], c1[1], c2[0], c2[1], c3[0], c3[1], false);
+```
+
+Y así es como queda el resultado cuando lo movemos con las flechas de dirección.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img15.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img15.jpg)
+
+
 

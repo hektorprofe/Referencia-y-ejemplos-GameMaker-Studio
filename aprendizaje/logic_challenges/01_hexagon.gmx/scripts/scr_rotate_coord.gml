@@ -7,12 +7,12 @@
 // argument1 = y
 // argument2 = offset_x
 // argument3 = offset_y
-// argument4 = angle in degrees
+// argument4 = angle
 
 // retorna coord[x,y];
 
 var rads = degtorad(argument4); // A radianos
-
+var coord;
 var newX = argument0 - argument2;
 var newY = argument1 - argument3;
 
