@@ -659,5 +659,99 @@ Y así es como queda el resultado cuando lo movemos con las flechas de direcció
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img15.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img15.jpg)
 
+ACTUALIZADO: Para añadir movimiento en dispositivos móviles he implementado el siguiente código que tiene en cuenta incluso cuando se pulsa la pantalla con varios dedos sin que se bloquee.
 
+```javascript
+// Controles móviles hasta 3 dedos (no se bloquea)
+var mouse_pressed = 0;
 
+if device_mouse_check_button(0, mb_any)
+{
+    if (device_mouse_x(0) < room_width/2) mouse_pressed = 1;
+    else mouse_pressed = -1;
+}
+
+if device_mouse_check_button(1, mb_any)
+{
+    if (device_mouse_x(1) < room_width/2) mouse_pressed = 1;
+    else mouse_pressed = -1;
+}
+  
+if device_mouse_check_button(3, mb_any)
+{
+    if (device_mouse_x(2) < room_width/2) mouse_pressed = 1;
+    else mouse_pressed = -1;
+}
+
+// Controles PC
+
+if keyboard_check(vk_left) || mouse_pressed == -1
+{
+    angle -= 10;
+}
+else if keyboard_check(vk_right) || mouse_pressed == 1
+{
+    angle += 10; 
+}
+
+if (angle == 360) angle = 0;
+if (angle == -360) angle = 0;
+```
+
+### Colisiones
+
+Ya es hora de hacer que el jugador choque contra las ráfagas. Hacerlo es realmente sencillo sin tenemos en cuenta lo siguiente:
+
+* El jugador siempre está a una distancia fija del centro.
+* Los trapecios se van aproximando a una distancia variable del centro.
+* En el momento del choque, el trapecio estará a la misma distancia que el jugador del centro y el ángulo del jugador deberá estar compreso entre el mínimo ángulo del trapecio y su máximo ángulo.
+
+Para determinar si el ángulo del jugador se encuentra dentro del trapecio podemos dividir ambos ángulos por 60 y utilizar la función floor para saber si comparten la fracción. Ésto lo hacemos en el mismo draw del obj_trapezoid.
+
+```javascript
+// Detectamos colisiones, sólo múltiplos de 60
+var p_angle = floor(obj_player.angle / 60) * 60;
+var c_angle = floor(angle / 60) * 60;
+
+if (p_angle < 0 ) p_angle = p_angle + 360; // si es negativo
+
+// Si el trapecio está a la misma distancia del centro que el jugador
+if(distance <= 80 && distance >= 70) {
+    // Si tienen el mismo ángulo reiniciamos el juego
+    if (c_angle == p_angle) room_restart();
+}
+
+// Restamos spd de la distancia
+distance -= global.spd;
+if (distance < 1) instance_destroy();
+```
+
+Fijaros que es importante rectificar el ángulo del jugador sumándole 360 si es negativo, ya que sinó al desplazarnos a la izquierda y ser éste negativo, nunca nos daría el mismo valor y no habría colisión.
+
+### Ráfagas aleatorios
+
+Todo muy bien, pero ¿cómo vamos a probar el juego si no paran de salir ráfagas de 6 trapecios y no dejan sitio para esquivarlas?
+
+Por ahora para probar el juego voy a modificar el código del scr_burst para evitar crear algunos trapecios. Simplemente le haré un random(1) y si es cierto crearé el objeto:
+
+```javascript
+// Creado por Héctor Costa Guzmán
+
+// Script burst: Crea una ráfaga de trapecios aleatoria
+
+for (var i=0;i<6;i++)
+{   
+    if (round(random(1)) )
+    {
+        trapezoid = instance_create(0, 0, obj_trapezoid);
+        with(trapezoid)
+        {
+            angle = i * 60; 
+        }
+    
+    }
+    
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img16.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img16.jpg)
