@@ -928,3 +928,189 @@ switch(rand)
 Evidentemente el juego original mezcla muchos más conceptos, como por ejemplo la velocidad de las ráfagas y además tiene en cuenta la música para generar los caminos que van saliendo por pantalla. Yo no quiero llegar tan lejos y con unos pocos ajustes dejaré por zancado este Logic Challenge :)
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img21.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img21.jpg)
+
+### Colores aleatorios, cambio de dirección y contador de tiempo
+
+Algo que quiero añadir es un cambio de dirección de la dirección global en un momento aleatorio. Debería ser tan fácil como poner una alarma con un multiplicador negativo o postivo y llamarla de forma aleatoria a si misma a lo largo del juego.
+
+```javascript
+// obj_controller: Create
+global.spd = 7;
+global.distance = 600;
+global.height = 35;
+global.angle = 0;
+global.angle_inc = 2;
+global.multi = 1;
+burst = true;
+
+alarm[1] = round(random_range(room_speed * 4, room_speed * 8));
+```
+
+```javascript
+// obj_controller: Alarm 1
+global.multi  = global.multi * (-1);
+global.spd += 0.25;
+global.angle_inc += 0.125;
+
+alarm[1] = round(random_range(room_speed * 4, room_speed * 8)); // 4 a 8 segundos
+```
+
+```javascript
+// obj_controller: Draw Begin
+global.angle += (global.angle_inc*global.multi);
+if (global.angle > 360) global.angle = 0;
+if (global.angle < 0) global.angle += 360;
+```
+
+Luego para dibujar el contador y los elementos de la interfaz voy a crear un objeto gui que llamaré cada 1 step y dibujará el contador.
+
+```javascript
+// obj_gui: Create
+timer_sec = 0;
+timer_msec = 1;
+
+alarm[1] = room_speed/33;
+```
+
+```javascript
+// obj_gui: Alarm 0
+timer_msec = timer_msec + 3.333;
+
+if (timer_msec > 99)
+{
+    timer_msec = 1;
+    timer_sec += 1;
+
+}
+alarm[1] = room_speed / 33;
+```
+
+```javascript
+// obj_gui: Draw GUI
+var secs = "0";
+var msecs = "0";
+
+if (timer_sec < 10) secs = secs + string(timer_sec);
+else secs = string(timer_sec);
+
+if (timer_msec < 10) msecs = msecs + string(round(timer_msec));
+else msecs = string(round(timer_msec));
+
+draw_set_font(fnt_timer);
+draw_set_halign(fa_left);
+draw_text(25, 15, "TIME:  " + secs + ":" + msecs);
+draw_set_halign(fa_right);
+draw_text(room_width-25, 15, "MULTI:  " + string(global.spd));
+```
+
+¡Ah! Para evitar que se nos escale incorrectamente la GUI, hay que establecer el tamaño de la pantalla, por ejemplo al crear el controlador:
+
+```javascript
+// obj_controller: Create
+display_set_gui_size(room_width, room_height);
+```
+
+Finalmente para cambiar los colores hay que conocer como funciona el sistema RGB y el sistema HSV. 
+
+En cuanto a [RGB](http://es.wikipedia.org/wiki/RGB), representa que a partir de tres colores, rojo, verde y azul (Red, Green, Blue) es posible crear todos los demás mezclándolos. Tenemos 256 valores para cada uno de esos tres colores (0 a 255), representando el 0-0-0 la ausencia de color (negro) y el 255-255-255 el blanco. El rojo quedaría como 255-0-0, el verde 0-255-0 y el azul 0-0-255.
+
+Teniendo lo anterior en cuenta, nuestro juego utiliza básicamente tres colores. Dos para el fondo más oscuros y uno base para las ráfagas, en conclusión podemos llegar a generar los dos del fondo a partir del color base.
+
+Para hacerlo bien entra en juego el sistema [HSV](http://es.wikipedia.org/wiki/Modelo_de_color_HSV) que permite definir un color a partir de su matriz, saturación y brillo (Hue, Saturation, Value). Es precisamente jugando con la saturación y el brillo que podemos lograr correctamente oscurecer un color de base.
+
+Así que la idea es generar nuestro color con RGB y convertirlo a HSV, oscurecerlo y convertirlo de vuelta a RGB para utilizarlo en Game Maker. Para ello utilizaré un par de códigos que he encontrado en el foro de [Yoyo Games](http://gmc.yoyogames.com/index.php?showtopic=321995) y me permitirán hacer las conversiones. 
+
+```javascript
+/* HSV to RGB
+arg0: Hue
+arg1: Sat
+arg2: Val */
+
+col=make_color_hsv(argument0,argument1,argument2)
+red=color_get_red(col)
+green=color_get_green(col)
+blue=color_get_blue(col)
+```
+
+/* RGB to HSV
+arg0: Red
+arg1: Green
+arg2: Blue */
+
+col=make_color_rgb(argument0,argument1,argument2)
+hue=color_get_hue(col)
+sat=color_get_saturation(col)
+val=color_get_value(col)
+```
+
+La cuestión es si generar colores aleatorios o partir de una paleta previa... Supongo que es mejor que prepare yo mismo unos cuantos colores de base. Por ahora iré a lo fácil (valores encontrados en la wikipedia):
+* Rojo: 230-0-38
+* Naranja: 230-95-0
+* Verde: 0-145-80
+* Azul:  0-112-184
+
+Iré alternando estos 5 colores aleatoriamente cada vez que cambiamos de dirección, no sé como quedará pero me la voy a jugar.
+
+La verdad no sé como empezar, supongo que debería crear un script que me devuelva uno de estos 3 colores aleatoriamente:
+
+```javascript
+// Creado por Héctor Costa Guzmán
+
+// Script rand_color: Devuelve un color aleatorio de mi paleta de colores.
+
+        //rojo     //naranja   //verde     //azul
+var r;  r[0]=215;  r[1]=215;   r[2]=35;    r[3]=35;  
+var g;  g[0]=35;   g[1]=145;   g[2]=215;   g[3]=145;
+var b;  b[0]=35;   b[1]=35;    b[2]=35;    b[3]=215;
+
+randomize();
+var i = round(random(array_length_1d(r) - 1));
+
+return make_color_rgb(r[i],g[i],b[i]);
+```
+
+Una vez tengo el color primario necesito oscurecerlo de forma variable y generar dos colores de fondo, uno más oscuro que el otro. Para ello me voy a crear una función que oscurezca un color rgb, lo transforme a hsv, le quite un porcentaje de brillo y lo devuelva de nuevo como rgb.
+
+```javascript
+// Creado por Héctor Costa Guzmán
+
+// Script darken_color: 
+// argument0 = color rgb
+// argument1 = porcetaje a oscurecer
+
+// Transformamos el color a hsv
+var hue=color_get_hue(argument0);
+var sat=color_get_saturation(argument0);
+var val=color_get_value(argument0);
+
+val -= argument1*255/100;
+
+var hsv = make_color_hsv(hue,sat,val);
+
+var red = color_get_red(hsv);
+var green = color_get_green(hsv);
+var blue = color_get_blue(hsv);
+
+return make_color_rgb(red,green,blue);
+```
+
+Para utilizarlo básicamente lo que haré es esbalecer unos colores de inicio en el create del controlador y alternar los colores en el alarm 1 (al cambiar la rotación), asegurándome que siempre se devuelva uno nuevo.
+
+```javascript
+// obj_controller: Create
+global.color = scr_rand_color();
+global.bg_color_1 = scr_darken_color(global.color, 40); // lo oscurezco un 40%
+global.bg_color_2 = scr_darken_color(global.color, 50); // lo oscurezco un 5%
+```
+
+```javascript
+// obj_controller: Alarm 1
+var new_color = scr_rand_color();
+while(global.color == new_color) new_color = scr_rand_color();
+global.color = new_color;
+global.bg_color_1 = scr_darken_color(global.color, 40);
+global.bg_color_2 = scr_darken_color(global.color, 50);
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img22.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img22.jpg)
+
