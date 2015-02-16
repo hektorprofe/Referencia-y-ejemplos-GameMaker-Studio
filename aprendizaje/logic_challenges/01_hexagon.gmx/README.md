@@ -926,3 +926,5 @@ switch(rand)
 ```
 
 Evidentemente el juego original mezcla muchos más conceptos, como por ejemplo la velocidad de las ráfagas y además tiene en cuenta la música para generar los caminos que van saliendo por pantalla. Yo no quiero llegar tan lejos y con unos pocos ajustes dejaré por zancado este Logic Challenge :)
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img21.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img21.jpg)
