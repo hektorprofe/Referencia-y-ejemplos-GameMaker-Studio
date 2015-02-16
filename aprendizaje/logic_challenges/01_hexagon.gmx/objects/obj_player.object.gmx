@@ -71,11 +71,11 @@ if device_mouse_check_button(3, mb_any)
 
 // Controles PC
 
-if keyboard_check(vk_left) || mouse_pressed == -1
+if keyboard_check(vk_left) || mouse_pressed == 1
 {
     angle -= 10;
 }
-else if keyboard_check(vk_right) || mouse_pressed == 1
+else if keyboard_check(vk_right) || mouse_pressed == -1
 {
     angle += 10; 
 }
@@ -105,7 +105,7 @@ if (angle == -360) angle = 0;
           <argument>
             <kind>1</kind>
             <string>// Dibujamos el hexágono central
-scr_polygon(room_width/2, room_height/2, 35, 6, make_color_rgb(255, 255, 255), global.angle);
+scr_polygon(room_width/2, room_height/2, 40, 6, make_color_rgb(255, 255, 255), global.angle);
 
 // Dibujamos el triángulo de dirección
 var tangle = angle + global.angle;
@@ -115,9 +115,9 @@ var posY = room_height/2 + sin( degtorad(tangle) ) * 60;
 draw_set_color(c_white);
 //draw_triangle(posX,posY-6,posX,posY+6,posX+12,posY,false);
 
-var c1 = scr_rotate_coord(posX, posY-6,posX,posY, tangle);
-var c2 = scr_rotate_coord(posX, posY+6,posX,posY, tangle);
-var c3 = scr_rotate_coord(posX+12, posY,posX,posY, tangle);
+var c1 = scr_rotate_coord(posX, posY-8,posX,posY, tangle);
+var c2 = scr_rotate_coord(posX, posY+8,posX,posY, tangle);
+var c3 = scr_rotate_coord(posX+16, posY,posX,posY, tangle);
 
 draw_triangle(c1[0], c1[1], c2[0], c2[1], c3[0], c3[1], false);
 

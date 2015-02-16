@@ -6,7 +6,7 @@ Los logic challenge son unos ejercicios de análisis que me he propuesto hacer a
 
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/GWBu5yDql6E/0.jpg)](http://www.youtube.com/watch?v=GWBu5yDql6E)
 
-En este primer logic challenge quiero empezar fuerte y me he propuesto estudiar el juego Hexagon del desarrollador Terry Cavanagh. Este juego lo programó en un sólo un día a principios de 2012 y le sirvió como prototipo para crear el famoso Super Hexagon.
+En este primer logic challenge quiero empezar fuerte y me he propuesto estudiar el juego Hexagon del desarrollador Terry Cavanagh. Este juego lo programó a principios de 2012 y le sirvió como prototipo para crear el famoso Super Hexagon.
 
 A parte de la dificultad que tiene, lo primero que se te viene a la cabeza es que es geométricamente perfecto y que debido al tempo de la música y los efectos de zoom da una sensación perfecta de equilibrio con la música, algo que lo hace tremendamente adictivo.
 
@@ -794,7 +794,7 @@ Sin duda lo más divertido del juego es que se puede lograr una sincronía perfe
 
 El juego original utiliza una mezcla de música 8-bits con dubstep pero no puedo utilizarla porque está licenciada bajo costes de reutilización. Alternativamente hay muchisimos autores que ofrecen su música con licencias creative commons y dejan que las podamos reutilizar citando la fuente.
 
-La canción que he descargado para este Logic Challenge es de [teknoaxe]() y se llama [Beat Timed Grime Remastered](), la cual deja utilizar bajo Licencia Atribución de Creative Commons (reutilización permitida).
+La canción que he descargado para este Logic Challenge es de [teknoaxe](https://www.youtube.com/user/teknoaxe) y se llama [Beat Timed Grime Remastered](https://www.youtube.com/watch?v=ptQcEe30JEs), la cual deja utilizar bajo Licencia Atribución de Creative Commons (reutilización permitida).
 
 Para introducir la música en el juego es tan sencillo como añadir un sonido, seleccionar el fichero mp3, bajarle un poco la calidad y en el objeto controller, añadir dos eventos; room start y room end iniciando y parando el fichero de audio.
 
@@ -802,5 +802,127 @@ Para introducir la música en el juego es tan sencillo como añadir un sonido, s
 
 El resultado ya es genial y aún nos faltan los últimos detalles. ¡Gracias por la música mestro! :)
 
+### Mejorando las ráfagas
 
+Todo muy bonito pero hay un problema en el código, y es que en ocasiones aparece una ráfaga de 6 trapecios imposible de esquivar... y cuando se encuentran este tipo de problemas significa que hay mejores formas de hacerlo. 
 
+El caso es que después de pensar un rato he ideado una forma de incrementar mucho la jubalidad y acabar con ese bug que os comentaba.
+
+Se trata de crear pre-plantillas de las ráfagas, dependiendo si tienen 2, 3, 4 o 5 trapecios, cada una con una forma distinta.
+
+Para hacerme una idea he creado una imagen ilustrativa de las posibilidades:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img20.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img20.jpg)
+
+Así que sin contar la primera he ideado 4 formas de crear las ráfagas y lo que haré es que mi script burst elija de forma aleatoria cuáles crear. Además he añadido una quinta similar a la primera forma que varía la altura de los trapecios y la decrementa 5 puntos en cada nuevo trapecio.
+
+```javascript
+// Creado por Héctor Costa Guzmán
+
+// Script burst: Crea una ráfaga de trapecios aleatoria
+
+var rand = round(random(4));
+var nrand = round(random(5)); // 0 al 6
+
+switch(rand)
+{
+    case 0:
+        // rand = 0 , 1 camino
+        if (nrand > 3) nrand -= 4;
+    
+        for (var i=0;i<6;i++)
+        {   
+            if (nrand != i)
+            {
+        
+                trapezoid = instance_create(0, 0, obj_trapezoid);
+                with(trapezoid)
+                {
+                    angle = i * 60;  
+                }
+            } 
+        }
+        
+        break;
+        
+    case 1:
+        // rand = 1 , 2 caminos v1
+        if (nrand > 2) nrand-=3;
+    
+        for (var i=0;i<6;i++)
+        {   
+            if (nrand != i && nrand+3 != i)
+            {
+                trapezoid = instance_create(0, 0, obj_trapezoid);
+                with(trapezoid)
+                {
+                    angle = i * 60; 
+                }
+            }
+        }
+        
+        break;
+        
+    case 2:
+        // rand = 2 , 2 caminos v2
+        if (nrand > 2) nrand-=2;
+        
+        for (var i=0;i<6;i++)
+        {   
+            if (nrand != i && nrand+2 != i)
+            {
+                trapezoid = instance_create(0, 0, obj_trapezoid);
+                with(trapezoid)
+                {
+                    angle = i * 60; 
+                }
+            }
+        }
+        
+        break;
+        
+    case 3:
+        // rand = 3 , 3 caminos
+        if (nrand > 2) nrand-=4;
+        
+        for (var i=0;i<6;i++)
+        {   
+            if (nrand != i && nrand+2 != i && nrand+4 != i) 
+            {
+                trapezoid = instance_create(0, 0, obj_trapezoid);
+                with(trapezoid)
+                {
+                    angle = i * 60; 
+                }
+            }
+            
+        }
+        
+        break;
+        
+    default:
+        // rand = 0 , 1 camino
+        if (nrand > 3) nrand -= 4;
+        
+        var resize = false;        
+        if (round(random(2) == 0)) resize = true;
+    
+        for (var i=0;i<6;i++)
+        {   
+            if (nrand != i)
+            {
+                trapezoid = instance_create(0, 0, obj_trapezoid);
+                with(trapezoid)
+                {
+                    angle = i * 60; 
+                    height = 77 - (i*7);   
+                }
+            }
+        }
+
+        break;
+        
+}
+```
+
+Evidentemente el juego original mezcla muchos más conceptos, como por ejemplo la velocidad de las ráfagas y además tiene en cuenta la música para generar los caminos que van saliendo por pantalla. Yo no quiero llegar tan lejos y con unos pocos ajustes dejaré por zancado este Logic Challenge :)

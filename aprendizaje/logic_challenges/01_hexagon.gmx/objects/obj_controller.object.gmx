@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.spd = 7.5;
+            <string>global.spd = 7;
 global.distance = 600;
 global.height = 35;
 global.angle = 0;
@@ -132,7 +132,7 @@ if (burst)
 {
     scr_burst();
     burst = false;
-    alarm[0] = 30;
+    alarm[0] = 40;
 }
 </string>
           </argument>

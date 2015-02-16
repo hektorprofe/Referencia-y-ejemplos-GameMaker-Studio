@@ -14,11 +14,11 @@
     <option_android_amazon_iap>0</option_android_amazon_iap>
     <option_android_apk_expansion>0</option_android_apk_expansion>
     <option_android_arch_armv5>True</option_android_arch_armv5>
-    <option_android_arch_armv7>True</option_android_arch_armv7>
-    <option_android_arch_mips>True</option_android_arch_mips>
+    <option_android_arch_armv7>False</option_android_arch_armv7>
+    <option_android_arch_mips>False</option_android_arch_mips>
     <option_android_arch_mipsr2>false</option_android_arch_mipsr2>
     <option_android_arch_mipsr2sf>false</option_android_arch_mipsr2sf>
-    <option_android_arch_x86>True</option_android_arch_x86>
+    <option_android_arch_x86>False</option_android_arch_x86>
     <option_android_build_version>0</option_android_build_version>
     <option_android_color_depth>0</option_android_color_depth>
     <option_android_display_name>hexagonproject</option_android_display_name>
@@ -29,7 +29,7 @@
     <option_android_google_play_id></option_android_google_play_id>
     <option_android_google_tracking_id></option_android_google_tracking_id>
     <option_android_iap_suppress_toast>false</option_android_iap_suppress_toast>
-    <option_android_icade_support>-1</option_android_icade_support>
+    <option_android_icade_support>0</option_android_icade_support>
     <option_android_icon_hdpi>Configs\Default\android\icons\icon_hdpi.png</option_android_icon_hdpi>
     <option_android_icon_ldpi>Configs\Default\android\icons\icon_ldpi.png</option_android_icon_ldpi>
     <option_android_icon_mdpi>Configs\Default\android\icons\icon_mdpi.png</option_android_icon_mdpi>
@@ -43,7 +43,7 @@
     <option_android_major_version>1</option_android_major_version>
     <option_android_minor_version>0</option_android_minor_version>
     <option_android_orient_landscape>True</option_android_orient_landscape>
-    <option_android_orient_landscape_flipped>False</option_android_orient_landscape_flipped>
+    <option_android_orient_landscape_flipped>True</option_android_orient_landscape_flipped>
     <option_android_orient_portrait>False</option_android_orient_portrait>
     <option_android_orient_portrait_flipped>False</option_android_orient_portrait_flipped>
     <option_android_orientation>2</option_android_orientation>
