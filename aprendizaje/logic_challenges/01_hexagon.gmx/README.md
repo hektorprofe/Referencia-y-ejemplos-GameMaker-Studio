@@ -1032,6 +1032,7 @@ green=color_get_green(col)
 blue=color_get_blue(col)
 ```
 
+```javascript
 /* RGB to HSV
 arg0: Red
 arg1: Green
