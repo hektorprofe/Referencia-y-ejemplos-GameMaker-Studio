@@ -27,8 +27,8 @@
             <kind>1</kind>
             <string>// Triángulos de fondo
 var size = 800;
-var firstColor = make_color_rgb(115, 25, 25);
-var secondColor = make_color_rgb(75, 15, 15);
+var firstColor = global.bg_color_1;
+var secondColor = global.bg_color_2;
 var currentColor = firstColor;
 
 for(var i = 0; i &lt; 360; i += 360 / 6) {

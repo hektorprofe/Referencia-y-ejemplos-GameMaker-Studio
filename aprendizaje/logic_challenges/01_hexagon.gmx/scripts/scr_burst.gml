@@ -24,7 +24,6 @@ switch(rand)
                     angle = i * 60;  
                 }
             
-            
             }
             
         }
@@ -52,6 +51,30 @@ switch(rand)
         break;
         
     case 2:
+    
+        // rand = 0 , 1 camino (sino es muy facil)
+        if (nrand > 3) nrand -= 4;
+        //show_debug_message("CASE 0: nrand: " +string(nrand) + " rand: " + string(rand));
+    
+        for (var i=0;i<6;i++)
+        {   
+            if (nrand != i)
+            {
+        
+                trapezoid = instance_create(0, 0, obj_trapezoid);
+                with(trapezoid)
+                {
+                    angle = i * 60;  
+                }
+            
+            }
+            
+        }
+        
+        break;
+        
+        /*
+        
         // rand = 2 , 2 caminos v2
         if (nrand > 2) nrand-=2;
         
@@ -69,6 +92,8 @@ switch(rand)
         }
         
         break;
+        
+        */
         
     case 3:
         // rand = 3 , 3 caminos

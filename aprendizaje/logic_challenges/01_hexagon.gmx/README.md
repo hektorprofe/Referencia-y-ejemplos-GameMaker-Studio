@@ -1045,10 +1045,10 @@ val=color_get_value(col)
 ```
 
 La cuestión es si generar colores aleatorios o partir de una paleta previa... Supongo que es mejor que prepare yo mismo unos cuantos colores de base. Por ahora iré a lo fácil (valores encontrados en la wikipedia):
-* Rojo: 230-0-38
-* Naranja: 230-95-0
-* Verde: 0-145-80
-* Azul:  0-112-184
+* Rojo: 215-35-35
+* Naranja: 215-145-35
+* Verde: 35-215-35
+* Azul:  35-145-215
 
 Iré alternando estos 5 colores aleatoriamente cada vez que cambiamos de dirección, no sé como quedará pero me la voy a jugar.
 
@@ -1095,7 +1095,7 @@ var blue = color_get_blue(hsv);
 return make_color_rgb(red,green,blue);
 ```
 
-Para utilizarlo básicamente lo que haré es esbalecer unos colores de inicio en el create del controlador y alternar los colores en el alarm 1 (al cambiar la rotación), asegurándome que siempre se devuelva uno nuevo.
+Para utilizarlo básicamente lo que haré es establecer unos colores de inicio en el create del controlador y alternar los colores en el alarm 1 (al cambiar la rotación), asegurándome que siempre se devuelva uno nuevo.
 
 ```javascript
 // obj_controller: Create
@@ -1115,3 +1115,127 @@ global.bg_color_2 = scr_darken_color(global.color, 50);
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img22.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img22.jpg)
 
+### Últimos detalles: Pantalla inicial y récords
+
+Lo más fácil es crear una pantalla inicial con unos créditos. Lo hago con una nueva room y añadiendo un objeto home que al hacer clic vaya a la siguiente room.
+
+```javascript
+// obj_home: Draw
+draw_set_font(fnt_home);
+draw_set_halign(fa_center);
+draw_set_color(c_white);
+
+draw_text(room_width/2, 50, "The Hexagon Clone");
+
+draw_set_font(fnt_credits);
+draw_text(room_width/2, 100, "This game is created with learning purposes");
+
+draw_set_color(c_red);
+draw_text(room_width/2, 200, "Tap to Start Playing");
+
+draw_set_color(c_white);
+draw_text(room_width/2, 275, "Created by: Hector Costa Guzmán");
+draw_text(room_width/2, 315, "http://hcosta.info");
+
+draw_text(room_width/2, 375, "Music by: teknoaxe");
+draw_text(room_width/2, 415, "https://www.youtube.com/user/teknoaxe");
+
+draw_text(room_width/2, 475, "Original game by Terry Cavanagh");
+draw_text(room_width/2, 515, "http://terrycavanaghgames.com/");
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img23.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img23.jpg)
+
+Por último voy a añadir un poco de persistencia al juego para almacenar el mejor récord del jugador.
+
+Lo haré fácilmente almacenando el tiempo en que el jugador pierde en un fichero ini. Necesitaré leer ese fichero si existe al iniciar el juego para establecer el record y también escribir encima si debo modificarlo.
+
+Por tanto me creo dos scripts, load y save.
+
+```javascript
+// scr_load(): Carga el record en memoria
+var file;
+file = 'savegame'+'.ini';
+if file_exists(file) then
+{
+    ini_open(file);
+    
+    global.record[0] = ini_read_real("Record", "secs", 0);
+    global.record[1] = ini_read_real("Record", "msecs", 0);
+    
+    ini_close();
+}
+```
+
+```javascript
+// scr_save(): Guarda el record en memoria
+// argument0 = secs
+// argument1 = msecs
+var file;
+file = 'savegame'+'.ini'
+ini_open(file);
+
+ini_write_real("Record", "secs", argument0);
+ini_write_real("Record", "msecs", argument1);
+
+ini_close();
+```
+
+Para utilizarlo cargaré el récord en memoria al iniciar el juego:
+
+```javascript
+// obj_home: Create
+file = 'savegame'+'.ini' 
+if file_exists(file) scr_load() 
+else 
+{
+    scr_save(0,0) // creo una puntuación inicial
+    scr_load()
+}
+```
+
+Luego en el objeto gui que maneja el tiempo añado dos eventos, room start y room end:
+
+```javascript
+// obj_gui: Room Start
+// Establecemos el record
+record_secs = "0";
+record_msecs = "0";
+
+show_debug_message(global.record[0]);
+show_debug_message(global.record[1]);
+
+if (global.record[0] < 10) record_secs = record_secs + string(round(global.record[0]));
+else record_secs = string(global.record[0]);
+
+if (global.record[1] < 10) record_msecs = record_msecs + string(round(global.record[1]));
+else record_msecs = string(round(global.record[1]));
+```
+
+```javascript
+// obj_gui: Room End
+// Guardamos el record si es mejor que el último
+var save = false;
+if (global.record[0] < timer_sec) save = true;
+if (global.record[0] == timer_sec && global.record[1] < timer_msec) save = true;
+
+if save
+{
+    // Lo ponemos en global
+    global.record[0] = timer_sec;
+    global.record[1] = timer_msec;
+    
+    // Y en el fichero
+    scr_save(timer_sec, timer_msec);
+}
+```
+Luego en el draw gui simplemente lo mostramos en una esquina:
+
+```javascript
+// obj_gui: Draw GUI
+draw_text(room_width-25, 15, "BEST:  " + record_secs + ":" + record_msecs);
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img24.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/01_hexagon.gmx/docs/img24.jpg)
+
+Y con esto dejo mi primer Logic Challenge finalizado después de una intensa semana :) 

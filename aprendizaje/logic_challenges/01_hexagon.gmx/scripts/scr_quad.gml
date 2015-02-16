@@ -1,4 +1,4 @@
-// Creado por Héctor Costa Guzmán
+ // Creado por Héctor Costa Guzmán
 
 // Script trapecio: Dibuja un trapecio a partir
 // de cuatro coordenadas usando primitivas

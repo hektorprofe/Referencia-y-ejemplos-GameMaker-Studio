@@ -17,15 +17,27 @@
     <script>scripts\scr_rotate_coord.gml</script>
     <script>scripts\scr_quad.gml</script>
     <script>scripts\scr_burst.gml</script>
+    <script>scripts\scr_rand_color.gml</script>
+    <script>scripts\scr_darken_color.gml</script>
+    <script>scripts\scr_save.gml</script>
+    <script>scripts\scr_load.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_timer</font>
+    <font>fonts\fnt_home</font>
+    <font>fonts\fnt_credits</font>
+  </fonts>
   <objects name="objects">
     <object>objects\obj_controller</object>
     <object>objects\obj_trapezoid</object>
     <object>objects\obj_player</object>
     <object>objects\obj_zoom</object>
     <object>objects\obj_background</object>
+    <object>objects\obj_gui</object>
+    <object>objects\obj_home</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_home</room>
     <room>rooms\rm_game</room>
   </rooms>
   <help>

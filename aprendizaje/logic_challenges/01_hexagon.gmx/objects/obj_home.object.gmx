@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>10</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,13 +25,32 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>angle = 0;
-distance = global.distance;
-height = global.height;
-spd = global.spd;
+            <string>file = 'savegame'+'.ini' 
+if file_exists(file) scr_load() 
+else 
+{
+    scr_save(0,0) 
+    scr_load()
+}
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="50">
+      <action>
+        <libid>1</libid>
+        <id>222</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_next_room</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="8" enumb="0">
@@ -51,42 +70,28 @@ spd = global.spd;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Draw over others
-
-var offset_x = room_width/2;
-var offset_y = room_height/2;
-
-var x1 = offset_x + cos(degtorad(angle+global.angle)) * distance;
-var y1 = offset_y + sin(degtorad(angle+global.angle)) * distance;
-
-var x2 = offset_x + cos(degtorad(angle+global.angle + (360 / 6))) * distance;
-var y2 = offset_y + sin(degtorad(angle+global.angle + (360 / 6))) * distance;
-
-var x3 = offset_x + cos(degtorad(angle+global.angle + (360 / 6))) * (distance + height);
-var y3 = offset_y + sin(degtorad(angle+global.angle + (360 / 6))) * (distance + height);
-
-var x4 = offset_x + cos(degtorad(angle+global.angle)) * (distance + height);
-var y4 = offset_y + sin(degtorad(angle+global.angle)) * (distance + height);
-
-scr_quad(x1, y1, x2, y2, x3, y3, x4, y4, global.color);
-
-// Detectamos colisiones, sólo múltiplos de 60
-var p_angle = floor(obj_player.angle / 60) * 60;
-var c_angle = floor(angle / 60) * 60;
-
-if (p_angle &lt; 0 ) p_angle = p_angle + 360; // si es negativo
-
-if(distance &lt;= 80 &amp;&amp; distance &gt;= 70) {
-    if (c_angle == p_angle) room_restart();
-}
-
-//draw_text(50,25,string(c_angle));
-//draw_text(50,75,string(p_angle));
+            <string>draw_set_font(fnt_home);
+draw_set_halign(fa_center);
+draw_set_color(c_white);
+draw_text(room_width/2, 50, "The Hexagon Clone");
 
 
-// Restamos spd de la distancia
-distance -= global.spd;
-if (distance &lt; 1) instance_destroy();
+draw_set_font(fnt_credits);
+
+draw_text(room_width/2, 100, "This game is created with learning purposes");
+
+draw_set_color(c_red);
+draw_text(room_width/2, 200, "Tap to Start Playing");
+
+draw_set_color(c_white);
+draw_text(room_width/2, 275, "Created by: Hector Costa Guzmán");
+draw_text(room_width/2, 315, "http://hcosta.info");
+
+draw_text(room_width/2, 375, "Music by: teknoaxe");
+draw_text(room_width/2, 415, "https://www.youtube.com/user/teknoaxe");
+
+draw_text(room_width/2, 475, "Original game by Terry Cavanagh");
+draw_text(room_width/2, 515, "http://terrycavanaghgames.com/");
 
 </string>
           </argument>
