@@ -22,7 +22,7 @@ Ya que este juego se basa en una rejilla de cuadros, creo que lo plantearé ente
 
 Empezaré creando un sprite con bloques 32*32 de todos los colores que forman las diferentes formas, incluyendo las paredes:
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img1.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img2.jpg)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img2.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img2.jpg)
 
 La idea es que la rejilla tenga 21 filas y 12 columnas, dejando el margen izquierdo, derecho e inferior para crear unas paredes, tal como muestro en la siguiente imagen:
 
