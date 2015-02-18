@@ -40,7 +40,7 @@ Como tendremos un juego totalmente guardado en una grid, dibujarlo en el evento 
 
 Y finalmente para simular la rotación crearé una variable llamada angle con valores 0,1,2,3 que a partir de un switch determinará la matriz a aplicar para cada rotación. Evidentemente antes de confirmar la rotación se comprobará que haya espacio en la grid para rotar.
 
-### El tablero
+### El objeto controlador (tablero)
 
 ```javascript
 ///Obj_controller: Create
@@ -82,3 +82,123 @@ for (var i=0;i<ds_grid_width(global.tablero);i++)
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img3.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img3.jpg)
 
+
+### El objeto figura
+Voy a empezar probando de crear un cuadrado 2x2.
+
+```javascript
+///Obj_figure: Create
+show_debug_message("Created");
+
+// Determinar el tipo de forma
+f_type = 0;
+f_angle = 0;
+f_grid = noone;
+offset_i = 0;
+offset_j = 3;
+destroy = false;
+
+f_grid = ds_grid_create(2,2);
+ds_grid_clear(f_grid, -1);
+
+// Cuadrado 2x2
+f_grid[#0,0] = 1;
+f_grid[#1,0] = 1;
+f_grid[#0,1] = 1;
+f_grid[#1,1] = 1;
+
+// Iniciamos el movimiento
+alarm[0] = room_speed;
+```
+
+```javascript
+///Obj_figure: Alarm 0
+offset_j += 1; // movemos una posición abajo la figura
+alarm[0] = room_speed/50; // esto es para que caiga muy rápido
+```
+
+```javascript
+///Obj_figure: Step
+/// Comprobar si debajo en el global grid hay algun elemento diferente a -1
+
+// Detección de movimiento horizntal
+if keyboard_check_pressed(vk_right) 
+{
+    // form_position_i + spawn_point_i + min_i < max_i + form_width
+    if (offset_i + round(10/(ds_grid_width(f_grid))) + global.min_i < global.max_i-ds_grid_width(f_grid)) offset_i+=1;
+}
+if keyboard_check_pressed(vk_left)
+{
+    // form_position_i + spawn_point_i > min_i
+    if (offset_i + round(10/(ds_grid_width(f_grid))) > global.min_i) offset_i-=1;
+}
+//if (offset_i > global.max_i-1) offset_i = global.max_i;
+
+// Detección del bloque
+for (var i=0;i<ds_grid_width(f_grid);i++)
+{
+    for (var j=0;j<ds_grid_height(f_grid);j++)
+    {
+    
+        var new_i = i + offset_i+round(10/(ds_grid_width(f_grid)))+global.min_i;
+        var new_j = j + offset_j + 1; //+1 por debajo
+        
+        // Si por debajo en el tablero hay algo
+        if (global.tablero[#new_i,new_j] > -1) 
+        {
+            // Y si y solo si en esta posicion del grid hay algo
+            if (f_grid[#i,j] > -1) 
+            {
+                destroy = true;
+            }
+        }
+    }
+}
+
+// Si hay colision dibujaremos eso en el tablero
+if (destroy)
+{
+    for (var i=0;i<ds_grid_width(f_grid);i++)
+    {
+        for (var j=0;j<ds_grid_height(f_grid);j++)
+        {
+            show_debug_message("CONTADOR");
+    
+            var new_i = i + offset_i+round(10/(ds_grid_width(f_grid)))+global.min_i;
+            var new_j = j + offset_j;
+            
+            if (f_grid[#i,j] > -1) 
+            {
+                global.tablero[#new_i,new_j] = f_grid[#i,j];
+                destroy = true;
+            }
+        }
+    }
+    global.new_form = true;
+    // si no nos hemos movido
+    if(offset_j==3) game_restart();
+    instance_destroy();
+}
+```
+
+```javascript
+///Obj_figure: Draw
+for (var i=0;i<ds_grid_width(f_grid);i++)
+{
+    for (var j=0;j<ds_grid_height(f_grid);j++)
+    {
+    
+        var new_i = i + offset_i+round(10/(ds_grid_width(f_grid)))+global.min_i;
+        var new_j = j + offset_j;
+        
+        if (f_grid[#i,j] > -1) 
+        {
+            show_debug_message(string(f_grid[#i,j]));
+            draw_sprite(spr_block,f_grid[#i,j],32*new_i+16,32*new_j+16);
+        }
+        show_debug_message("END");
+    }
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img4.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img4.jpg)
