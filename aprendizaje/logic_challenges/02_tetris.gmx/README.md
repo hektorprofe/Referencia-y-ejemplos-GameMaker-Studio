@@ -40,4 +40,45 @@ Como tendremos un juego totalmente guardado en una grid, dibujarlo en el evento 
 
 Y finalmente para simular la rotación crearé una variable llamada angle con valores 0,1,2,3 que a partir de un switch determinará la matriz a aplicar para cada rotación. Evidentemente antes de confirmar la rotación se comprobará que haya espacio en la grid para rotar.
 
-### Creación e inicialización del tablero
+### El tablero
+
+```javascript
+///Obj_controller: Create
+global.tablero = ds_grid_create(room_width / 32, room_height / 32);
+ds_grid_clear(global.tablero, -1);
+
+// Inicialización de las paredes
+global.min_i = 1;
+global.max_i = 12;
+global.min_j = 2;
+global.max_j = 22;
+
+for (var i=0;i<ds_grid_width(global.tablero);i++)
+{
+    for (var j=0;j<ds_grid_height(global.tablero);j++)
+    {
+        // pared izquierda
+        if (i == global.min_i && j > global.min_j && j < global.max_j) global.tablero[#i,j] = 0;   
+        // pared derecha
+        if (i == global.max_i && j > global.min_j && j < global.max_j) global.tablero[#i,j] = 0;   
+        // pared inferior
+        if (j == global.max_j && i >= global.min_i && i <= global.max_i) global.tablero[#i,j] = 0; 
+    }
+}
+```
+
+```javascript
+///Obj_controller: Draw
+draw_clear(c_black);
+
+for (var i=0;i<ds_grid_width(global.tablero);i++)
+{
+    for (var j=0;j<ds_grid_height(global.tablero);j++)
+    {
+        if (global.tablero[#i,j] > -1) draw_sprite(spr_block,global.tablero[#i,j],32*i+16,32*j+16);
+    }
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img3.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img3.jpg)
+
