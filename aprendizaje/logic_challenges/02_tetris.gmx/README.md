@@ -202,3 +202,223 @@ for (var i=0;i<ds_grid_width(f_grid);i++)
 ```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img4.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img4.jpg)
+
+### Generar formas diferentes aleatoriamente
+
+```javascript
+///Obj_figure: Create
+// Determinar el tipo de forma
+randomize();
+f_type = irandom(6); // generamos un numero aleatorio
+f_grid = noone;
+offset_i = 0;
+offset_j = 3;
+destroy = false;
+switch f_type
+{
+    case 0:
+
+        /// FIGURE 1  [][]
+        ///           [][]
+        f_grid = ds_grid_create(2,2);
+        ds_grid_clear(f_grid, -1);
+        f_grid[#0,0] = 1;
+        f_grid[#1,0] = 1;
+        f_grid[#0,1] = 1;
+        f_grid[#1,1] = 1;
+        break;
+        
+    case 1:
+
+        /// FIGURE 2  []
+        ///           [][][]
+        f_grid = ds_grid_create(3,2);
+        ds_grid_clear(f_grid, -1);
+        f_grid[#0,0] = 7;
+        f_grid[#0,1] = 7;
+        f_grid[#1,1] = 7;
+        f_grid[#2,1] = 7;
+        offset_i = 1;
+        break;
+        
+    case 2:
+    
+        /// FIGURE 3      []
+        ///           [][][]
+        f_grid = ds_grid_create(3,2);
+        ds_grid_clear(f_grid, -1);
+        f_grid[#1,0] = 6;
+        f_grid[#0,1] = 6;
+        f_grid[#1,1] = 6;
+        f_grid[#2,1] = 6;
+        offset_i = 2;
+        break;
+        
+    case 3:
+
+        /// FIGURE 4    []  
+        ///           [][][]
+        f_grid = ds_grid_create(3,2);
+        ds_grid_clear(f_grid, -1);
+        f_grid[#2,0] = 5;
+        f_grid[#0,1] = 5;
+        f_grid[#1,1] = 5;
+        f_grid[#2,1] = 5;
+        offset_i = 1;
+        break;
+        
+    case 4:
+
+        /// FIGURE 5      
+        ///           [][][][]
+        f_grid = ds_grid_create(4,1);
+        ds_grid_clear(f_grid, -1);
+        f_grid[#0,0] = 2;
+        f_grid[#1,0] = 2;
+        f_grid[#2,0] = 2;
+        f_grid[#3,0] = 2;
+        offset_i = 2;
+        break;
+        
+    case 5:
+
+        /// FIGURE 6    []  
+        ///           [][]
+        ///           []
+        f_grid = ds_grid_create(2,3);
+        ds_grid_clear(f_grid, -1);
+        f_grid[#1,0] = 4;
+        f_grid[#0,1] = 4;
+        f_grid[#1,1] = 4;
+        f_grid[#0,2] = 4;
+        break;
+        
+    case 6:
+
+        /// FIGURE 7  []  
+        ///           [][]
+        ///             []
+        f_grid = ds_grid_create(2,3);
+        ds_grid_clear(f_grid, -1);
+        f_grid[#0,0] = 3;
+        f_grid[#0,1] = 3;
+        f_grid[#1,1] = 3;
+        f_grid[#1,2] = 3;
+        break;
+        
+}
+
+// Iniciamos el movimiento
+alarm[0] = room_speed;
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img5.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img5.jpg)
+
+### Botón de desplazamiento instantáneo
+
+```javascript
+///Obj_figure: Step
+// Comprobamos el movimiento horizontal
+var x_move = 0;
+var h_move = true;
+var r_times = 1;
+
+// Detección de movimiento horizntal contra las paredes
+if keyboard_check_pressed(vk_right) 
+{
+    // form_position_i + spawn_point_i + min_i < max_i + form_width
+    if (offset_i + round(10/(ds_grid_width(f_grid))) + global.min_i < global.max_i-ds_grid_width(f_grid))
+    {
+        //offset_i+=1;
+        x_move=1;
+    }
+}
+
+if keyboard_check_pressed(vk_left)
+{
+    // form_position_i + spawn_point_i > min_i
+    if (offset_i + round(10/(ds_grid_width(f_grid))) > global.min_i)
+    {
+        //offset_i-=1;
+        x_move=-1;
+    }
+}
+
+if keyboard_check_pressed(vk_down)
+{
+    r_times = 20;
+}
+
+
+// Repeat X times
+for(var k=0;k<r_times;k++)
+{
+    /// Comprobaremos si hay bloques a los lados (si hay movimiento) o debajo
+    for (var i=0;i<ds_grid_width(f_grid);i++)
+    {
+        for (var j=0;j<ds_grid_height(f_grid);j++)
+        {
+            
+            var new_i = i + offset_i+round(10/(ds_grid_width(f_grid)))+global.min_i;
+            var new_j = j + offset_j + 1; //+1 por debajo
+             
+            // Si en la nueva posición  horizontal hay algo
+            if (global.tablero[#new_i+x_move,new_j] > -1)
+            {
+                // Y si y solo si en esta posicion de la forma hay algo
+                if (f_grid[#i,j] > -1) 
+                {
+                    // Entonces no podemos movernos
+                    h_move = false;
+                }
+            }
+            
+            // Si por debajo en el tablero hay algo
+            if (global.tablero[#new_i,new_j] > -1) 
+            {
+                // Y si y solo si en esta posicion del grid hay algo
+                if (f_grid[#i,j] > -1) 
+                {
+                    // Marcamos para destruir
+                    destroy = true;
+                }
+            }
+        }
+    }
+    
+    // Si podemos movernos horizontalmente lo hacemo
+    if(h_move) offset_i+=x_move;
+    
+    // Si hay colision dibujaremos la forma en el tablero y la borraremos
+    if (destroy)
+    {
+        for (var i=0;i<ds_grid_width(f_grid);i++)
+        {
+            for (var j=0;j<ds_grid_height(f_grid);j++)
+            {
+                //show_debug_message("CONTADOR");
+        
+                var new_i = i + offset_i+round(10/(ds_grid_width(f_grid)))+global.min_i;
+                var new_j = j + offset_j;
+                
+                //show_debug_message("Check if destroy:" + string(f_grid[#i,j] > -1));
+                if (f_grid[#i,j] > -1) 
+                {
+                    global.tablero[#new_i,new_j] = f_grid[#i,j];
+                    destroy = true;
+                    r_times = 0; // Aunque luego rompamos la instancia se acaban de repetir, por eso hay que sacaros ya
+                }
+            }
+        }
+        
+        // Si no nos hemos movido
+        if(offset_j==3) game_restart();
+        
+        global.new_form = true;
+        instance_destroy();
+    }
+    
+    if (r_times>1) offset_j+=1;
+    
+}
+```
