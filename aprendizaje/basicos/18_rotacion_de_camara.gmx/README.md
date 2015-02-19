@@ -8,7 +8,7 @@ Necesitamos crear un objeto rotate y añadirlo en la room. Luego podemos captura
 angle = 0;
 ```
 
-### obj_rotate(): Game End
+### obj_rotate(): Step
 ```javascript
 if (keyboard_check(vk_divide)) angle+= 1;
 else
