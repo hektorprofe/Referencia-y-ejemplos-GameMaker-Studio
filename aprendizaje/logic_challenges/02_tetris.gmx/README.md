@@ -960,7 +960,7 @@ for (var i=0;i<ds_grid_width(f_grid);i++)
 return false;
 ```
 
-La rotación entonces la haremos en el step del objeto figura.
+La rotación entonces la haremos en el step del objeto figura, además tendremos que modificar todos los offset_i por figure_offset_i + offset_i para tener en cuenta esta nueva posición horizontal en todo el evento Step.
 
 ```javascript
 /// Obj_figure: Step
