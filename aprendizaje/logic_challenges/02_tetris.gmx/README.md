@@ -481,6 +481,8 @@ for(var k=0;k<ds_list_size(completadas);k++)
 }
 ```
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img7.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img7.jpg)
+
 ### Rotar las figuras
 Sólo podemos rotar una figura si esta no tiene colisiones al rotarla. Lo que haré es sencillo. 
 
