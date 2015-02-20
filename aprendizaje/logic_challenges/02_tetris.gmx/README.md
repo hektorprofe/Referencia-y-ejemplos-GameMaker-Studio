@@ -1116,3 +1116,33 @@ for (var i=0;i<ds_grid_width(f_next_grid);i++)
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img8.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img8.jpg)
 
+### Crear un marcador
+
+```javascript
+/// Obj_controller: Create
+global.marcador = 0; // Marcador
+```
+
+```javascript
+/// Obj_controller: Draw
+draw_set_colour(c_white);
+draw_set_font(fnt_score);
+draw_set_halign(fa_right); // Dibujamos el marcador
+draw_text(room_width-48, 16, string(global.marcador));
+```
+
+```javascript
+/// Obj_controller: Step
+// Sumamos 50 puntos por fila destruida cuando sacamos la fila de la lista completadas
+global.marcador += 50;
+```
+
+```javascript
+/// Obj_figure: Step
+// Sumamos 4 puntos por cada pieza puesta correctamente
+global.marcador += 4;
+```
+
+Finalmente le pondríamos un poco de música de fondo y ya tendríamos nuestro concepto de tetris.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img9.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img9.jpg)

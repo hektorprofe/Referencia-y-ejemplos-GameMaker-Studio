@@ -42,7 +42,7 @@ if (f_type == 0)
             figure_offset_i = 0;
             break;            
             
-        case 3: // 270
+        case 3: // 270º
 
             /// FIGURE 1  [][]
             ///           [][]
@@ -307,33 +307,19 @@ if (f_type == 5)
     {
         case 0: // 0º
 
-            /// FIGURE 6    []  
-            ///           [][]
-            ///           []
-            f_grid = ds_grid_create(2,3);
+            /// FIGURE 6  [][]  
+            ///             [][]
+            f_grid = ds_grid_create(3,2);
             ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 4;
             f_grid[#1,0] = 4;
-            f_grid[#0,1] = 4;
             f_grid[#1,1] = 4;
-            f_grid[#0,2] = 4;
-            figure_offset_i = 0;
+            f_grid[#2,1] = 4;
+            figure_offset_i = 1;
             break;
             
         case 1: // 90º
 
-            /// FIGURE 6  [][]  
-            ///             [][]
-            f_grid = ds_grid_create(3,2);
-            ds_grid_clear(f_grid, -1);
-            f_grid[#0,0] = 4;
-            f_grid[#1,0] = 4;
-            f_grid[#1,1] = 4;
-            f_grid[#2,1] = 4;
-            figure_offset_i = 1;
-            break;
-            
-        case 2: // 180º
-
             /// FIGURE 6    []  
             ///           [][]
             ///           []
@@ -346,7 +332,7 @@ if (f_type == 5)
             figure_offset_i = 0;
             break;
             
-        case 3: // 270
+        case 2: // 180º
 
             /// FIGURE 6  [][]  
             ///             [][]
@@ -357,6 +343,20 @@ if (f_type == 5)
             f_grid[#1,1] = 4;
             f_grid[#2,1] = 4;
             figure_offset_i = 1;
+            break;
+            
+        case 3: // 270º
+
+            /// FIGURE 6    []  
+            ///           [][]
+            ///           []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#1,0] = 4;
+            f_grid[#0,1] = 4;
+            f_grid[#1,1] = 4;
+            f_grid[#0,2] = 4;
+            figure_offset_i = 0;
             break;
     }
 }    
@@ -365,35 +365,22 @@ if (f_type == 6)
 {
     switch f_angle
     {
+            
         case 0: // 0º
 
-            /// FIGURE 7  []  
+            /// FIGURE 7    [][]  
             ///           [][]
-            ///             []
-            f_grid = ds_grid_create(2,3);
+            f_grid = ds_grid_create(3,2);
             ds_grid_clear(f_grid, -1);
-            f_grid[#0,0] = 3;
+            f_grid[#1,0] = 3;
+            f_grid[#2,0] = 3;
             f_grid[#0,1] = 3;
             f_grid[#1,1] = 3;
-            f_grid[#1,2] = 3;
-            figure_offset_i = 0;
+            figure_offset_i = 1;
             break;
             
         case 1: // 90º
 
-            /// FIGURE 7    [][]  
-            ///           [][]
-            f_grid = ds_grid_create(3,2);
-            ds_grid_clear(f_grid, -1);
-            f_grid[#1,0] = 3;
-            f_grid[#2,0] = 3;
-            f_grid[#0,1] = 3;
-            f_grid[#1,1] = 3;
-            figure_offset_i = 1;
-            break;
-            
-        case 2: // 180º
-
             /// FIGURE 7  []  
             ///           [][]
             ///             []
@@ -406,7 +393,7 @@ if (f_type == 6)
             figure_offset_i = 0;
             break;
             
-        case 3: // 270
+        case 2: // 180º
 
             /// FIGURE 7    [][]  
             ///           [][]
@@ -417,6 +404,20 @@ if (f_type == 6)
             f_grid[#0,1] = 3;
             f_grid[#1,1] = 3;
             figure_offset_i = 1;
+            break;
+            
+        case 3: // 270º
+
+            /// FIGURE 7  []  
+            ///           [][]
+            ///             []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 3;
+            f_grid[#0,1] = 3;
+            f_grid[#1,1] = 3;
+            f_grid[#1,2] = 3;
+            figure_offset_i = 0;
             break;
     }  
 } 

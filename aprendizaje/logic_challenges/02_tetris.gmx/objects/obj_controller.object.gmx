@@ -31,11 +31,17 @@ global.new_form = true;
 global.tablero = ds_grid_create(room_width / 32, room_height / 32); // 480x800, cuadros 32x32
 ds_grid_clear(global.tablero, -1);
 
+// Determinamos la siguiente figure
+global.f_next = irandom(6);
+
 // Inicialización de las paredes
 global.min_i = 1;
 global.max_i = 12;
-global.min_j = 2;
-global.max_j = 22;
+global.min_j = 3;
+global.max_j = 23;
+
+// Marcador
+global.marcador = 0;
 
 for (var i=0;i&lt;ds_grid_width(global.tablero);i++)
 {
@@ -98,7 +104,7 @@ for (var i=0;i&lt;ds_grid_width(global.tablero);i++)
             <string>// Crear una figura
 if(global.new_form) 
 {   
-    alarm[0] = room_speed;
+    alarm[0] = room_speed/3;
     global.new_form = false;
 }
 
@@ -151,6 +157,9 @@ for(var k=0;k&lt;ds_list_size(completadas);k++)
             }      
         }
     }
+    
+    // Sumamos 50 puntos por fila destruida
+    global.marcador += 50;
 }
 </string>
           </argument>
@@ -177,11 +186,12 @@ for(var k=0;k&lt;ds_list_size(completadas);k++)
             <string>/// Draw the grid
 draw_clear(c_black);
 
+
 for (var i=0;i&lt;ds_grid_width(global.tablero);i++)
 {
     for (var j=0;j&lt;ds_grid_height(global.tablero);j++)
     {
-        if (global.tablero[#i,j] &gt; -1) draw_sprite(spr_block,global.tablero[#i,j],32*i+16,32*j+16);
+        if (global.tablero[#i,j] &gt; -1) draw_sprite(spr_block,global.tablero[#i,j],32*i+16,32*j);
         
         
         // DEBUG TOOLS
@@ -190,6 +200,13 @@ for (var i=0;i&lt;ds_grid_width(global.tablero);i++)
     }
     
 }
+
+// Dibujamos el marcador
+draw_set_colour(c_white);
+draw_set_font(fnt_score);
+draw_set_halign(fa_right);
+draw_text(room_width-48, 16, string(global.marcador));
+
 </string>
           </argument>
         </arguments>

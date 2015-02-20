@@ -11,10 +11,12 @@
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\scr_check_tablero.gml</script>
     <script>scripts\scr_rotate_figure.gml</script>
     <script>scripts\scr_check_collision.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_score</font>
+  </fonts>
   <objects name="objects">
     <object>objects\obj_controller</object>
     <object>objects\obj_figure</object>
