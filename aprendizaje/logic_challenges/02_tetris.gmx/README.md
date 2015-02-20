@@ -984,6 +984,7 @@ if keyboard_check_pressed(vk_up)
         scr_rotate_figure();
     }
 }
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img6.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img6.jpg)
 
