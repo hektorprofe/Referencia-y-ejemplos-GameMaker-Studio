@@ -422,3 +422,61 @@ for(var k=0;k<r_times;k++)
     
 }
 ```
+
+### Detectar y eliminar las filas completadas
+
+```javascript
+/// Obj_controller: Step
+
+// Lista para guardar las filas completadas
+var completadas = ds_list_create();
+
+//// RECORREMOS LA GRID DE FORMA INVERSA FILAS->COLUMNAS, ACCEDEMOS CON J,I
+for (var i=0;i<ds_grid_height(global.tablero);i++)
+{
+    var bloques_por_fila = 0;
+    
+    for (var j=0;j<ds_grid_width(global.tablero);j++)
+    {
+        if (global.tablero[#j,i] > 0 ) bloques_por_fila++;
+    }
+    
+    if (bloques_por_fila == 10) ds_list_add(completadas, i);
+    
+}
+
+//// RECORREMOS LA GRID DE FORMA INVERSA FILAS->COLUMNAS, ACCEDEMOS CON J,I
+for(var k=0;k<ds_list_size(completadas);k++)
+{
+    // Sacamos una fila de la lista
+    // Primero las filas más arriba (antes introducidas en la lista)
+    var fila = ds_list_find_value(completadas, k); 
+    
+    // Buscamos la fila dentro de la grid
+    for (var i=0;i<ds_grid_height(global.tablero);i++)
+    {
+        for (var j=0;j<ds_grid_width(global.tablero);j++)
+        {
+            // Borramos toda la fila menos sus paredes
+            if(i == fila && global.tablero[#j,i] != 0 )
+            {
+                global.tablero[#j,i] = -1;
+            }
+        
+        }
+    }
+    
+    // Bajamos el valor de todos los elementos por encima de la fila borrada (menos las filas offset)
+    for (var i=fila;i>=global.min_j;i--) // Vamos de la fila hacia arriba bajando los valores
+    {
+        for (var j=0;j<ds_grid_width(global.tablero);j++)
+        {
+            if(j >= global.min_j && j <= global.min_j+10 && global.tablero[#j,i] != 0 )
+            {
+                global.tablero[#j,i] =global.tablero[#j,i-1];  
+                global.tablero[#j,i-1] = -1;
+            }      
+        }
+    }
+}
+```

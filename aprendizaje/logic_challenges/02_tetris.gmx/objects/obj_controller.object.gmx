@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>10</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,8 +25,30 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.timer = room_speed;
-alarm[0] = global.timer;
+            <string>// Declaración del tablero
+global.new_form = true;
+
+global.tablero = ds_grid_create(room_width / 32, room_height / 32); // 480x800, cuadros 32x32
+ds_grid_clear(global.tablero, -1);
+
+// Inicialización de las paredes
+global.min_i = 1;
+global.max_i = 12;
+global.min_j = 2;
+global.max_j = 22;
+
+for (var i=0;i&lt;ds_grid_width(global.tablero);i++)
+{
+    for (var j=0;j&lt;ds_grid_height(global.tablero);j++)
+    {
+        // pared izquierda
+        if (i == global.min_i &amp;&amp; j &gt; global.min_j &amp;&amp; j &lt; global.max_j) global.tablero[#i,j] = 0;   
+        // pared derecha
+        if (i == global.max_i &amp;&amp; j &gt; global.min_j &amp;&amp; j &lt; global.max_j) global.tablero[#i,j] = 0;   
+        // pared inferior
+        if (j == global.max_j &amp;&amp; i &gt;= global.min_i &amp;&amp; i &lt;= global.max_i) global.tablero[#i,j] = 0; 
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -49,9 +71,125 @@ alarm[0] = global.timer;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Create a form and the next form if is empty
+            <string>instance_create(0,0,obj_figure);
+//show_debug_message("Creating..");
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Crear una figura
+if(global.new_form) 
+{   
+    alarm[0] = room_speed;
+    global.new_form = false;
+}
 
+var completadas = ds_list_create();
 
+//// RECORREMOS LA GRID DE FORMA INVERSA FILAS-&gt;COLUMNAS, ACCEDEMOS CON J,I
+for (var i=0;i&lt;ds_grid_height(global.tablero);i++)
+{
+    var bloques_por_fila = 0;
+    
+    for (var j=0;j&lt;ds_grid_width(global.tablero);j++)
+    {
+        if (global.tablero[#j,i] &gt; 0 ) bloques_por_fila++;
+    }
+    
+    if (bloques_por_fila == 10) ds_list_add(completadas, i);
+    
+}
+
+//// RECORREMOS LA GRID DE FORMA INVERSA FILAS-&gt;COLUMNAS, ACCEDEMOS CON J,I
+for(var k=0;k&lt;ds_list_size(completadas);k++)
+{
+    // Sacamos una fila de la lista
+    // Primero las filas más arriba (antes introducidas en la lista)
+    var fila = ds_list_find_value(completadas, k); 
+    
+    // Buscamos la fila dentro de la grid
+    for (var i=0;i&lt;ds_grid_height(global.tablero);i++)
+    {
+        for (var j=0;j&lt;ds_grid_width(global.tablero);j++)
+        {
+            // Borramos toda la fila menos sus paredes
+            if(i == fila &amp;&amp; global.tablero[#j,i] != 0 )
+            {
+                global.tablero[#j,i] = -1;
+            }
+        
+        }
+    }
+    
+    // Bajamos el valor de todos los elementos por encima de la fila borrada (menos las filas offset)
+    for (var i=fila;i&gt;=global.min_j;i--) // Vamos de la fila hacia arriba bajando los valores
+    {
+        for (var j=0;j&lt;ds_grid_width(global.tablero);j++)
+        {
+            if(j &gt;= global.min_j &amp;&amp; j &lt;= global.min_j+10 &amp;&amp; global.tablero[#j,i] != 0 )
+            {
+                global.tablero[#j,i] =global.tablero[#j,i-1];  
+                global.tablero[#j,i-1] = -1;
+            }      
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw the grid
+draw_clear(c_black);
+
+for (var i=0;i&lt;ds_grid_width(global.tablero);i++)
+{
+    for (var j=0;j&lt;ds_grid_height(global.tablero);j++)
+    {
+        if (global.tablero[#i,j] &gt; -1) draw_sprite(spr_block,global.tablero[#i,j],32*i+16,32*j+16);
+        
+        
+        // DEBUG TOOLS
+        // draw_set_color(c_white);
+        // draw_text(15*i+130,15*j+5,string(global.tablero[#i,j]));
+    }
+    
+}
 </string>
           </argument>
         </arguments>
