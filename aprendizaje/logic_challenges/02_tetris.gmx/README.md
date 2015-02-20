@@ -990,3 +990,129 @@ if keyboard_check_pressed(vk_up)
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img6.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img6.jpg)
 
+### Determinar la próxima figura y mostrarla
+
+Una de las cosas que tiene Tetris es que puedes ver la próxima figura que va a salir. Para hacer esto voy a crear una variable f_next (siguiente).
+
+Al principio del juego la pondré aleatoria de 0-6 y luego en el create de la figura lo que iré haciendo es indicar que f_type es f_next y luego conseguir otro valor random para f_next, de manera que podré dibujar la figura siguiente a partir del valor de f_next.
+
+```javascript
+/// Obj_controller: Create
+global.f_next = irandom(6);
+```
+
+```javascript
+/// Obj_figure: Create
+f_type = global.f_next;
+global.f_next = irandom(6);
+f_next_grid = noone;
+
+switch global.f_next
+{
+    case 0:
+
+        /// FIGURE 1  [][]
+        ///           [][]
+        f_next_grid = ds_grid_create(2,2);
+        ds_grid_clear(f_next_grid, -1);
+        f_next_grid[#0,0] = 1;
+        f_next_grid[#1,0] = 1;
+        f_next_grid[#0,1] = 1;
+        f_next_grid[#1,1] = 1;
+        break;
+        
+    case 1:
+
+        /// FIGURE 2  []
+        ///           [][][]
+        f_next_grid = ds_grid_create(3,2);
+        ds_grid_clear(f_next_grid, -1);
+        f_next_grid[#0,0] = 7;
+        f_next_grid[#0,1] = 7;
+        f_next_grid[#1,1] = 7;
+        f_next_grid[#2,1] = 7;
+        break;
+        
+    case 2:
+    
+        /// FIGURE 3      []
+        ///           [][][]
+        f_next_grid = ds_grid_create(3,2);
+        ds_grid_clear(f_next_grid, -1);
+        f_next_grid[#2,0] = 6;
+        f_next_grid[#0,1] = 6;
+        f_next_grid[#1,1] = 6;
+        f_next_grid[#2,1] = 6;
+        break;
+        
+    case 3:
+
+        /// FIGURE 4    []  
+        ///           [][][]
+        f_next_grid = ds_grid_create(3,2);
+        ds_grid_clear(f_next_grid, -1);
+        f_next_grid[#1,0] = 5;
+        f_next_grid[#0,1] = 5;
+        f_next_grid[#1,1] = 5;
+        f_next_grid[#2,1] = 5;
+        
+        break;
+        
+    case 4:
+
+        /// FIGURE 5      
+        ///           [][][][]
+        f_next_grid = ds_grid_create(4,1);
+        ds_grid_clear(f_next_grid, -1);
+        f_next_grid[#0,0] = 2;
+        f_next_grid[#1,0] = 2;
+        f_next_grid[#2,0] = 2;
+        f_next_grid[#3,0] = 2;
+        break;
+        
+    case 5:
+
+        /// FIGURE 6  [][]  
+        ///             [][]
+        f_next_grid = ds_grid_create(3,2);
+        ds_grid_clear(f_next_grid, -1);
+        f_next_grid[#0,0] = 4;
+        f_next_grid[#1,0] = 4;
+        f_next_grid[#1,1] = 4;
+        f_next_grid[#2,1] = 4;
+        break;
+        
+    case 6:
+
+        /// FIGURE 7    [][]  
+        ///           [][]
+        f_next_grid = ds_grid_create(3,2);
+        ds_grid_clear(f_next_grid, -1);
+        f_next_grid[#1,0] = 3;
+        f_next_grid[#2,0] = 3;
+        f_next_grid[#0,1] = 3;
+        f_next_grid[#1,1] = 3;
+        break;
+        
+}
+```
+
+```javascript
+/// Obj_figure: Draw
+// Dibujamos la próxima figura en la esquina superior izquierda
+for (var i=0;i<ds_grid_width(f_next_grid);i++)
+{
+    for (var j=0;j<ds_grid_height(f_next_grid);j++)
+    {
+        
+        if (f_next_grid[#i,j] > -1) 
+        {
+            draw_sprite(spr_block,f_next_grid[#i,j],32*i+24,32*j+24);
+        }
+        //show_debug_message("END");
+    }
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img8.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img8.jpg)
+
