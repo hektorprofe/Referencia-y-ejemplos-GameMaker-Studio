@@ -480,3 +480,510 @@ for(var k=0;k<ds_list_size(completadas);k++)
     }
 }
 ```
+
+### Rotar las figuras
+Sólo podemos rotar una figura si esta no tiene colisiones al rotarla. Lo que haré es sencillo. 
+
+* Crear la grid de todas las figuras rotadas con sus 4 ángulos en un script que modificará la grid actual de la figura a partir del ángulo.
+* Detectar si queremos rotar la figura apretando algún botón.
+* Si queremos rotar, rotamos a la posición.
+* Comprobamos si no hay colisiones, lo haré en un nuevo script.
+* Si no hay colisiones dejamos la figura rotada.
+* Si hay colisiones deshacemos la rotación.
+
+Script de rotación de figura:
+
+```javascript
+// scr_rotate_figure(): A partir del f_type y el f_angle establece la nueva grid de la figura rotada
+// También se establece un offset i de figura para alinear horizontalmente la nueva figura rotada
+if (f_type == 0)
+{
+    switch f_angle
+    {
+        case 0: // 0º
+
+            /// FIGURE 1  [][]
+            ///           [][]
+            f_grid = ds_grid_create(2,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 1;
+            f_grid[#1,0] = 1;
+            f_grid[#0,1] = 1;
+            f_grid[#1,1] = 1;
+            figure_offset_i = 0;
+            break;
+            
+        case 1: // 90º
+
+            /// FIGURE 1  [][]
+            ///           [][]
+            f_grid = ds_grid_create(2,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 1;
+            f_grid[#1,0] = 1;
+            f_grid[#0,1] = 1;
+            f_grid[#1,1] = 1;
+            figure_offset_i = 0;
+            break;
+            
+        case 2: // 180º
+
+            /// FIGURE 1  [][]
+            ///           [][]
+            f_grid = ds_grid_create(2,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 1;
+            f_grid[#1,0] = 1;
+            f_grid[#0,1] = 1;
+            f_grid[#1,1] = 1;
+            figure_offset_i = 0;
+            break;            
+            
+        case 3: // 270
+
+            /// FIGURE 1  [][]
+            ///           [][]
+            f_grid = ds_grid_create(2,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 1;
+            f_grid[#1,0] = 1;
+            f_grid[#0,1] = 1;
+            f_grid[#1,1] = 1;
+            figure_offset_i = 0;
+            break;
+    }
+            
+}    
+if (f_type == 1)
+{
+    switch f_angle
+    {
+        case 0: // 0º
+
+            /// FIGURE 2  []
+            ///           [][][]
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 7;
+            f_grid[#0,1] = 7;
+            f_grid[#1,1] = 7;
+            f_grid[#2,1] = 7;
+            figure_offset_i = 1;
+            break;
+            
+        case 1: // 90º
+
+            /// FIGURE 2    []
+            ///             []
+            ///           [][]
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#1,0] = 7;
+            f_grid[#1,1] = 7;
+            f_grid[#1,2] = 7;
+            f_grid[#0,2] = 7;
+            figure_offset_i = 0;
+            break;
+            
+        case 2: // 180º
+
+            /// FIGURE 2  [][][]
+            ///               []
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 7;
+            f_grid[#1,0] = 7;
+            f_grid[#2,0] = 7;
+            f_grid[#2,1] = 7;
+            figure_offset_i = 1;
+            break;
+            
+        case 3: // 270
+
+            /// FIGURE 2  [][]
+            ///           []
+            ///           []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 7;
+            f_grid[#1,0] = 7;
+            f_grid[#0,1] = 7;
+            f_grid[#0,2] = 7;
+            figure_offset_i = 0;
+            break;
+    }
+}    
+if (f_type == 2)
+{
+    switch f_angle
+    {
+        case 0: // 0º
+
+            /// FIGURE 3      []
+            ///           [][][]
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#2,0] = 6;
+            f_grid[#0,1] = 6;
+            f_grid[#1,1] = 6;
+            f_grid[#2,1] = 6;
+            figure_offset_i = 1;
+            break
+            
+        case 1: // 90º
+
+            /// FIGURE 3  [][]
+            ///             []
+            ///             []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 6;
+            f_grid[#1,0] = 6;
+            f_grid[#1,1] = 6;
+            f_grid[#1,2] = 6;
+            figure_offset_i = 0;
+            break;
+            
+        case 2: // 180º
+
+            /// FIGURE 3  [][][]
+            ///           []
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 6;
+            f_grid[#1,0] = 6;
+            f_grid[#2,0] = 6;
+            f_grid[#0,1] = 6;
+            figure_offset_i = 1;
+            break;
+            
+        case 3: // 270
+
+            /// FIGURE 3  []   
+            ///           []
+            ///           [][]
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 6;
+            f_grid[#0,1] = 6;
+            f_grid[#0,2] = 6;
+            f_grid[#1,2] = 6;
+            figure_offset_i = 0;
+            break;
+    }
+        
+}    
+ 
+if (f_type == 3)
+{
+    switch f_angle
+    {
+        case 0: // 0º
+
+            /// FIGURE 4    []  
+            ///           [][][]
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#1,0] = 5;
+            f_grid[#0,1] = 5;
+            f_grid[#1,1] = 5;
+            f_grid[#2,1] = 5;
+            figure_offset_i = 1;
+            break;
+            
+        case 1: // 90º
+
+            /// FIGURE 4    []  
+            ///           [][]
+            ///             []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#1,0] = 5;
+            f_grid[#0,1] = 5;
+            f_grid[#1,1] = 5;
+            f_grid[#1,2] = 5;
+            figure_offset_i = 0;
+            break;
+            
+        case 2: // 180º
+
+            /// FIGURE 4  [][][]
+            ///             []
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 5;
+            f_grid[#1,0] = 5;
+            f_grid[#2,0] = 5;
+            f_grid[#1,1] = 5;
+            figure_offset_i = 1;
+            break;
+            
+        case 3: // 270
+
+            /// FIGURE 4    []  
+            ///             [][]
+            ///             []  
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 5;
+            f_grid[#0,1] = 5;
+            f_grid[#1,1] = 5;
+            f_grid[#0,2] = 5;
+            figure_offset_i = 0;
+            break;
+    }
+}
+
+if (f_type == 4)
+{
+    switch f_angle
+    {
+        case 0: // 0º
+
+            /// FIGURE 5      
+            ///           [][][][]
+            f_grid = ds_grid_create(4,1);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 2;
+            f_grid[#1,0] = 2;
+            f_grid[#2,0] = 2;
+            f_grid[#3,0] = 2;
+            figure_offset_i = 2;
+            break;
+            
+        case 1: // 90º
+
+            /// FIGURE 5      
+            ///           []
+            ///           []
+            ///           []
+            ///           []
+            f_grid = ds_grid_create(1,4);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 2;
+            f_grid[#0,1] = 2;
+            f_grid[#0,2] = 2;
+            f_grid[#0,3] = 2;
+            figure_offset_i = -4;
+            break;
+            
+        case 2: // 180º
+
+            /// FIGURE 5      
+            ///           [][][][]
+            f_grid = ds_grid_create(4,1);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 2;
+            f_grid[#1,0] = 2;
+            f_grid[#2,0] = 2;
+            f_grid[#3,0] = 2;
+            figure_offset_i = 2;
+            break;
+            
+        case 3: // 270
+
+            /// FIGURE 5      
+            ///           []
+            ///           []
+            ///           []
+            ///           []
+            f_grid = ds_grid_create(1,4);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 2;
+            f_grid[#0,1] = 2;
+            f_grid[#0,2] = 2;
+            f_grid[#0,3] = 2;
+            figure_offset_i = -4;
+            break;
+    }
+}
+
+if (f_type == 5)
+{
+    switch f_angle
+    {
+        case 0: // 0º
+
+            /// FIGURE 6    []  
+            ///           [][]
+            ///           []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#1,0] = 4;
+            f_grid[#0,1] = 4;
+            f_grid[#1,1] = 4;
+            f_grid[#0,2] = 4;
+            figure_offset_i = 0;
+            break;
+            
+        case 1: // 90º
+
+            /// FIGURE 6  [][]  
+            ///             [][]
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 4;
+            f_grid[#1,0] = 4;
+            f_grid[#1,1] = 4;
+            f_grid[#2,1] = 4;
+            figure_offset_i = 1;
+            break;
+            
+        case 2: // 180º
+
+            /// FIGURE 6    []  
+            ///           [][]
+            ///           []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#1,0] = 4;
+            f_grid[#0,1] = 4;
+            f_grid[#1,1] = 4;
+            f_grid[#0,2] = 4;
+            figure_offset_i = 0;
+            break;
+            
+        case 3: // 270
+
+            /// FIGURE 6  [][]  
+            ///             [][]
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 4;
+            f_grid[#1,0] = 4;
+            f_grid[#1,1] = 4;
+            f_grid[#2,1] = 4;
+            figure_offset_i = 1;
+            break;
+    }
+}    
+
+if (f_type == 6)
+{
+    switch f_angle
+    {
+        case 0: // 0º
+
+            /// FIGURE 7  []  
+            ///           [][]
+            ///             []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 3;
+            f_grid[#0,1] = 3;
+            f_grid[#1,1] = 3;
+            f_grid[#1,2] = 3;
+            figure_offset_i = 0;
+            break;
+            
+        case 1: // 90º
+
+            /// FIGURE 7    [][]  
+            ///           [][]
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#1,0] = 3;
+            f_grid[#2,0] = 3;
+            f_grid[#0,1] = 3;
+            f_grid[#1,1] = 3;
+            figure_offset_i = 1;
+            break;
+            
+        case 2: // 180º
+
+            /// FIGURE 7  []  
+            ///           [][]
+            ///             []
+            f_grid = ds_grid_create(2,3);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#0,0] = 3;
+            f_grid[#0,1] = 3;
+            f_grid[#1,1] = 3;
+            f_grid[#1,2] = 3;
+            figure_offset_i = 0;
+            break;
+            
+        case 3: // 270
+
+            /// FIGURE 7    [][]  
+            ///           [][]
+            f_grid = ds_grid_create(3,2);
+            ds_grid_clear(f_grid, -1);
+            f_grid[#1,0] = 3;
+            f_grid[#2,0] = 3;
+            f_grid[#0,1] = 3;
+            f_grid[#1,1] = 3;
+            figure_offset_i = 1;
+            break;
+    }  
+} 
+```
+Script de detección de colisiones:
+
+```javascript
+// scr_check_collision(offset_i+figure_offset_i, offset_j, x_move)
+// Devuelve true/false
+
+/// Comprobaremos si hay bloques a los lados (si hay movimiento) o debajo
+for (var i=0;i<ds_grid_width(f_grid);i++)
+{
+    for (var j=0;j<ds_grid_height(f_grid);j++)
+    {
+        
+        var new_i = i + argument0+round(10/(ds_grid_width(f_grid)))+global.min_i;
+        var new_j = j + argument1 + 1; //+1 por debajo
+         
+        // Si en la nueva posición  horizontal hay algo
+        if (global.tablero[#new_i+argument2,new_j] > -1)
+        {
+            // Y si y solo si en esta posicion de la forma hay algo
+            if (f_grid[#i,j] > -1) 
+            {
+                // Entonces no podemos movernos
+                return true;
+            }
+        }
+        
+        // Si por debajo en el tablero hay algo
+        if (global.tablero[#new_i,new_j] > -1) 
+        {
+            // Y si y solo si en esta posicion del grid hay algo
+            if (f_grid[#i,j] > -1) 
+            {
+                // Entonces no podemos movernos
+                return true;
+            }
+        }
+    }
+}
+
+return false;
+```
+
+La rotación entonces la haremos en el step del objeto figura.
+
+```javascript
+/// Obj_figure: Step
+
+// Comprobar si queremos rotar el objeto
+if keyboard_check_pressed(vk_up)
+{
+	// Cambiamos el ángulo (sentido horario hacia atrás)
+    f_angle -= 1;
+    if(f_angle<0) f_angle = 3;
+    
+    // Rotamos la figura
+    scr_rotate_figure();
+    
+    // Si hay un choque en la nueva posición rectificamos
+    if scr_check_collision(figure_offset_i+offset_i,offset_j,x_move)
+    {
+        f_angle += 1;
+        if(f_angle>3) f_angle = 0;
+        // Y rectificamos
+        scr_rotate_figure();
+    }
+}
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img6.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/02_tetris.gmx/docs/img6.jpg)
+

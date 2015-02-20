@@ -190,14 +190,6 @@ var h_move = true;
 var r_times = 1;
 rotate = false;
 
-
-
-/// AQUI ANDO INTENTANDO ROTAR SIN SALIRME DE LOS LADOS USANDO EL OFFSET DE LA FIGURA
-//offset_i = offset_i + figure_offset_i; //PERO ESTO NO VA
-
-
-
-
 // Detección de movimiento horizntal contra las paredes
 if keyboard_check_pressed(vk_right) 
 {
@@ -225,7 +217,7 @@ if keyboard_check_pressed(vk_down)
     r_times = 20;
 }
 
-// Comprobar si queremos desplazar hacia arriba el objeto
+// Comprobar si queremos rotar el objeto
 if keyboard_check_pressed(vk_up)
 {
     rotate = true;
