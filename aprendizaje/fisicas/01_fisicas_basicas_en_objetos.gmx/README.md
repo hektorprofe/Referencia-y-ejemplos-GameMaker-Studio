@@ -43,9 +43,9 @@ for(i=0 i<40 i+=1)
     draw_line(lastx,lasty,ax,ay)
 }
 ```
+Para aplicar el impulso se ha utilizado:
 
 ```javascript
-Para aplicar el impulso se ha utilizado:
 // Si apretamos el ratón
 if mouse_check_button_pressed(mb_left)
 {
