@@ -54,6 +54,7 @@
     <instance objName="obj_Player" x="96" y="288" name="inst_919BE7C4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_generator" x="32" y="32" name="inst_00CBCAA2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_block" x="0" y="336" name="inst_54F2B24A" locked="0" code="image_index = 0&#xA;image_speed = 0&#xA;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_score" x="576" y="112" name="inst_6B3B596B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

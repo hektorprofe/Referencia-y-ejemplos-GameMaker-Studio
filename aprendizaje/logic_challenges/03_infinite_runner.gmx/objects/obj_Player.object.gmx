@@ -104,6 +104,7 @@ if sprite_index != sp_dead // si no estamos muertos
     }
 }
     
+if (obj_Player.x &lt; -50) game_restart();
 
 </string>
           </argument>

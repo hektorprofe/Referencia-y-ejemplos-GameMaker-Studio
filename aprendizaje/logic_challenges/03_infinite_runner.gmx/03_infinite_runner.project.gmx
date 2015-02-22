@@ -15,7 +15,8 @@
     <sprite>sprites\sp_ground</sprite>
     <sprite>sprites\sp_box</sprite>
     <sprite>sprites\sp_hp</sprite>
-    <sprite>sprites\spr_coin</sprite>
+    <sprite>sprites\sp_coin</sprite>
+    <sprite>sprites\sp_score</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\b1</background>
@@ -25,9 +26,13 @@
   <scripts name="scripts">
     <script>scripts\scr0.gml</script>
     <script>scripts\spd.gml</script>
-    <script>scripts\scr1.gml</script>
-    <script>scripts\scr2.gml</script>
+    <script>scripts\co_1.gml</script>
+    <script>scripts\co_2.gml</script>
+    <script>scripts\co_3.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\font0</font>
+  </fonts>
   <objects name="objects">
     <object>objects\obj_Player</object>
     <object>objects\obj_block</object>
