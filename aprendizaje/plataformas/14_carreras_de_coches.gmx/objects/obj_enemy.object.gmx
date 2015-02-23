@@ -74,7 +74,7 @@ sprite_index = carsprite;
     if x &lt; 130 x = 130;
     if x &gt; 385 x = 385;
     
-    // Collision
+    // Colisión
     if place_meeting(x+40, y+100, obj_enemy)
     {
         hspeed = 0;

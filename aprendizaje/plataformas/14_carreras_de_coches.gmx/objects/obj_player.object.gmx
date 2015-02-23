@@ -25,11 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.allow = 1
-global.bg = 18;
-sp = 4
-osp = 4
-carspeed = 0
+            <string>global.allow = 1  // si el juego está en marcha
+global.bg = 18;  // velocidad del fondo
+sp = 4;  // velocidad constante del coche
+carspeed = 0  // velocidad actual del coche
 </string>
           </argument>
         </arguments>
@@ -95,8 +94,6 @@ carspeed = 0
         hspeed = 0;
         
     }
-    
-    
 
 }
 </string>

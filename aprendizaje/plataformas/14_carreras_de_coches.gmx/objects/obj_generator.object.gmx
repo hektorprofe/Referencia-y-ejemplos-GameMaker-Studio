@@ -27,9 +27,7 @@
             <kind>1</kind>
             <string>if global.allow == 1
 {
-
     alarm[0] = 100;
-
 }
 </string>
           </argument>
@@ -53,7 +51,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = random_range(130, 185);
+            <string>a = random_range(130, 385);
 b = random_range(25,150);
 
 if global.allow == 1
