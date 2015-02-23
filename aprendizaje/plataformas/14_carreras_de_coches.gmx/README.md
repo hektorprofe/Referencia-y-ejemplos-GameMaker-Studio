@@ -123,7 +123,7 @@ if global.allow == 1
 }
 ```
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/14_carreras_de_coches.gmx/captura1.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/14_carreras_de_coches.gmx/captura1.jpg)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/14_carreras_de_coches.gmx/captura1.JPG)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/14_carreras_de_coches.gmx/captura1.JPG)
 
 El obj_generador nos permitirá añadir nuevos enemigos cada cierto tiempo.
 
@@ -197,4 +197,4 @@ if global.allow == 1
 }
 ```
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/14_carreras_de_coches.gmx/captura2.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/14_carreras_de_coches.gmx/captura2.jpg)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/14_carreras_de_coches.gmx/captura2.JPG)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/14_carreras_de_coches.gmx/captura2.JPG)
