@@ -8,8 +8,8 @@ Lamentablemente en GameMaker:Studio estas funciones no existen, pero siempre se 
 
 Para realizar mis experimentos he creado un juego muy sencillo con los diferentes efectos que genera el script. En él es posible regular el tiempo de la animación con los botones [+] y [-] y el tipo de la animación con el [Espacio].
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura1.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura1.png)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura1.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura1.jpg)
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura2.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura2.png)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura2.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura2.jpg)
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura3.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura3.png)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura3.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/06_ease_functions.gmx/captura3.jpg)
