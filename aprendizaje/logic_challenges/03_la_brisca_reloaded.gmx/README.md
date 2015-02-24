@@ -33,15 +33,6 @@ En cuanto a la lógica los juegos de cartas son sencillos, ya que sólo se requi
 * Se añadirán animaciones y sonidos a las cartas para enfatizar el propio ritmo del juego.
 * Una música de fondo no muy alta podría amenizar las partidas, se valorará.
 
-## Trasladando el concepto
-
-Para enfocar este juego en GameMaker voy a intentar recrear sus diferentes elementos en objetos. 
-
-* Objeto carta: Contendrá un palo, un número, una puntuación y un estado (volteada si/no).
-* Objeto baraja: Contendrá una lista con todas las cartas. 
-* Objeto jugador: Contendrá una lista con la mano actual (<=3 cartas) y otra lista con las cartas ganadas.
-* Objeto jugada: Contendrá una lista con las cartas jugadas de cada jugador (<=2 cartas).
-
 ## Descripción del flujo de juego
 
 * Se empieza con la baraja de 48 cartas y se mezcla unas cuantas veces.
@@ -60,3 +51,9 @@ Situaciones especiales / ajustes extras:
 * Al ganar una mano se puede cambiar el 7 del palo triunfo por las cartas del 10 al 12.
 * Arrastrar en la última ronda si el jugador tiene el triunfo más alto. (el as arrastra el 3 o las mayores de su palo).
 
+## Trasladando el concepto
+
+En un primer momento quería plantear el juego en muchos objetos diferentes (carta, baraja, jugador, jugada...) pero después de pensarlo durante un buen rato y entender los problemas que ésto me daría de cara a realizar animaciones en las cartas, creo que cuantos menos objetos tenga el juego mucho mejor. Así que por ahora he determinado estos dos:
+
+* Objeto juego: Para controlar el flujo del juego y las posiciones de las cartas.
+* Objeto carta: Cada carta contendrá un palo, un número, un valor, una puntuación, un estado (volteada si/no) y un jugador.
