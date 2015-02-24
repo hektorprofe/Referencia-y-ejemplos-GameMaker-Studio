@@ -33,4 +33,30 @@ En cuanto a la lógica los juegos de cartas son sencillos, ya que sólo se requi
 * Se añadirán animaciones y sonidos a las cartas para enfatizar el propio ritmo del juego.
 * Una música de fondo no muy alta podría amenizar las partidas, se valorará.
 
-### Trasladando el concepto
+## Trasladando el concepto
+
+Para enfocar este juego en GameMaker voy a intentar recrear sus diferentes elementos en objetos. 
+
+* Objeto carta: Contendrá un palo, un número, una puntuación y un estado (volteada si/no).
+* Objeto baraja: Contendrá una lista con todas las cartas. 
+* Objeto jugador: Contendrá una lista con la mano actual (<=3 cartas) y otra lista con las cartas ganadas.
+* Objeto jugada: Contendrá una lista con las cartas jugadas de cada jugador (<=2 cartas).
+
+## Descripción del flujo de juego
+
+* Se empieza con la baraja de 48 cartas y se mezcla unas cuantas veces.
+* Se toman 3 cartas de la baraja para cada jugador.
+* Se toma 1 carta de triunfo para indicar el palo ganador y se sitúa debajo de la baraja.
+* Empieza aleatoriamente uno de los dos jugadores a jugar la primera ronda.
+* Cada jugador tira una carta, éstas se enfrentan en la jugada y se determina un ganador.
+* El ganador se queda con las dos cartas y toma una carta de la baraja.
+* El perdedor toma otra carta de la baraja.
+* El ganador empieza de nuevo la ronda y se repite el ciclo hasta que ambos se quedan sin cartas.
+* Cuando se han jugado todas las cartas se hace el recuento de puntos y se anuncia el ganador.
+
+Situaciones especiales / ajustes extras:
+
+* Al ganar una mano se puede cambiar el 2 del palo triunfo por las cartas del 3 al 7.
+* Al ganar una mano se puede cambiar el 7 del palo triunfo por las cartas del 10 al 12.
+* Arrastrar en la última ronda si el jugador tiene el triunfo más alto. (el as arrastra el 3 o las mayores de su palo).
+
