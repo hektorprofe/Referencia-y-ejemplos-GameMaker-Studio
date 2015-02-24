@@ -5,9 +5,30 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
-  <backgrounds name="background"/>
+  <sprites name="sprites">
+    <sprite>sprites\sp_carta</sprite>
+    <sprite>sprites\sp_carta_hd</sprite>
+  </sprites>
+  <backgrounds name="background">
+    <background>background\bg_tablero</background>
+  </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <scripts name="Baraja">
+      <script>scripts\crearBaraja.gml</script>
+    </scripts>
+    <scripts name="Carta">
+      <script>scripts\valorCarta.gml</script>
+      <script>scripts\puntosCarta.gml</script>
+    </scripts>
+  </scripts>
+  <objects name="objects">
+    <object>objects\obj_juego</object>
+    <object>objects\obj_carta</object>
+  </objects>
+  <rooms name="rooms">
+    <room>rooms\rm_juego</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
