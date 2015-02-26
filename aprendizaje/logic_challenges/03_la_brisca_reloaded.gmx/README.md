@@ -57,3 +57,26 @@ En un primer momento quería plantear el juego en muchos objetos diferentes (car
 
 * Objeto juego: Para controlar el flujo del juego y las posiciones de las cartas.
 * Objeto carta: Cada carta contendrá un palo, un número, un valor, una puntuación, un estado (volteada si/no) y un jugador.
+
+Para controlar la lógica utilizaré varias variables y listas en el objeto juego:
+
+```javascript
+// obj_juego: Create
+triunfo = noone;			// para guardar la carta de triunfo
+baraja  = ds_list_create(); // para guardar la baraja de cartas actual
+manoJ1  = ds_list_create(); // para guardar las cartas en la mano del jugador 1
+manoJ2  = ds_list_create(); // para guardar las cartas en la mano del jugador 2
+jugada  = ds_list_create(); // para guardar las cartas en juego
+pozo    = ds_list_create(); // para guardar las cartas ya jugadas
+```
+
+Entonces mi idea es que las cartas tengan diferentes estados y a partir de éstos se irá determinando la posición en la pantalla de cada una de ellas:
+
+* Estado enBaraja: El estado inicial en la posición que se crean las cartas. 
+* Estado enManoJ1: Posiciona hasta tres cartas a la mano del jugador 1 a partir de las cartas en la lista manoJ1 y les da la vuelta.
+* Estado enManoJ2: Posiciona hasta tres cartas a la mano del jugador 2 a partir de las cartas en la lista manoJ2.
+* Estado enTriunfo: Mueve una carta a la posición del triunfo a partir de la carta guardada en la variable triunfo.
+* Estado enJuego: Posiciona hasta dos cartas en el espacio de juego, las rota y hace más pequeño el tamaño ligeramente.
+
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/03_la_brisca_reloaded.gmx/docs/img2.jpg)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/03_la_brisca_reloaded.gmx/docs/img2.jpg)
