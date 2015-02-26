@@ -28,40 +28,240 @@
             <string>
 // Creo una baraja
 baraja = crearBaraja();
+triunfo = noone;
+jugada = ds_list_create();
+pozo = ds_list_create();
+manoJ1 = ds_list_create();
+manoJ2 = ds_list_create();
 
-// Creo dos jugadores
-//jugador1 = crearJugador(); 
-//jugador2 = crearJugador(); 
+//audio_stop_sound(snd_music);
+//audio_play_sound(snd_music, 10, true);
 
-// Le doy 3 cartas a cada jugador
-//repartirCartasBaraja(baraja, jugador1, 3);
-//repartirCartasBaraja(baraja, jugador2, 3);
 
-// Determino la carta triunfo
-//triunfo = triunfoBaraja(baraja);
+// Reparto 3 cartas al jugador 1
+alarm[0] = 30;
+
+// Reparto 3 cartas al jugador 2
+alarm[1] = 75;
+
+// Saco el triunfo
+alarm[2] = 120;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="53">
+    <event eventtype="2" enumb="4">
       <action>
         <libid>1</libid>
-        <id>321</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_message</functionname>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>2</kind>
-            <string>click</string>
+            <kind>1</kind>
+            <string>/// Repartimos nuevas cartas
+// miramos quien se llevó la última del pozo
+var ultima = ds_list_size(pozo)-1;
+var primero = -1;
+
+if (ultima &gt; -1)
+{
+    var carta = ds_list_find_value(pozo,ultima);
+    with (carta)
+    {
+    
+        primero = jugador;
+    }
+
+    if (primero == 1)
+    {
+        var carta = sacarCarta();
+        if (carta != false)
+        {
+            with (carta) 
+            {
+                estado = enManoJ1;
+                girando = true;
+            }
+            ds_list_add(obj_juego.manoJ1, carta);
+        }
+        
+        // Si ya no hay cartas y hay triunfo lo ponemos en la baraja de nuevo
+        if (ds_list_size(baraja) == 0 &amp;&amp; triunfo != noone)
+        {   
+            ds_list_add(baraja, triunfo);
+            triunfo = noone;
+        }
+        
+        // Sacamos otra para el J2 en 15 steps
+        alarm[1] = 15;
+    } 
+    else if (primero == 2)
+    {
+        var carta = sacarCarta();
+        if (carta != false)
+        {
+            with (carta) estado = enManoJ2;
+            ds_list_add(obj_juego.manoJ2, carta);
+        }
+        
+        // Si ya no hay cartas y hay triunfo lo ponemos en la baraja de nuevo
+        if (ds_list_size(baraja) == 0 &amp;&amp; triunfo != noone)
+        {   
+            ds_list_add(baraja, triunfo);
+            triunfo = noone;
+        }
+        
+        // Sacamos otra para el J1 en 15 steps
+        alarm[0] = 15;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Se dipara una comprobación de jugada
+if ds_list_size(jugada) == 2
+{
+    // Para cada carta de la jugada
+    for (var i=0;i&lt;ds_list_size(jugada);i++)
+    {
+        var carta = ds_list_find_value(jugada,i);
+        with(carta)
+        {
+            // AQUI TOCARIA COMPROBAR QUIEN ES EL GANADOR DE VERDAD
+             jugador = 1;
+             estado = enPozoJ1;
+        }
+        ds_list_add(pozo,carta);
+}
+   
+    // Borramos las cartas de la jugada
+    ds_list_clear(jugada);
+    
+    // Llamamos la alarma para sacar dos nuevas cartas
+    alarm[4] = 30;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Sacamos el triunfo
+var carta = sacarCarta();
+with (carta) 
+{
+    estado = enTriunfo;
+}
+triunfo = carta;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// 1 cartas al jugador 1
+var carta = sacarCarta();
+if (carta != false)
+{
+    with (carta) estado = enManoJ2;
+    ds_list_add(manoJ2, carta);
+    if ds_list_size(manoJ2)&lt;3 alarm[1] = 15;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// 1 cartas al jugador 1
+var carta = sacarCarta();
+if (carta != false)
+{
+    with (carta) {
+        estado = enManoJ1;
+        girando = true;
+    }
+    ds_list_add(manoJ1, carta);
+    if ds_list_size(manoJ1)&lt;3 alarm[0] = 15;
+}
+</string>
           </argument>
         </arguments>
       </action>
@@ -84,9 +284,27 @@ baraja = crearBaraja();
           <argument>
             <kind>1</kind>
             <string>draw_text(15,15,string(mouse_x) + "," + string(mouse_y) );
+draw_text(15,35,"En juego:" + string(ds_list_size(jugada)));
+draw_text(15,55,"En pozo:" + string(ds_list_size(pozo)));
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="82">
+      <action>
+        <libid>1</libid>
+        <id>331</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_restart_game</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
   </events>

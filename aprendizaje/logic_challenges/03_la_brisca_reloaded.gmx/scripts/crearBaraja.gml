@@ -14,8 +14,10 @@ for (var i=0;i<12;i++)
         numero = i+1;
         valor = valorCarta(numero);
         puntos = puntosCarta(numero);
+        sprite = n;
     }
     ds_list_add(baraja,carta);
+    n++;
 }
 
 // Añado las copas
@@ -28,8 +30,10 @@ for (var i=0;i<12;i++)
         numero = i+1;
         valor = valorCarta(numero);
         puntos = puntosCarta(numero);
+        sprite = n;
     }
     ds_list_add(baraja,carta);
+    n++;
 }
 
 // Añado las espadas
@@ -42,8 +46,10 @@ for (var i=0;i<12;i++)
         numero = i+1;
         valor = valorCarta(numero);
         puntos = puntosCarta(numero);
+        sprite = n;
     }
     ds_list_add(baraja,carta);
+    n++;
 }
 
 // Añado los bastos
@@ -56,7 +62,9 @@ for (var i=0;i<12;i++)
         numero = i+1;
         valor = valorCarta(numero);
         puntos = puntosCarta(numero);
+        sprite = n;
     }
+    n++;
     ds_list_add(baraja,carta);
 }
 

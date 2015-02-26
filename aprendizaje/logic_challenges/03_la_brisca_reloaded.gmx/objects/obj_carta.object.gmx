@@ -25,7 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Variables
+            <string>// Estados SON MACROS
+/*enBaraja = 0;
+enManoJ1 = 1;
+enManoJ2 = 2;
+enTriunfo = 3;
+enJuego = 4;
+enPozoJ1 = 5;
+enPozoJ2 = 6; 
+*/
+
+// Variables
 palo = 0;
 numero = 0;
 valor = 0;
@@ -33,6 +43,14 @@ puntos = 0;
 sprite = 49;
 volteada = false;
 jugador = -1;
+xinicial = 0;
+yinicial = 0;
+triunfo = noone;
+estado = enBaraja;
+estado_anterior = enBaraja;
+girando = false;
+anchura_giro = 0;
+direccion_giro = 0;
 
 // Sprite
 image_speed = 0;
@@ -44,24 +62,357 @@ image_index = 49;
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="4">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
-        <id>103</id>
-        <kind>0</kind>
-        <userelative>-1</userelative>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_set_hspeed</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
+            <kind>1</kind>
+            <string>estado++;
+if (estado&gt;11) estado = 1;
+alarm[0] = 10;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Estado
+switch(estado)
+{
+    case enBaraja:
+        break;
+        
+    case enManoJ1:
+    
+        // si hay hueco en el primer lugar
+            
+        if ds_list_size(obj_juego.manoJ1) == 1
+        {
+            var carta = ds_list_find_value(obj_juego.manoJ1,0);
+            moverCarta(carta, 320, 448);
+            carta.depth = -10;
+        }   
+        // si hay hueco en el segundo lugar
+        else if ds_list_size(obj_juego.manoJ1) == 2
+        {
+            var carta = ds_list_find_value(obj_juego.manoJ1,0);
+            moverCarta(carta, 320, 448);
+            carta.depth = -10;
+            var carta = ds_list_find_value(obj_juego.manoJ1,1);
+            moverCarta(carta, 480, 448);
+            carta.depth = -11;
+            
+        } 
+        // si hay hueco en el tercer lugar
+        else if ds_list_size(obj_juego.manoJ1) == 3
+        {
+            var carta = ds_list_find_value(obj_juego.manoJ1,0);
+            moverCarta(carta, 320, 448);
+            carta.depth = -10;
+            var carta = ds_list_find_value(obj_juego.manoJ1,1);
+            moverCarta(carta, 480, 448);
+            carta.depth = -11;
+            var carta = ds_list_find_value(obj_juego.manoJ1,2);
+            moverCarta(carta, 640, 448);
+            carta.depth = -12;
+        } 
+        
+        image_angle = 0;
+        image_xscale = 1;
+        image_yscale = 1;
+        //image_index = sprite;
+        
+        jugador = 1;
+        
+        break;
+        
+    case enManoJ2:
+    
+        // si hay hueco en el primer lugar
+            
+        if ds_list_size(obj_juego.manoJ2) == 1
+        {
+            var carta = ds_list_find_value(obj_juego.manoJ2,0);
+            moverCarta(carta, 320, -96);
+            carta.depth = -10;
+        }   
+        // si hay hueco en el segundo lugar
+        else if ds_list_size(obj_juego.manoJ2) == 2
+        {
+            var carta = ds_list_find_value(obj_juego.manoJ2,0);
+            moverCarta(carta, 320, -96);
+            carta.depth = -10;
+            var carta = ds_list_find_value(obj_juego.manoJ2,1);
+            moverCarta(carta, 480, -96);
+            carta.depth = -11;
+            
+        } 
+        // si hay hueco en el tercer lugar
+        else if ds_list_size(obj_juego.manoJ2) == 3
+        {
+            var carta = ds_list_find_value(obj_juego.manoJ2,0);
+            moverCarta(carta, 320, -96);
+            carta.depth = -10;
+            var carta = ds_list_find_value(obj_juego.manoJ2,1);
+            moverCarta(carta, 480, -96);
+            carta.depth = -11;
+            var carta = ds_list_find_value(obj_juego.manoJ2,2);
+            moverCarta(carta, 640, -96);
+            carta.depth = -12;
+        } 
+        
+        image_angle = 0;
+        image_xscale = 1;
+        image_yscale = 1;
+        
+        image_index = 49;
+        
+        jugador = 2;
+        
+        break;
+        
+    case enTriunfo:
+        var newX = 96 + sprite_height;
+        var newY = room_height/2 - sprite_width/2 - 8;
+        
+        moverCarta(id, newX, newY);
+        
+        image_angle = 270;
+        image_xscale = 1;
+        image_yscale = 1;
+        depth = 100;
+        image_index = sprite;
+        break;
+        
+    case enJuego:
+        // si hay hueco en el primer lugar
+        // if place_empty(460, 176)
+        if ds_list_size(obj_juego.jugada) == 1
+        {
+            var carta = ds_list_find_value(obj_juego.jugada,0);
+            if carta == id
+            {
+                moverCarta(id, 460, 176);
+            
+                image_angle = 350;
+                image_xscale = 0.90;
+                image_yscale = 0.90;
+                image_index = sprite;
+                carta.depth = -20;
+            }
+            
+            break;
+        } 
+        // si hay hueco en el segundo lugar
+        //if place_empty(546+50, 198)
+        else if ds_list_size(obj_juego.jugada) == 2
+        {
+            var carta = ds_list_find_value(obj_juego.jugada,1);
+            if carta == id
+            {
+                moverCarta(id, 546, 198);
+                
+                image_angle = 10;
+                image_xscale = 0.90;
+                image_yscale = 0.90;
+                image_index = sprite;
+                carta.depth = -30;
+                
+            }
+            
+            break;
+        } 
+        if estado_anterior != enJuego
+            estado = enJuego;
+        break;
+        
+    case enPozoJ1:
+        var newX = 480;
+        var newY = room_height+400;
+        
+        jugador = 1;
+        
+        moverCarta(id, newX, newY);
+        
+        
+        break;
+        
+    case enPozoJ2:
+        var newX = 480;
+        var newY = -400;
+        
+        jugador = 2;
+        
+        moverCarta(id, newX, newY);
+        
+        
+        break;
+}
+
+// Giro
+if girando
+{
+    
+    if (direccion_giro == 0) anchura_giro+=5;
+    else if (direccion_giro == 1) anchura_giro-=5;
+    
+    // Giro horizontal hacia adentro
+    if (anchura_giro &gt;= sprite_width/2)
+    {
+        direccion_giro = 1;
+        if (image_index == 49) image_index = sprite;
+        else image_index = 49;
+    }
+    // Giro horizontal hacia afuera
+    if (anchura_giro &lt;= 0)
+    {
+        direccion_giro = 0;
+        girando = false;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>119</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_path</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>8</kind>
+            <path>path_carta1</path>
+          </argument>
+          <argument>
             <kind>0</kind>
-            <string>2</string>
+            <string>5</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>4</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Si se puede poner en juego cambiamos el estado
+if  ds_list_size(obj_juego.jugada) &lt; 2 &amp;&amp; jugador &gt; -1
+{
+    estado_anterior = estado;
+    estado = enJuego;
+    
+    ds_list_add(obj_juego.jugada, id);
+    
+    audio_play_sound(snd_slide, 10, false);
+    
+    
+    if (jugador == 1)
+    {   
+        var pos = ds_list_find_index(obj_juego.manoJ1,id);
+        ds_list_delete(obj_juego.manoJ1,pos);
+    }
+    if (jugador == 2)
+    {        
+        var pos = ds_list_find_index(obj_juego.manoJ2,id);
+        ds_list_delete(obj_juego.manoJ2,pos);
+    }    
+    
+    with (obj_juego) alarm[3] = 30;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!girando) draw_self();
+else 
+{
+    draw_sprite_pos(sp_carta, 
+                    image_index, 
+                    x+anchura_giro, y, 
+                    x+sprite_width-anchura_giro, y, 
+                    x+sprite_width-anchura_giro, y+sprite_height, 
+                    x+anchura_giro, y+sprite_height, 
+                    1); 
+}
+//draw_sprite_pos(sp_carta, sprite, x, y, x+sprite_width, y, x+sprite_width, y+sprite_height, x, y+sprite_height, 1); 
+</string>
           </argument>
         </arguments>
       </action>

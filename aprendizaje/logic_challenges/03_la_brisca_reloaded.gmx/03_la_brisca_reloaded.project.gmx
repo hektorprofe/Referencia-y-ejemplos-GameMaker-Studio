@@ -4,31 +4,50 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sounds name="Cartas">
+      <sound>sound\snd_slide</sound>
+    </sounds>
+    <sound>sound\snd_music</sound>
+  </sounds>
   <sprites name="sprites">
     <sprite>sprites\sp_carta</sprite>
-    <sprite>sprites\sp_carta_hd</sprite>
+    <sprite>sprites\sp_restart</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_tablero</background>
   </backgrounds>
-  <paths name="paths"/>
+  <paths name="paths">
+    <path>paths\path_carta1</path>
+  </paths>
   <scripts name="scripts">
     <scripts name="Baraja">
       <script>scripts\crearBaraja.gml</script>
+      <script>scripts\sacarCarta.gml</script>
     </scripts>
     <scripts name="Carta">
       <script>scripts\valorCarta.gml</script>
       <script>scripts\puntosCarta.gml</script>
+      <script>scripts\moverCarta.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
     <object>objects\obj_juego</object>
     <object>objects\obj_carta</object>
+    <object>objects\obj_restart</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_juego</room>
   </rooms>
+  <constants number="7">
+    <constant name="enBaraja">0</constant>
+    <constant name="enManoJ1">1</constant>
+    <constant name="enManoJ2">2</constant>
+    <constant name="enTriunfo">3</constant>
+    <constant name="enJuego">4</constant>
+    <constant name="enPozoJ1">5</constant>
+    <constant name="enPozoJ2">6</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
