@@ -120,11 +120,23 @@ surface_free(global.surf);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Dibujamos la superficie en calidad normal-alta
+            <string>// Si no existe la superficie la creamos (al cambiar a fullscreen se va)
+
+if !surface_exists(global.surf)
+{
+    global.surf = surface_create(room_width,room_height);
+    surface_set_target(global.surf);
+    draw_clear_alpha(c_black,0);
+    surface_reset_target();
+}
+
+
+// Dibujamos la superficie en calidad normal-alta
 draw_surface_ext(global.surf,0,0,1,1,0,c_white,1); 
 // Alternativamente para baja calidad escalamos al doble 
 // nuestra superficie creada con la mitad de espacio
 // draw_surface_ext(global.surf,0,0,2,2,0,c_white,1); 
+
 </string>
           </argument>
         </arguments>
