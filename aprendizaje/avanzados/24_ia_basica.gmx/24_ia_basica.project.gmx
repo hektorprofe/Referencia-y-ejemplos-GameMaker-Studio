@@ -5,9 +5,24 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprite>sprites\spr_enemy</sprite>
+    <sprite>sprites\spr_player</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_enemy_idle.gml</script>
+    <script>scripts\scr_enemy_chase.gml</script>
+    <script>scripts\scr_enemy_attack.gml</script>
+  </scripts>
+  <objects name="objects">
+    <object>objects\obj_player</object>
+    <object>objects\obj_enemy</object>
+  </objects>
+  <rooms name="rooms">
+    <room>rooms\rm_room</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
