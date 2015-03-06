@@ -34,8 +34,8 @@ pozo = ds_list_create();
 manoJ1 = ds_list_create();
 manoJ2 = ds_list_create();
 
-//audio_stop_sound(snd_music);
-//audio_play_sound(snd_music, 10, true);
+audio_stop_sound(snd_music);
+audio_play_sound(snd_music, 10, true);
 
 
 // Reparto 3 cartas al jugador 1
