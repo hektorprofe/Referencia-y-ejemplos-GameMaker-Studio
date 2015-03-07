@@ -18,6 +18,8 @@ Luego utilizando un Script se establece automáticamente la profundidad de las p
 
 Este script se llama en el create de las paredes y en cada Step del jugador para ponerlo en todo momento al mismo nivel que las paredes. Evidentemente la máscara de colisión y el anclaje vertical también es el mismo que las paredes.
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura.png)
+
 ### Parte 2: Estadísticas de personaje
 
 En todo RPG nuestro personaje tiene una serie de variables tales como el nivel, la experiencia, la vida, los puntos de ataque, etc. Vamos a comenzar creando un objeto para manejar todas las variables de personaje:
