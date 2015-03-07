@@ -15,6 +15,50 @@ Luego utilizando un Script se establece automáticamente la profundidad de las p
     depth = y*-1;   
 }
 ```
+
 Este script se llama en el create de las paredes y en cada Step del jugador para ponerlo en todo momento al mismo nivel que las paredes. Evidentemente la máscara de colisión y el anclaje vertical también es el mismo que las paredes.
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura.png)
+### Parte 2: Estadísticas de personaje
+
+En todo RPG nuestro personaje tiene una serie de variables tales como el nivel, la experiencia, la vida, los puntos de ataque, etc. Vamos a comenzar creando un objeto para manejar todas las variables de personaje:
+
+```javascript
+/// Obj globals: Create
+{
+    global.level = 1;
+    global.hp = 10;
+    global.maxhp = 10;
+    global.expr = 0;
+    global.maxexpr = 2;
+}
+```
+
+Para probar estad estadísticas vamos a crear un objeto llamado experiencia (una bolita) que al colisionar con el personaje le otorgarán un punto de experiencia:
+
+```javascript
+/// Obj player: Collision with obj_expr
+{
+    global.expr++;
+    with(other) instance_destroy();
+}
+```
+
+A continuación manejaremos la experiencia del personaje para hacer que suba de nivel cuando se alcance la experiencia necesaria, aumentando la vida y otorgando un nuevo valor a la experiencia necesaria para alcanzar el próximo nivel:
+
+```javascript
+/// Obj globals: Step
+{
+    if(global.expr >= global.maxexpr)
+    {
+        global.level+=1;
+        global.hp+=5;
+        global.maxhp+=5;
+        // La experiencia actual será la resta de la experiencia actual del nivel menos la experiencia actual
+        global.expr = global.expr-global.maxexpr;
+        // La experiencia máxima para alcanzar el próximo nivel pasará a ser el doble que la del nivel actual
+        global.maxexpr *= 2;
+    }   
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura2.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura2.png)
