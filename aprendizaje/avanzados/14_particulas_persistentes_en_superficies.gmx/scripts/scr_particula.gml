@@ -11,4 +11,3 @@ part_type_gravity(particula,0,270)
 part_type_orientation(particula,0,359,0,0,1)
 part_type_blend(particula,0)
 part_type_life(particula,15,15)
-

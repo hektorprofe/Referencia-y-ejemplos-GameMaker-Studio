@@ -81,10 +81,10 @@ draw_set_font(fnt_credits);
 draw_text(room_width/2, 100, "This game is created with learning purposes");
 
 draw_set_color(c_red);
-draw_text(room_width/2, 200, "Tap to Start Playing");
+draw_text(room_width/2, 200, "Tap Screen/Press any Key to Play");
 
 draw_set_color(c_white);
-draw_text(room_width/2, 275, "Created by: Hector Costa Guzmán");
+draw_text(room_width/2, 275, "Created by: Hector Costa Guzman");
 draw_text(room_width/2, 315, "http://hcosta.info");
 
 draw_text(room_width/2, 375, "Music by: teknoaxe");
@@ -96,6 +96,22 @@ draw_text(room_width/2, 515, "http://terrycavanaghgames.com/");
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>222</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_next_room</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
   </events>

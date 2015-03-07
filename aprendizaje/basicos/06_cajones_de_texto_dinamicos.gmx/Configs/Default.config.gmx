@@ -63,8 +63,10 @@
     <option_android_texture_page>1024</option_android_texture_page>
     <option_android_use_test_ads>false</option_android_use_test_ads>
     <option_argumenterrors>true</option_argumenterrors>
+    <option_audioGroupCount>1</option_audioGroupCount>
     <option_author></option_author>
     <option_backimage>nil</option_backimage>
+    <option_borderless>false</option_borderless>
     <option_changed>false</option_changed>
     <option_changeresolution>false</option_changeresolution>
     <option_closeesc>true</option_closeesc>
@@ -90,6 +92,7 @@
     <option_html5_advertising_type>Supersonic Ads</option_html5_advertising_type>
     <option_html5_allow_fullscreen>true</option_html5_allow_fullscreen>
     <option_html5_alwaysreload>false</option_html5_alwaysreload>
+    <option_html5_browser_title>Created with GameMaker:Studio</option_html5_browser_title>
     <option_html5_centergame>false</option_html5_centergame>
     <option_html5_flurry_enable>false</option_html5_flurry_enable>
     <option_html5_flurry_id></option_html5_flurry_id>
@@ -102,6 +105,7 @@
     <option_html5_interpolate>true</option_html5_interpolate>
     <option_html5_jsprepend></option_html5_jsprepend>
     <option_html5_loadingbar>-1</option_html5_loadingbar>
+    <option_html5_localrunalert>true</option_html5_localrunalert>
     <option_html5_outputdebugtoconsole>false</option_html5_outputdebugtoconsole>
     <option_html5_outputname>index.html</option_html5_outputname>
     <option_html5_scale>-1</option_html5_scale>
@@ -109,6 +113,7 @@
     <option_html5_splash_png>Configs\Default\html5\splash.png</option_html5_splash_png>
     <option_html5_texture_page>2048</option_html5_texture_page>
     <option_html5_use_test_ads>false</option_html5_use_test_ads>
+    <option_html5_usebuiltinparticles>true</option_html5_usebuiltinparticles>
     <option_html5_usesplash>false</option_html5_usesplash>
     <option_icon>nil</option_icon>
     <option_in_app_purchase_enable>false</option_in_app_purchase_enable>
@@ -141,6 +146,8 @@
     <option_ios_ipad_retina_splash_png>Configs\Default\ios\iPadRetinasplash.png</option_ios_ipad_retina_splash_png>
     <option_ios_ipad_splash_png>Configs\Default\ios\iPadsplash.png</option_ios_ipad_splash_png>
     <option_ios_iphone5_splash_png>Configs\Default\ios\iPhone5splash.png</option_ios_iphone5_splash_png>
+    <option_ios_iphone6_splash_png>Configs\Default\ios\iPhone6splash.png</option_ios_iphone6_splash_png>
+    <option_ios_iphone6plus_splash_png>Configs\Default\ios\iPhone6Plussplash.png</option_ios_iphone6plus_splash_png>
     <option_ios_iphone_retina_splash_png>Configs\Default\ios\IphoneRetinasplash.png</option_ios_iphone_retina_splash_png>
     <option_ios_iphone_splash_png>Configs\Default\ios\iPhonesplash.png</option_ios_iphone_splash_png>
     <option_ios_major_version>1</option_ios_major_version>
@@ -244,7 +251,8 @@
     <option_savekey>true</option_savekey>
     <option_scale>-1</option_scale>
     <option_scaleprogress>true</option_scaleprogress>
-    <option_sci_UseSCI>false</option_sci_UseSCI>
+    <option_sci_UseSCI>0</option_sci_UseSCI>
+    <option_sci_serverLocation></option_sci_serverLocation>
     <option_screenkey>true</option_screenkey>
     <option_screenshotkey>true</option_screenshotkey>
     <option_shortcircuit>true</option_shortcircuit>
@@ -407,16 +415,20 @@
     <option_xbone_build_version>0</option_xbone_build_version>
     <option_xbone_description>Your Description</option_xbone_description>
     <option_xbone_display_name>003_Platform_views_and_cameras</option_xbone_display_name>
+    <option_xbone_events_manifest_index>-1</option_xbone_events_manifest_index>
     <option_xbone_foreground_text>light</option_xbone_foreground_text>
     <option_xbone_interpolation>true</option_xbone_interpolation>
     <option_xbone_major_version>1</option_xbone_major_version>
     <option_xbone_minor_version>0</option_xbone_minor_version>
     <option_xbone_publisher>Company Name</option_xbone_publisher>
     <option_xbone_publisher_display_name>Company Display Name</option_xbone_publisher_display_name>
+    <option_xbone_require_xbox_live>false</option_xbone_require_xbox_live>
     <option_xbone_revision_version>0</option_xbone_revision_version>
     <option_xbone_scale>-1</option_xbone_scale>
+    <option_xbone_service_config_id></option_xbone_service_config_id>
     <option_xbone_splash_screen_colour>#464646</option_xbone_splash_screen_colour>
     <option_xbone_texture_page>1024</option_xbone_texture_page>
+    <option_xbone_title_id></option_xbone_title_id>
   </Options>
   <ConfigConstants/>
 </Config>

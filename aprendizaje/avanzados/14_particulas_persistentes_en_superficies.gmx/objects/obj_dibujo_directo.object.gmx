@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scr_particula(); //Create particle system...
+            <string>scr_particula(); //Creamos el sistema y la partícula
 
 // Cambiamos al sistema automatico de dibujo ya que vamos a hacerlo cada step
 part_system_automatic_draw(sistema,false);

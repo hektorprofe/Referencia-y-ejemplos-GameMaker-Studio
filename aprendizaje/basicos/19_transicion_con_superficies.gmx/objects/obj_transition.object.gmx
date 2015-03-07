@@ -65,7 +65,7 @@ if ( instance_number(self) &lt;= 1)
     instance_deactivate_all(true);
     
 }
-else    instance_destroy();
+else instance_destroy();
 </string>
           </argument>
         </arguments>

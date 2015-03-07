@@ -33,7 +33,7 @@ if (mouse_check_button_released(mb_left))
     switch(irandom(4))
     {
         case 0: 
-            str = "Lorem ipsum dolor sit amet,#consectetur adipiscing elit.#Aliquam ultricies imperdiet augue.#Ut cursus lacus dui.";
+            str = "Lorem asdasda sdas dasdsasadasdsaasdsadasdasdasdassd ipsum dolor sit amet,#consectetur adipiscing elit.#Aliquam ultricies imperdiet augue.#Ut cursus lacus dui.";
             break
         case 1: 
             str = "Aliquam ultricies imperdiet augue.#Ut cursus lacus dui.";
