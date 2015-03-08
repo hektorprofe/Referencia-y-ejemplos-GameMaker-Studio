@@ -65,7 +65,7 @@
     if (keyboard_check_pressed(ord('Z')) &amp;&amp; sprite_index != spr_player_attack)
     {
         sprite_index = spr_player_attack;
-        image_speed = 1;
+        image_speed = 0.8;
     } 
     
     // Si no hay movimiento ni estamos atacando
@@ -75,6 +75,9 @@
         image_speed = 0;
         sprite_index = spr_player_stand;
     }   
+    
+    // Acabar el juego
+    if (global.hp &lt;= 0) game_end();
     
 }
 </string>

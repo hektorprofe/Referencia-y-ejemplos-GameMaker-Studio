@@ -227,4 +227,85 @@ Una vez hecho tendremos que comprobar antes de cambiar de nuevo el sprite que se
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura5.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura5.png)
 
+### Parte 6: Añadiendo el ataque contra los enemigos
 
+Ya tenemos las animaciones pero todavía no sucede nada cuando un enemigo colisiona con nosotros o utilizamos nuestro ataque para matarlos.
+
+Lo primero que haremos es añadir algo de vida a los enemigos:
+
+```javascript
+/// Obj Enemy: Create
+{
+    hp = 2;
+}
+```
+
+A continuación crearemos el código del ataque, en el propio Step del obj enemy:
+
+```javascript
+/// Obj Enemy: Step
+{
+
+	// Cambiamos la transparencia del enemigo dependiendo de su vida actual
+    image_alpha = hp/2;
+    if (hp <= 0) instance_destroy(); // Si llega a cero borramos el objeto
+    
+    if (instance_exists(obj_player))
+    {
+
+    	// Cambiamos la dirección del sprite
+    
+        if (x <= obj_player.x)
+        {
+            image_xscale = 1;
+        }
+        else
+        {
+            image_xscale = -1;
+        }
+        
+        // En el caso que el jugador esté a menos de 18 px del enemigo
+        if (distance_to_point(obj_player.x,obj_player.y) <= 18)
+        {
+            // Procesamos el ataque del enemigo cada 1 segundo
+            if (alarm[0] <= 0)
+            {
+                global.hp -= 1;
+                motion_set(point_direction(obj_player.x,obj_player.y,x,y), 4);
+                alarm[0] = 30;
+            }
+            
+            // Y detectamos el ataque del jugador sobre el enemigo a partir 
+            // del sprite y de la animación de ataque en movimiento
+            if (obj_player.sprite_index == spr_player_attack && floor(obj_player.image_index) == 1)
+            {
+                // Si el jugador está mirando a la izquierda y el enemigo está a su derecha
+                if (obj_player.image_xscale < 0 && x-obj_player.x <= 0)
+                {
+                    hp -= 1; // Restamos la vida e incrementamos la animación post-ataque
+                    obj_player.image_index = 2;
+                } 
+                // O si el jugador está mirando a la derecha y el enemigo está a su izquierda
+                else if (obj_player.image_xscale > 0 && x-obj_player.x > 0)
+                {
+                    hp -= 1; // Restamos la vida e incrementamos la animación post-ataque
+                    obj_player.image_index = 2;
+                }
+            }
+        }
+    }
+}
+```
+
+Por último sólo nos falta añadir una detección muy básica de la vida del jugador y finalizar el juego cuando ésta llegue a cero:
+
+```javascript
+/// Obj Player: Step
+
+// Acabar el juego
+if (global.hp <= 0) game_end();
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura6.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura6.png)
+
+Ésta ha sido una primera aproximación a un juego RPG. Hay muchas cosas que se pueden mejorar, pero es funcional.
