@@ -7,6 +7,7 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\spr_player</sprite>
+    <sprite>sprites\spr_enemy</sprite>
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_expr</sprite>
   </sprites>
@@ -14,6 +15,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\scr_find_depth.gml</script>
+    <script>scripts\scr_ai.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\obj_player</object>
@@ -21,6 +23,7 @@
     <object>objects\obj_expr</object>
     <object>objects\obj_globals</object>
     <object>objects\obj_stats</object>
+    <object>objects\obj_enemy</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>

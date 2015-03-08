@@ -63,4 +63,44 @@ A continuación manejaremos la experiencia del personaje para hacer que suba de 
 }
 ```
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura2.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura2.png)
+### Parte 3: Enemigos con IA
+
+Empezaremos duplicando el sprite del jugador para crear uno de enemigo. A continuación crearemos el objeto enemy y le añadiremos el sprite.
+
+Para cada Step comprobaremos la profunidad con nuestro script y además llamaremos a un nuevo script llamado scr_ai que manejará el movimiento del enemigo. Éste solo se moverá hacia el jugador cuando no haya una pared en medio y haya un mínimo de distancia. Además añadiremos una comprobación en las colisiones con la pared, el jugador y otros enemigos para añadir un efecto de rebote y disminuir la velocidad.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura2-5.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura2-5.png)
+
+```javascript
+/// scr_ai()
+{
+    if ( instance_exists(obj_player) )
+    {
+        // Si no hay una pared y el jugador está a menos de 256px
+        if (distance_to_point(obj_player.x,obj_player.y) <= 256 && !collision_line(x,y,obj_player.x,obj_player.y,obj_wall,false,true))
+        {
+            // Eliminamos la fricción y añadimos 1 de speed hacia la dirección del jugador
+            friction = 0;
+            motion_add( point_direction(x,y,obj_player.x,obj_player.y), 1 );
+            if(speed>=4) speed = 4;
+        } 
+        // Si hay una pared paramos el movimiento
+        else
+        {
+            friction = 1;
+        }
+    }
+}
+```
+
+```javascript
+/// Obj Enemy: Collision Wall/Enemy/Player
+{
+    // Activamos el rebote
+    move_bounce_all(true);
+    // Decrementamos la velocidad
+    if(speed > 2) speed = speed/2;
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura3.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura3.png)
