@@ -26,8 +26,12 @@
           <argument>
             <kind>1</kind>
             <string>{
+    
+    //image_speed = 0;
+    //sprite_index = spr_player_stand;
+
     // movemos a la derecha si podemos hacerlo
-    if (keyboard_check(vk_right) &amp;&amp; place_free(x+4,y))
+    if (keyboard_check(vk_right) &amp;&amp; place_free(x+4,y) &amp;&amp; sprite_index != spr_player_attack)
     {
         x+=4;
         sprite_index = spr_player_run;
@@ -35,7 +39,7 @@
         image_xscale = 1;
     }
     // movemos a la izquierda si podemos hacerlo
-    if (keyboard_check(vk_left) &amp;&amp; place_free(x-4,y))
+    if (keyboard_check(vk_left) &amp;&amp; place_free(x-4,y) &amp;&amp; sprite_index != spr_player_attack)
     {
         x-=4;
         sprite_index = spr_player_run;
@@ -43,23 +47,30 @@
         image_xscale = -1;
     }
     // movemos a la izquierda si podemos hacerlo
-    if (keyboard_check(vk_up) &amp;&amp; place_free(x,y-4))
+    if (keyboard_check(vk_up) &amp;&amp; place_free(x,y-4) &amp;&amp; sprite_index != spr_player_attack)
     {
         y-=4;
         sprite_index = spr_player_run;
         image_speed = .2;
     }
     // movemos a la izquierda si podemos hacerlo
-    if (keyboard_check(vk_down) &amp;&amp; place_free(x,y+4))
+    if (keyboard_check(vk_down) &amp;&amp; place_free(x,y+4) &amp;&amp; sprite_index != spr_player_attack)
     {
         y+=4;
         sprite_index = spr_player_run;
         image_speed = .2;
-    }
+    } 
     
-    // 
+    // Si atacamos y no está activo el sprite de ataque 
+    if (keyboard_check_pressed(ord('Z')) &amp;&amp; sprite_index != spr_player_attack)
+    {
+        sprite_index = spr_player_attack;
+        image_speed = 1;
+    } 
+    
+    // Si no hay movimiento ni estamos atacando
     if (!keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left)&amp;&amp; 
-        !keyboard_check(vk_up)&amp;&amp; !keyboard_check(vk_down))
+        !keyboard_check(vk_up)&amp;&amp; !keyboard_check(vk_down) &amp;&amp; sprite_index != spr_player_attack)
     {
         image_speed = 0;
         sprite_index = spr_player_stand;
@@ -132,6 +143,33 @@
     global.expr++;
     with(other) instance_destroy();
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (sprite_index == spr_player_attack)
+{
+    sprite_index = spr_player_stand;
+    show_debug_message("END ATTACK");
+} 
 </string>
           </argument>
         </arguments>

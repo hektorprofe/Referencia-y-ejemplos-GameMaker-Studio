@@ -157,3 +157,74 @@ Para añadir la animación fácilmente añadiremos el código que cambiará de s
 ```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura4.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura4.png)
+
+### Parte 5: Animación de ataque
+
+Para añadir un movimiento de ataque con espada creamos una pequeña animación con el rastro de la espada muy sencilla. Capturamos una tecla cualquiera y cambiamos el sprite_index al de la animación de ataque. 
+
+Una vez hecho tendremos que comprobar antes de cambiar de nuevo el sprite que se ha completado la animación de ataque. Lo haremos añadiendo una comprobación a todas las condiciones antes de mover el personaje o ponerle el sprite stand, y después utilizando el evento animation end, cuando la animación de ataque haya finalizado le volvemos a dar el sprite stand.
+
+```javascript
+/// Obj player: Step
+{
+    // movemos a la derecha si podemos hacerlo
+    if (keyboard_check(vk_right) && place_free(x+4,y) && sprite_index != spr_player_attack)
+    {
+        x+=4;
+        sprite_index = spr_player_run;
+        image_speed = .2;
+        image_xscale = 1;
+    }
+    // movemos a la izquierda si podemos hacerlo
+    if (keyboard_check(vk_left) && place_free(x-4,y) && sprite_index != spr_player_attack)
+    {
+        x-=4;
+        sprite_index = spr_player_run;
+        image_speed = .2;
+        image_xscale = -1;
+    }
+    // movemos a la izquierda si podemos hacerlo
+    if (keyboard_check(vk_up) && place_free(x,y-4) && sprite_index != spr_player_attack)
+    {
+        y-=4;
+        sprite_index = spr_player_run;
+        image_speed = .2;
+    }
+    // movemos a la izquierda si podemos hacerlo
+    if (keyboard_check(vk_down) && place_free(x,y+4) && sprite_index != spr_player_attack)
+    {
+        y+=4;
+        sprite_index = spr_player_run;
+        image_speed = .2;
+    } 
+    
+    // Si atacamos y no está activo el sprite de ataque 
+    if (keyboard_check_pressed(ord('Z')) && sprite_index != spr_player_attack)
+    {
+        sprite_index = spr_player_attack;
+        image_speed = 1;
+    } 
+    
+    // Si no hay movimiento ni estamos atacando
+    if (!keyboard_check(vk_right) && !keyboard_check(vk_left)&& 
+        !keyboard_check(vk_up)&& !keyboard_check(vk_down) && sprite_index != spr_player_attack)
+    {
+        image_speed = 0;
+        sprite_index = spr_player_stand;
+    }   
+}
+```
+
+```javascript
+/// Obj player: Animation End
+{  
+	if (sprite_index == spr_player_attack)
+	{
+	    sprite_index = spr_player_stand;
+	} 
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura5.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura5.png)
+
+
