@@ -104,3 +104,56 @@ Para cada Step comprobaremos la profunidad con nuestro script y además llamarem
 ```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura3.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura3.png)
+
+### Parte 4: Animación básica del personaje
+
+Primero dibujamos un par de sprites, uno cuando el personaje está parado y otro en movimiento. Al que está en movimiento le añadimos varias imágenes consecutivas creando el efecto deseado.
+
+Para añadir la animación fácilmente añadiremos el código que cambiará de sprite y la velocidad de la animación en el mismo momento que movemos al jugador:
+
+```javascript
+/// Obj player: Step
+{
+    // movemos a la derecha si podemos hacerlo
+    if (keyboard_check(vk_right) && place_free(x+4,y))
+    {
+        x+=4;
+        sprite_index = spr_player_run;
+        image_speed = .2;
+        image_xscale = 1;
+    }
+    // movemos a la izquierda si podemos hacerlo
+    if (keyboard_check(vk_left) && place_free(x-4,y))
+    {
+        x-=4;
+        sprite_index = spr_player_run;
+        image_speed = .2;
+        image_xscale = -1;
+    }
+    // movemos a la izquierda si podemos hacerlo
+    if (keyboard_check(vk_up) && place_free(x,y-4))
+    {
+        y-=4;
+        sprite_index = spr_player_run;
+        image_speed = .2;
+    }
+    // movemos a la izquierda si podemos hacerlo
+    if (keyboard_check(vk_down) && place_free(x,y+4))
+    {
+        y+=4;
+        sprite_index = spr_player_run;
+        image_speed = .2;
+    }
+    
+    // 
+    if (!keyboard_check(vk_right) && !keyboard_check(vk_left)&& 
+        !keyboard_check(vk_up)&& !keyboard_check(vk_down))
+    {
+        image_speed = 0;
+        sprite_index = spr_player_stand;
+    }   
+    
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura4.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/12_primer_concepto_rpg.gmx/captura4.png)
