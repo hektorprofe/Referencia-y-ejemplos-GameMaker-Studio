@@ -8,7 +8,7 @@ El ejemplo original en inglés se puede encontrar en [Youtube](https://www.youtu
 * Desactivamos la interpolacion entre pixels en las plataformas que queramos (en Global Game Settings).
 * Creamos el objeto obj_Hero, dándole un image_index = 0.1 en el create.
 * Creamos la room.
-* Activamos la view y configuramos paa seguir al heroe con el zoom:
+* Activamos la view y configuramos para seguir al heroe con el zoom:
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img1.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img1.png)
@@ -42,46 +42,57 @@ if (keyboard_check(vk_down)){
 
 ### Parte 2: Tileset y técnicas de mapeo
 
-- creamos el background
-- en room añadimos tiles todo de cesped
-- añadimos una capa con un numero inferior
-- creamos una chuleta con el nombre de las capas de tiles
-  1000000 Floor
-   999999 Paths and Grass
-- Vamos añadiendo hierba para recrear un poco el mapa
-img3.png
-- probamos el juego
-img4.png
+* Creamos el background.
+* En la room añadimos tiles de césped para simular el suelo.
+* Creamos una capa con un numero inferior para los elementos superiores.
+* Es buena idea tener una chuleta con el nombre de las capas de tiles:
+	- 1000000 Floor
+	- 999999 Paths and Grass
+* Vamos añadiendo hierba para recrear un poco el mapa:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img3.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img3.png)
+
+* Probamos el juego:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img4.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img4.png)
 
 ### Parte 3: Colisiones avanzadas y profundidad
 
-- extraremos una imagend e un arbol y creamos el objeto,
-- añadimos fisicas y una mascara shape pero dejando el triángulo libre de la mitad arriba del árbol para hacer que el personaje pueda esconderse detras, le damos densidad 0.0
-- activamos las fisicas en la room y desactivamos la gravedad
-- damos densidad 0.1 al Heroe para que no se pueda mover y le otorgamos una máscara redonda
-- ponemos unos cuantos árboles en la room
-- ahora el personaje no se moverá por las físicas, lo que haremos es cambiar las x e y por phy_position_x y phy_position_y en el step
-- añadimos un evento de colision con el árbol sin nada dentro
-- damos a cada arbol una depth dependiendo de su posicion y: depth = y * -1;
-- hacemos lo mismo para el heroe pero con la posicion y física: depth = phy_position_y * -1;
-img5.png
+* Extraemos una imagen de un árbol y creamos el objeto.
+* Le añadimos físicas y una máscara shape pero dejando el triángulo libre en la mitad superior del árbol para hacer que el personaje pueda esconderse detrás, le damos densidad 0.
+* Activamos las físicas en la room y desactivamos la gravedad (ponemos a 0).
+* Damos densidad 0.1 al héroe y le otorgamos una máscara redonda.
+* Ponemos unos cuantos árboles en la room.
+* Ahora el personaje no se moverá por las físicas, lo que haremos es cambiar las **x** e **y** por **phy_position_x** y **phy_position_y** en el step.
+* Añadimos un evento de colisión con el árbol sin nada dentro del código.
+* Damos a cada árbol una depth dependiendo de su posición Y: **depth = y * -1;**
+* Hacemos lo mismo para el héroe pero con la posicion Y física: **depth = phy_position_y * -1;**
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img5.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img5.png)
 
 ### Parte 4: Dándole vida a nuestro mundo
 
-- creamos una florecilla
-- añadimos el truco de la auto depth
-- creamos otro sprite , clonamos la flor y movemos la flor izquierda un pixel abajo a la izquierda y la derecha 1px abajo derecha y bajamos la dl medio 1 px
-- añadimos un script a la floor para animarla, con un random
-- hacemos lo mismo para animar los árboles, bajando 1 px cada capa del árbol y creando unas cuantas imagenes de subida y bajada
-- para corregir la profundidad de las flores ponemos el offset de la flor a 8
-img6.png
+* Creamos una florecilla.
+* Le añadimos el truco de la auto depth **depth = y * -1;**.
+* Le creamos otro sprite, clonamos la flor y en la nueva imagen movemos la flor izquierda un pixel abajo a la izquierda, la derecha 1px abajo derecha y bajamos la del medio 1 px.
+* Añadimos un script a la floor para animarla, con un random: **image_speed = 0.04 + random(0.03);**
+* Hacemos lo mismo para animar los árboles, bajando 1 px cada capa del árbol y creando unas cuantas imagenes de subida y bajada
+* Para corregir la profundidad de las flores ponemos el offset del sprite de la flor a 8:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img6.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img6.png)
 
 ### Parte 5: Haciendo limpieza
 
-- En esta parte simplemente organizaremos un poco mejor los sprites, objetos y backgrounds del juego, tal como se muestra en la siguiente imagen:
-img6.png
+* En esta parte simplemente organizaremos un poco mejor los sprites, objetos y backgrounds del juego, tal como se muestra en la siguiente imagen:
 
-### Parte 6:
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img7.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img7.png)
+
+### Parte 6: Próximamente
 
 
 
