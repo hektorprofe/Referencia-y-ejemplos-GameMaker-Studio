@@ -13,7 +13,9 @@
       <sprite>sprites\spr_Hero_Left</sprite>
     </sprites>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bg_Tileset_Main</background>
+  </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\obj_Hero</object>
