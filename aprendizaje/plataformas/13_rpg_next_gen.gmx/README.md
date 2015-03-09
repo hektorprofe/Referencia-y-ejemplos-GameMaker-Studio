@@ -4,13 +4,17 @@ El ejemplo original en inglés se puede encontrar en [Youtube](https://www.youtu
 
 ### Parte 1: Creando nuestro héroe
 
-- crear los sprites del heroe 
-- desactivar interpolacion entre pixels en las plataformas que queramos
-- creamos el obj hero, dando un image_index = 0.1 en el create
-- creamos la room
-- activamos la view y configuramos paa seguir al heroe con el zoom y eso
-img1.png
-- añadimos los controles básicos
+* Creamos los sprites del héroe .
+* Desactivamos la interpolacion entre pixels en las plataformas que queramos (en Global Game Settings).
+* Creamos el objeto obj_Hero, dándole un image_index = 0.1 en el create.
+* Creamos la room.
+* Activamos la view y configuramos paa seguir al heroe con el zoom:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/img1.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/img1.png)
+
+* Añadimos los controles básicos:
+
 ```javascript
 /// Handle Input Logic
 if (keyboard_check(vk_left)){
@@ -30,8 +34,11 @@ if (keyboard_check(vk_down)){
     y += 1;
 }
 ```
-- probamos el juego
-img2.png
+
+* Probamos el juego:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/img2.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/img2.png)
 
 ### Parte 2: Tileset y técnicas de mapeo
 
