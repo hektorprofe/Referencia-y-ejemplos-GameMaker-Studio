@@ -92,8 +92,24 @@ if (keyboard_check(vk_down)){
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img7.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img7.png)
 
-### Parte 6: Próximamente
+### Parte 6: Cambios al estilo de RPG Maker
 
+* Empezaremos creando un grupo de objetos System y un objeto dentro llamado GameState
+* Creamos una nueva room rm_TitleScreen y le añadimos una instancia de GameState
+* Haremos el objeto persistente y le añadiremos un evento Create inicializando todas las variables y un mapa donde guardaremos los estados del juego, por ejemplo si se ha mostrado la pantalla de inicio:
+
+```javascript
+/// Initialize Variables
+global.gamespeed = 1.0;
+
+switches = ds_map_create();
+switches[? "introscene"] = true;
+```
+
+```javascript
+/// Start Game
+room_goto_next();
+```
 
 
 

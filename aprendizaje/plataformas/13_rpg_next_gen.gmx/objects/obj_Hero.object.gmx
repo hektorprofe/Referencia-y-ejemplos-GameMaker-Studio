@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0.1;
+            <string>image_speed = 0;
 
 </string>
           </argument>
@@ -73,25 +73,37 @@ depth = phy_position_y * -1;
             <kind>1</kind>
             <string>/// Handle Input Logic
 
+moving = false;
+
 if (keyboard_check(vk_left)){
     sprite_index = spr_Hero_Left;
     phy_position_x -= 2;
+    moving = true;
 }
 
 if (keyboard_check(vk_right)){
     sprite_index = spr_Hero_Right;
     phy_position_x += 2;
+    moving = true;
 }
 
 if (keyboard_check(vk_up)){
     sprite_index = spr_Hero_Up;
     phy_position_y -= 2;
+    moving = true;
 }
 
 if (keyboard_check(vk_down)){
     sprite_index = spr_Hero_Down;
     phy_position_y += 2;
+    moving = true;
 }
+
+if (!moving) {
+    image_speed = 0;
+    image_index = 1;
+}
+else image_speed = 0.2;
 
 </string>
           </argument>
