@@ -10,8 +10,8 @@ El ejemplo original en inglés se puede encontrar en [Youtube](https://www.youtu
 * Creamos la room.
 * Activamos la view y configuramos paa seguir al heroe con el zoom:
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/img1.png
-)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/img1.png)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img1.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img1.png)
 
 * Añadimos los controles básicos:
 
