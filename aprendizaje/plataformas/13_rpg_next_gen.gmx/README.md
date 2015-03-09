@@ -111,6 +111,57 @@ switches[? "introscene"] = true;
 room_goto_next();
 ```
 
+### Parte 7: Sistema dinámico de ventanas
+
+* Empezamos creando dos grupos de sprites System > Window
+* Importamos unas ventanas de un tile de RPG Maker "rpg maker vx ace windowskin"
+* Partimos la ventana en partes de 16*16 y creamos un sprite para cada lado:
+	* spr_Window_TL: Top Left
+	* spr_Window_T: Top
+	* spr_Window_TR: Top Right
+	* spr_Window_ML: Middle Left
+	* spr_Window_MR: Middle Right
+	* spr_Window_BL: Bottom Left
+	* spr_Window_B: Bottom
+	* spr_Window_BR: Bottom Right
+* También añadimos otro sprite para el fondo:
+	* spr_Window_Base
+* Creamos un objeto obj_Window_Base en System > Window y le ponemos el spr_Window_Base de fondo.
+* Le añadimos un evento Draw que dibujará los bordes automáticamente:
+
+```javascript
+/// Draw Window
+
+// Draw Background
+draw_sprite_stretched(spr_Window_Base,0,x+4,y+4,sprite_width - 4, sprite_height - 4);
+
+// Draw H V Axis
+draw_sprite_stretched(spr_Window_T,0,x+8,y,sprite_width-8,16);
+draw_sprite_stretched(spr_Window_B,0,x,y+sprite_height-10,sprite_width,16);
+
+draw_sprite_stretched(spr_Window_ML,0,x,y,16,sprite_height);
+draw_sprite_stretched(spr_Window_MR,0,x + sprite_width - 16,y,16,sprite_height);
+
+// Draw Corners
+draw_sprite(spr_Window_TL,0,x,y);
+draw_sprite(spr_Window_TR,0,x+sprite_width-16,y);
+draw_sprite(spr_Window_BL,0,x,y + sprite_height - 10);
+draw_sprite(spr_Window_BR,0,x+sprite_width-16,y+sprite_height - 10);
+```
+
+* Ahora creamos unas cuantas ventanas en la room:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img8.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img8.png)
+
+* Y el resultado es simplemente genial:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img9.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img9.png)
+
+
+
+
 
 
 

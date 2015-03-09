@@ -18,6 +18,22 @@
       <sprite>sprites\spr_Flower</sprite>
       <sprite>sprites\spr_Tree</sprite>
     </sprites>
+    <sprites name="System">
+      <sprites name="Window">
+        <sprite>sprites\spr_Window_Base</sprite>
+        <sprite>sprites\spr_Window_TL</sprite>
+        <sprite>sprites\spr_Window_T</sprite>
+        <sprite>sprites\spr_Window_TR</sprite>
+        <sprite>sprites\spr_Window_ML</sprite>
+        <sprite>sprites\spr_Window_MR</sprite>
+        <sprite>sprites\spr_Window_BL</sprite>
+        <sprite>sprites\spr_Window_B</sprite>
+        <sprite>sprites\spr_Window_BR</sprite>
+      </sprites>
+      <sprites name="Unused">
+        <sprite>sprites\spr_WindowSkin</sprite>
+      </sprites>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="Environment">
@@ -35,6 +51,9 @@
     </objects>
     <objects name="System">
       <object>objects\GameState</object>
+      <objects name="Window">
+        <object>objects\obj_Window_Base</object>
+      </objects>
     </objects>
   </objects>
   <rooms name="rooms">
