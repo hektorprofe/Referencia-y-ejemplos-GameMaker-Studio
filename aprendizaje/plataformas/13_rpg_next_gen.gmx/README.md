@@ -59,5 +59,26 @@ img4.png
 - hacemos lo mismo para el heroe pero con la posicion y física: depth = phy_position_y * -1;
 img5.png
 
+### Parte 4: Dándole vida a nuestro mundo
+
+- creamos una florecilla
+- añadimos el truco de la auto depth
+- creamos otro sprite , clonamos la flor y movemos la flor izquierda un pixel abajo a la izquierda y la derecha 1px abajo derecha y bajamos la dl medio 1 px
+- añadimos un script a la floor para animarla, con un random
+- hacemos lo mismo para animar los árboles, bajando 1 px cada capa del árbol y creando unas cuantas imagenes de subida y bajada
+- para corregir la profundidad de las flores ponemos el offset de la flor a 8
+img6.png
+
+### Parte 5: Haciendo limpieza
+
+- En esta parte simplemente organizaremos un poco mejor los sprites, objetos y backgrounds del juego, tal como se muestra en la siguiente imagen:
+img6.png
+
+### Parte 6:
+
+
+
+
+
 
 

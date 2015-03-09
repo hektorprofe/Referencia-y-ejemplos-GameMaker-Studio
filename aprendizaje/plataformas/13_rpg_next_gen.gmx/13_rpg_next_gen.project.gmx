@@ -6,23 +6,33 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprites name="Hero">
-      <sprite>sprites\spr_Hero_Down</sprite>
-      <sprite>sprites\spr_Hero_Up</sprite>
-      <sprite>sprites\spr_Hero_Right</sprite>
-      <sprite>sprites\spr_Hero_Left</sprite>
+    <sprites name="Party">
+      <sprites name="Hero">
+        <sprite>sprites\spr_Hero_Down</sprite>
+        <sprite>sprites\spr_Hero_Up</sprite>
+        <sprite>sprites\spr_Hero_Right</sprite>
+        <sprite>sprites\spr_Hero_Left</sprite>
+      </sprites>
     </sprites>
-    <sprites name="Tree">
+    <sprites name="Nature">
+      <sprite>sprites\spr_Flower</sprite>
       <sprite>sprites\spr_Tree</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
-    <background>background\bg_Tileset_Main</background>
+    <backgrounds name="Environment">
+      <background>background\bg_Tileset_Main</background>
+    </backgrounds>
   </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
-    <object>objects\obj_Hero</object>
-    <object>objects\obj_Tree</object>
+    <objects name="Party">
+      <object>objects\obj_Hero</object>
+    </objects>
+    <objects name="Nature">
+      <object>objects\obj_Flower</object>
+      <object>objects\obj_Tree</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Intro</room>
