@@ -12,6 +12,9 @@
       <sprite>sprites\spr_Hero_Right</sprite>
       <sprite>sprites\spr_Hero_Left</sprite>
     </sprites>
+    <sprites name="Tree">
+      <sprite>sprites\spr_Tree</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_Tileset_Main</background>
@@ -19,6 +22,7 @@
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\obj_Hero</object>
+    <object>objects\obj_Tree</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Intro</room>

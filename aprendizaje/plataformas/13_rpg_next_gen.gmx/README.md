@@ -4,24 +4,60 @@ El ejemplo original en inglés se puede encontrar en [Youtube](https://www.youtu
 
 ### Parte 1: Creando nuestro héroe
 
-crear los sprites del heroe 
-desactivar interpolacion entre pixels en las plataformas que queramos
-creanis el obj hero
-creamos la room
-activamos la view y configuramos paa seguir al heroe con el zoom y eso
+- crear los sprites del heroe 
+- desactivar interpolacion entre pixels en las plataformas que queramos
+- creamos el obj hero, dando un image_index = 0.1 en el create
+- creamos la room
+- activamos la view y configuramos paa seguir al heroe con el zoom y eso
 img1.png
-añadimos los controles básicos
+- añadimos los controles básicos
+```javascript
+/// Handle Input Logic
+if (keyboard_check(vk_left)){
+    sprite_index = spr_Hero_Left;
+    x -= 1;
+}
+if (keyboard_check(vk_right)){
+    sprite_index = spr_Hero_Right;
+    x += 1;
+}
+if (keyboard_check(vk_up)){
+    sprite_index = spr_Hero_Up;
+    y -= 1;
+}
+if (keyboard_check(vk_down)){
+    sprite_index = spr_Hero_Down;
+    y += 1;
+}
+```
+- probamos el juego
 img2.png
 
 ### Parte 2: Tileset y técnicas de mapeo
 
-creamos el background
-en room añadimos tiles todo de cesped
-añadimos una capa con un numero inferior
-creamos una chuleta con el nombre de las capas de tiles
+- creamos el background
+- en room añadimos tiles todo de cesped
+- añadimos una capa con un numero inferior
+- creamos una chuleta con el nombre de las capas de tiles
   1000000 Floor
    999999 Paths and Grass
-Vamos añadiendo hierba para recrear un poco el mapa
+- Vamos añadiendo hierba para recrear un poco el mapa
 img3.png
+- probamos el juego
+img4.png
+
+### Parte 3: Colisiones avanzadas y profundidad
+
+- extraremos una imagend e un arbol y creamos el objeto,
+- añadimos fisicas y una mascara shape pero dejando el triángulo libre de la mitad arriba del árbol para hacer que el personaje pueda esconderse detras, le damos densidad 0.0
+- activamos las fisicas en la room y desactivamos la gravedad
+- damos densidad 0.1 al Heroe para que no se pueda mover y le otorgamos una máscara redonda
+- ponemos unos cuantos árboles en la room
+- ahora el personaje no se moverá por las físicas, lo que haremos es cambiar las x e y por phy_position_x y phy_position_y en el step
+- añadimos un evento de colision con el árbol sin nada dentro
+- damos a cada arbol una depth dependiendo de su posicion y: depth = y * -1;
+- hacemos lo mismo para el heroe pero con la posicion y física: depth = phy_position_y * -1;
+img5.png
+
 
 
