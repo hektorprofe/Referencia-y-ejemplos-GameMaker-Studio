@@ -52,6 +52,19 @@
     <backgrounds name="Environment">
       <background>background\bg_Tileset_Main</background>
     </backgrounds>
+    <backgrounds name="Levels">
+      <backgrounds name="HomeCity">
+        <background>background\bg_HomeCity_01</background>
+        <background>background\bg_HomeCity_02</background>
+        <background>background\bg_HomeCity_03</background>
+        <background>background\bg_HomeCity_04</background>
+        <background>background\bg_HomeCity_05</background>
+        <background>background\bg_HomeCity_06</background>
+        <background>background\bg_HomeCity_07</background>
+        <background>background\bg_HomeCity_08</background>
+        <background>background\bg_HomeCity_09</background>
+      </backgrounds>
+    </backgrounds>
   </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
@@ -81,6 +94,7 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_HomeCity</room>
     <room>rooms\rm_TitleScreen</room>
     <room>rooms\rm_Intro</room>
   </rooms>

@@ -326,3 +326,27 @@ questSuccessMessage = "Oh!!! Thank you so much for finding my tea. God bless you
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img12.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img12.png)
+
+### Parte 10: Mejorar las técnicas de mapeo
+
+* En esta parte se explica como utilizar la herramienta RPG Maker VX Ace para crear un mapa genérico, borrarle los elementos y exportarlo utilizando un script que generará una imagen gigante en PNG.
+* A continuación con Gimp (o Photoshop) utilizando la herramienta Sector, sectorizamos la imagen en varios trozos de tamaño 640*480.
+* Una vez particionadas podemos importarlas en Game Maker. Para ello crearemos un grupo llamado Levels en Backgrounds y dentro otro llamado HomeCity.
+* Entonces sólo tenemos que arrastrar las 9 imágenes al grupo creado como Backgrounds y marcarles la opción "Use as Tile Set" dándoles todo el ancho y alto de tamaño (ésto para las versiones 1.3 o mayores de GM:Studio).
+* Ahora creamos una nueva room llamada rm_HomeCity, le daremos de tamaño 1376*1440, el tamaño del mapa original.
+* En Tiles añadimos todos los trozos del mapa que hemos importado de manera que recreamos el mapa original.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img13.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img13.png)
+
+* Esta técnica de mapeo partiendo el fondo en trozos grandes da unos FPS muy altos ya que en lugar de procesar múltiples tiles se procesa el fondo sólo una vez. Como se ve en el siguiente ejemplo al renderizar el juego oscila sobre los 5000 FPS (con un i7 4790K).
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img14.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img14.png)
+
+* Ahora podemos poner unas cuantas flores y árboles de los que hemos creado anteriormente sobre nuestro fondo, añadimos nuestro héroe, activamos las físicas en la room, ponemos la gravedad a 0, activamos y configuramos las views y...
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img15.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img15.png)
+
+* Como vemos seguimos con una cantidad de FPS muy alta incluso con las animaciones de los diferentes objetos en la pantalla.
