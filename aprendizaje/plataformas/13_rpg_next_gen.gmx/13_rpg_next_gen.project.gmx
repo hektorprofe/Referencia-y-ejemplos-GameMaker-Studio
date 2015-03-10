@@ -97,11 +97,11 @@
         <object>objects\obj_Window_Base</object>
       </objects>
       <objects name="Warp">
-        <object>objects\obj_Hero_Start</object>
-        <object>objects\obj_Base_Warp</object>
-        <object>objects\obj_Warp_Last_Post</object>
-        <objects name="Locations">
+        <object>objects\obj_Hero_Reposition</object>
+        <object>objects\obj_Warp</object>
+        <objects name="Deprecated">
           <object>objects\obj_Warp_Pub</object>
+          <object>objects\obj_Warp_Last_Post</object>
         </objects>
       </objects>
     </objects>

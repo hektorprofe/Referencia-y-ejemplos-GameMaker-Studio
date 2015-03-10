@@ -441,6 +441,83 @@ obj_Hero.phy_position_y = GameState.switches[? "last_pos_y"];
 
 ### Parte 13: Eventos de teletransporte - Parte 2
 
+El sistema de transporte implementado anteriormente no era del todo funcional así que se ha hecho un remake.
+
+* Empezaremos renombrando el obj_Hero_Start por obj_Hero_Reposition.
+* También cambiamos el de obj_Base_Warp por obj_Warp.
+* Seguidamente en el obj_Base_Warp crearemos las variables de destino:
+
+```javascript
+var dest_room = -1;
+var dest_x = 0;
+var dest_y = 0;
+```
+
+* Ahora borramos los objetos obj_Warp_Pub y obj_Warp_Last_Point.
+* Añadimos un obj_Warp en la puerta del Pub y en su creation code ponemos:
+
+```javascript
+event_inherited();
+dest_room = rm_Pub;
+dest_x = 640 + 15; // Posición X de aparición en la casa
+				   // El offset de 15 es para acabar de centrarlo
+dest_y = 576; // Posición Y de aparición en la casa
+```
+
+* Actualizamos la colisión del obj_Warp guardando la última posición:
+
+```javascript
+/// Go to destiny room but capture last room and point before
+GameState.switches[? "last_pos_x"] = dest_x;
+GameState.switches[? "last_pos_y"] = dest_y;
+room_goto(dest_room);
+```
+
+* Y hacemos lo mismo con el obj_Hero_Reposition:
+
+```javascript
+/// Set hero in warp position on create
+obj_Hero.phy_position_x = GameState.switches[? "last_pos_x"];
+obj_Hero.phy_position_y = GameState.switches[? "last_pos_y"];
+```
+
+* Ahora añadimos un obj_Hero_Reposition en cada room y otro obj_Warp en la salida del Pub, con creation code:
+
+```javascript
+event_inherited();
+dest_room = rm_HomeCity;
+dest_x = 288+16;
+dest_y = 1120+16; // Este offset Y es muy importante para no salir sobre el warp de nuevo y volver a entrar XD
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img21.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img21.png)
+
+* Ahora antes de probar el juego actualizaremos la posición inicial del jugador estableciendo en el mapeo global su posición en la room rm_CityHome en el objeto **GameState**:
+
+```javascript
+// Initial Player position
+switches[? "last_pos_x"] = 288+15;
+switches[? "last_pos_y"] = 1184;
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img22.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img22.png)
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img23.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img23.png)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

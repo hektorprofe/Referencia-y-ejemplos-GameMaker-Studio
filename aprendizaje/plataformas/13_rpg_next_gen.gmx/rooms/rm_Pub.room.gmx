@@ -60,8 +60,15 @@
     <instance objName="obj_Collision" x="448" y="160" name="inst_F3F66CCA" locked="0" code="" scaleX="1" scaleY="3" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision" x="480" y="224" name="inst_0F027E91" locked="0" code="" scaleX="7" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision" x="672" y="160" name="inst_0FC50D41" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Hero_Start" x="640" y="576" name="inst_013C9CB9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Warp_Last_Post" x="640" y="608" name="inst_EDF7A896" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Hero_Reposition" x="64" y="64" name="inst_013C9CB9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Warp" x="640" y="608" name="inst_D17DD0C2" locked="0" code="event_inherited();&#xA;dest_room = rm_HomeCity;&#xA;dest_x = 288+16;&#xA;dest_y = 1120+24;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision" x="241" y="160" name="inst_33391AB1" locked="0" code="" scaleX="1.96875" scaleY="0.6875" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision" x="160" y="352" name="inst_FDFA1A63" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision" x="160" y="448" name="inst_F264BA77" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision" x="320" y="448" name="inst_9BB74700" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision" x="320" y="352" name="inst_047BB47F" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision" x="480" y="352" name="inst_C557D2CB" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision" x="480" y="448" name="inst_F2D2EC3A" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_Pub_01" x="0" y="0" w="288" h="352" xo="0" yo="0" id="10000653" name="inst_15B015CD" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

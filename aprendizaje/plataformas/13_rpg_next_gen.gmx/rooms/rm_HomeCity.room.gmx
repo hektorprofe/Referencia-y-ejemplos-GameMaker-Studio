@@ -72,7 +72,6 @@
     <instance objName="obj_Flower" x="608" y="384" name="inst_4BA06D5B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Flower" x="1088" y="448" name="inst_801F604D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Tree" x="992" y="160" name="inst_1778476C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Hero" x="256" y="1184" name="inst_7367F0D3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision" x="64" y="64" name="inst_5D38F736" locked="0" code="" scaleX="1" scaleY="39" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision" x="1280" y="64" name="inst_2B868524" locked="0" code="" scaleX="1" scaleY="39" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision" x="96" y="64" name="inst_673BA5C2" locked="0" code="" scaleX="37" scaleY="3" colour="4294967295" rotation="0"/>
@@ -164,7 +163,9 @@
     <instance objName="obj_Collision" x="448" y="800" name="inst_8B45E9E0" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision" x="160" y="1088" name="inst_836A7621" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision" x="320" y="1088" name="inst_26E9E905" locked="0" code="" scaleX="9" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Warp_Pub" x="288" y="1088" name="inst_753423C6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Hero" x="354" y="1183" name="inst_7367F0D3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Warp" x="288" y="1088" name="inst_30A2BBF6" locked="0" code="dest_room = rm_Pub;&#xA;dest_x = 640 + 15; // Posición X de aparición en la casa&#xA;dest_y = 588; // Posición Y de aparición en la casa&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Hero_Reposition" x="0" y="0" name="inst_BFD55317" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_HomeCity_01" x="0" y="0" w="640" h="480" xo="0" yo="0" id="10000644" name="inst_FA10B38A" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
