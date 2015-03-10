@@ -49,6 +49,10 @@
       <sprites name="Collisions">
         <sprite>sprites\spr_Collision</sprite>
       </sprites>
+      <sprites name="Warp">
+        <sprite>sprites\spr_Hero_Start</sprite>
+        <sprite>sprites\spr_Base_Warp</sprite>
+      </sprites>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -67,6 +71,14 @@
         <background>background\bg_HomeCity_08</background>
         <background>background\bg_HomeCity_09</background>
       </backgrounds>
+      <backgrounds name="Pub">
+        <background>background\bg_Pub_01</background>
+        <background>background\bg_Pub_02</background>
+        <background>background\bg_Pub_03</background>
+        <background>background\bg_Pub_04</background>
+        <background>background\bg_Pub_05</background>
+        <background>background\bg_Pub_06</background>
+      </backgrounds>
     </backgrounds>
   </backgrounds>
   <paths name="paths"/>
@@ -84,6 +96,14 @@
       <objects name="Window">
         <object>objects\obj_Window_Base</object>
       </objects>
+      <objects name="Warp">
+        <object>objects\obj_Hero_Start</object>
+        <object>objects\obj_Base_Warp</object>
+        <object>objects\obj_Warp_Last_Post</object>
+        <objects name="Locations">
+          <object>objects\obj_Warp_Pub</object>
+        </objects>
+      </objects>
     </objects>
     <objects name="NPC">
       <object>objects\obj_NPC_Base</object>
@@ -98,9 +118,12 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_HomeCity</room>
     <room>rooms\rm_TitleScreen</room>
-    <room>rooms\rm_Intro</room>
+    <room>rooms\rm_HomeCity</room>
+    <room>rooms\rm_Pub</room>
+    <rooms name="Unused">
+      <room>rooms\rm_Intro</room>
+    </rooms>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

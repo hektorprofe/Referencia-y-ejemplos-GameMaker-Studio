@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -119,7 +119,7 @@ if (keyboard_check(ord('Z'))){
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Collision">
+    <event eventtype="4" ename="obj_NPC_Base">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -142,7 +142,7 @@ if (keyboard_check(ord('Z'))){
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_NPC_Base">
+    <event eventtype="4" ename="obj_Collision">
       <action>
         <libid>1</libid>
         <id>603</id>

@@ -357,11 +357,109 @@ questSuccessMessage = "Oh!!! Thank you so much for finding my tea. God bless you
 * Empezaremos creando un nuevo sprite 32x32, transparente de cualquier color en Sprites > System > Collisions > spr_Collision.
 * Luego crearemos un objeto llamado obj_Collision en el grupo System y le daremos el sprite que hemos creado anteriormente.
 * Creamos un evento de colisión en el heroe contra el obj_Collision con un código vacío.
-* Volvemos un momento al obj_Collision, le activamos las físicas, le creamos una máscara cuadrada y ponemos la densidad a 0 para que no pueda ser empujadoy muy importante, desmarcamos la casilla **Visible**.
+* Volvemos un momento al obj_Collision, le activamos las físicas, le creamos una máscara cuadrada, ponemos la densidad a 0 para que no pueda ser empujado y muy importante, desmarcamos la casilla **Visible**.
 * Paso siguiente crearemos objetos collision en el mapa sobre las zonas que queremos que el héroe no pueda pasar. Podemos darles diferentes tamaños de manera que cubriremos gran parte del mapa.
 * Ahora en la room podemos deseleccionar la opción **Show Invisible Objects** en la lupa y alternar de forma cómoda la visión de las máscaras de colisión que vamos creando.
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img16.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img16.png)
+
+### Parte 12: Eventos de teletransporte - Parte 1
+
+* Antes de empezar cabe comentar un pequeño código muy útil para dibujar las máscaras de colisión cuando tenemos activadas las físicas. Hay que ponerlo en el Draw de cualquier objeto:
+
+```javascript
+draw_self();
+physics_draw_debug();
+```
+
+* Ahora de cara a crear unas nuevas rooms para transportarnos volvemos a exportar un mapa de RPG Maker (para testing). Repetimos todo el proceso y creamos una nueva room llamada rm_Pub, con sus colisiones y todo:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img17.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img17.png)
+
+* Para gestionar el punto de aparición de nuestro héroe crearemos un nuevo sprite spr_Hero_Start y su correspondiente objeto obj_Hero_Start y lo hacemos invisible.
+* Para las zonas de transporte (warp zones) crearemos uno igual spr_Hero_Warp y el objeto obj_Base_Warp con el mismo sprite.
+* En el objeto obj_Base_Warp marcamos que usa físicas, le damos el sprite base, activamos **sensor** y le damos también una máscara de colisión que sea un cuadrado y una densidad 0.
+* A continuación creamos un objeto base para gestionar el warp a la room rm_Pub en Warp > Locations llamado obj_Warp_Pub. Marcamos que usa físicas, le damos el sprite base, activamos **sensor** y le damos también una máscara de colisión que sea un cuadrado y una densidad 0.
+* Creamos un warp zone **obj_Warp_Pub** en la puerta del PUB de la room rm_HomeCity:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img18.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img18.png)
+
+* Ahora añadimos en el obj_Base_Warp un evento Create con la variable **var dest_room = -1;**.
+* Seguidamente en el obj_Warp_Pub añadimos un evento create e inicializamos la variable con la room de destino:
+
+```javascript
+event_inherited();
+dest_room = rm_Pub;
+```
+
+* Volvemos al obj_Base_Warp y creamos una colisión con el héroe:
+
+```javascript
+room_goto(dest_room);
+```
+
+* Ahora lo que tenemos que hacer es indicar al héroe que debe aparecer justo en el punto dónde indicamos el warp obj_Hero_Start dentro de la room rm_Pub:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img19.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img19.png)
+
+* Para hacerlo empezaremos estableciendo nuestro héroe como **Persistent** y luego en el Create de obj_Hero_Start cambiaremos la posición del héroe a su localización:
+
+```javascript
+obj_Hero.phy_position_x = x;
+obj_Hero.phy_position_y = y;
+```
+
+* Ahora ya nos funciona el warp, pero no hay forma de salir de la room, así que vamos a crear el sistema de retorno.
+* Para hacerlo guardaremos en nuestro maper global la posición x e y del héroe justo antes de transportarse en el obj_Base_Warp:
+
+```javascript
+/// Go to destiny room but capture last room and point before
+GameState.switches[? "last_room"] = room;
+GameState.switches[? "last_pos_x"] = obj_Hero.phy_position_x;
+GameState.switches[? "last_pos_y"] = obj_Hero.phy_position_y;
+room_goto(dest_room);
+```
+
+* A continuación crearemos un nuevo objeto obj_Warp_Last_Post al que tendremos que llegar para transportarnos al punto guardado en nuestro maper global. Creamos una colisión con el héroe que lo transporte de vuelta a la room anterior y a la coordenada x,y guardada:
+
+```javascript
+/// Back to saved room and position
+room_goto(GameState.switches[? "last_room"]);
+
+obj_Hero.phy_position_x = GameState.switches[? "last_pos_x"];
+obj_Hero.phy_position_y = GameState.switches[? "last_pos_y"];
+```
+
+* Añadimos nuestro obj_Warp_Last_Post en la salida de la room:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img20.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img20.png)
+
+### Parte 13: Eventos de teletransporte - Parte 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
