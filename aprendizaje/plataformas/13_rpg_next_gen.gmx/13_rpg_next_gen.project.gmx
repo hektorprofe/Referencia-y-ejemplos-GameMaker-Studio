@@ -6,6 +6,23 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprites name="NPC">
+      <sprites name="Bob">
+        <sprite>sprites\spr_Bob_Left</sprite>
+        <sprite>sprites\spr_Bob_Right</sprite>
+        <sprite>sprites\spr_Bob_Up</sprite>
+        <sprite>sprites\spr_Bob_Down</sprite>
+      </sprites>
+    </sprites>
+    <sprites name="Objects">
+      <sprites name="Nature">
+        <sprite>sprites\spr_Flower</sprite>
+        <sprite>sprites\spr_Tree</sprite>
+      </sprites>
+      <sprites name="Misc">
+        <sprite>sprites\spr_Tea</sprite>
+      </sprites>
+    </sprites>
     <sprites name="Party">
       <sprites name="Hero">
         <sprite>sprites\spr_Hero_Down</sprite>
@@ -13,10 +30,6 @@
         <sprite>sprites\spr_Hero_Right</sprite>
         <sprite>sprites\spr_Hero_Left</sprite>
       </sprites>
-    </sprites>
-    <sprites name="Nature">
-      <sprite>sprites\spr_Flower</sprite>
-      <sprite>sprites\spr_Tree</sprite>
     </sprites>
     <sprites name="System">
       <sprites name="Window">
@@ -32,14 +45,6 @@
       </sprites>
       <sprites name="Unused">
         <sprite>sprites\spr_WindowSkin</sprite>
-      </sprites>
-    </sprites>
-    <sprites name="NPC">
-      <sprites name="Bob">
-        <sprite>sprites\spr_Bob_Left</sprite>
-        <sprite>sprites\spr_Bob_Right</sprite>
-        <sprite>sprites\spr_Bob_Up</sprite>
-        <sprite>sprites\spr_Bob_Down</sprite>
       </sprites>
     </sprites>
   </sprites>
@@ -66,6 +71,13 @@
     <objects name="NPC">
       <object>objects\obj_NPC_Base</object>
       <object>objects\obj_NPC_Bob</object>
+    </objects>
+    <objects name="Quests">
+      <objects name="NPC Quest">
+        <objects name="NPC Bob">
+          <object>objects\obj_Tea</object>
+        </objects>
+      </objects>
     </objects>
   </objects>
   <rooms name="rooms">

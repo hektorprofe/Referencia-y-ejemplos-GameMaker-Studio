@@ -28,7 +28,13 @@
             <string>image_speed = 0;
 image_index = 1;
 
-message = "Undefined NPC";
+var message             = "Undefined Message NPC";
+var questMessage        = "Undefined Quest Message NPC";
+var questSuccessMessage = "Undefined Quest Success Message NPC";
+
+var hasquest       = false;
+var quest          = "";
+var questCondition = "";
 </string>
           </argument>
         </arguments>
@@ -74,11 +80,24 @@ depth = phy_position_y * -1;
           <argument>
             <kind>1</kind>
             <string>/// Hero interaction
-
 var dist = point_distance(obj_Hero.phy_position_x,obj_Hero.phy_position_y,phy_position_x,phy_position_y);
 if (dist &lt; 32){
     if (obj_Hero.action == true){
-        show_message(message);
+        // If the NPC has a quest
+        if (hasquest){
+            // If that quest has been successed show success
+            if (GameState.switches[? questCondition]){
+                show_message(questSuccessMessage);
+            } else {
+                // Else
+                show_message(questMessage);
+                GameState.switches[? quest] = true;
+                show_debug_message("Quest Activated: " +  quest);
+            }
+        } else {
+            // Else show inhertied custom message
+            show_message(message);
+        }
     }
 }
 </string>

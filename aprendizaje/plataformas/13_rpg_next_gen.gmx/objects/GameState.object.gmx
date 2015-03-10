@@ -29,7 +29,14 @@
 global.gamespeed = 1.0;
 
 switches = ds_map_create();
-switches[? "introscene"] = true;
+
+switches[? "introscene"]                = true;
+switches[? "quest_teaparty_started"]    = false;
+switches[? "quest_teaparty_gottea"]     = false;
+
+
+
+
 //show_message(switches[? "introscene"]);
 
 

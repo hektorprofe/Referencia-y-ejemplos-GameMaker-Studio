@@ -213,8 +213,116 @@ message = "Hello... I'm Bob.";
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img10.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img10.png)
 
+### Parte 9: Nuestra primera misión
 
+* La primera misión tratará de recolectar un objeto.
+* Creamos un sprite llamado spr_Tea con el dibujo de un jarrón de té y una taza.
+* A continuación creamos una jerarquía nueva de objetos: Quests > NPC Quest > NPC Bob con el objeto obj_Tea.
+* Le activamos las físicas y la casilla **sensor** y lo ponemos en un lugar escondido de la room.
+* Creamos dos nuevos disparadores en el GameState para gestionar si la misión está empezada y si se ha recogido el té:
 
+```javascript
+switches[? "quest_teaparty_started"]    = false;
+switches[? "quest_teaparty_gottea"]     = false;
+```
 
+* Establecemos el evento Create:
 
+```javascript
+/// Initial vars and depth correction
+depth = y*-1;
+active = false;
+```
 
+* Establecemos el evento Step:
+
+```javascript
+/// Check if quest is started
+if (GameState.switches[? "quest_teaparty_started"]  == true)
+{
+    active = true;
+}
+```
+
+* La colisión del héroe contra el objeto:
+
+```javascript
+/// Check colision from hero
+GameState.switches[? "quest_teaparty_gottea"] = true;
+```
+
+* Y el Draw para saber si debemos o no dibujar este objeto:
+
+```javascript
+/// Draw the object only if is active
+if (active) draw_self();
+```
+ 
+* A continuación creamos una nueva variable **var quest = "";** en el obj_NPC_Base vacía y en el NPC_Bob le damos el valor **quest = "quest_teaparty_started";**.
+* Y creamos otra llamada **var hasquest = false;** que inicializaremos a true en el NPC_Bob. De esta forma tendremos una misión en Bob.
+* Ahora lo que haremos es iniciar la misión de Bob al hablar con él, para hacerlo únicamente modificaremos el Step del obj_NPC_Base y justo después de hablar añadiremos:
+
+```javascript
+if (hasquest){
+    GameState.switches[? quest] = true; // quest equivale a 'quest_teaparty_gottea' en Bob
+    show_debug_message("Quest Activated: " +  quest);
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img11.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img11.png)
+
+* Ahora lo que haremos es destruir la instancia del objeto té cuando el héroe choca contra él **instance_destroy();**
+* También añadiremos algunas variables más a obj_NPC_Base para tener un mejor control del NPC y sus respuestas:
+
+```javascript
+var message             = "Undefined Message NPC";
+var questCondition       = "Undefined Quest Condition NPC";
+var questMessage        = "Undefined Quest Message NPC";
+var questSuccessMessage = "Undefined Quest Success Message NPC";
+
+var hasquest = false;
+var quest = false;
+```
+
+* Luego en el step del obj_NPC_Base haremos una comprobación de todas las posibilidades antes de mostrar los mensajes:
+
+```javascript
+/// Hero interaction
+var dist = point_distance(obj_Hero.phy_position_x,obj_Hero.phy_position_y,phy_position_x,phy_position_y);
+if (dist < 32){
+    if (obj_Hero.action == true){
+        // If the NPC has a quest
+        if (hasquest){
+            // If that quest has been successed show successQuestMessage
+            if (GameState.switches[? questCondition]){
+                show_message(questSuccessMessage);
+            } else {
+                // Else show questMessage
+                show_message(questMessage);
+                GameState.switches[? quest] = true;
+                show_debug_message("Quest Activated: " +  quest);
+            }
+        } else {
+            // Else show custom NPC message
+            show_message(message);
+        }
+    }
+}
+```
+
+* Por último en en el NPC Bob inicializaremos todas las variables:
+
+```javascript
+event_inherited();
+
+hasquest = true;
+quest = "quest_teaparty_started";
+questCodition = "quest_teaparty_gottea";
+
+questMessage = "Hello... I'm Bob the Ninja. I lost my tea at the end of the forest, please find it for me and I'll reward you.";
+questSuccessMessage = "Oh!!! Thank you so much for finding my tea. God bless you.";
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img12.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img12.png)
