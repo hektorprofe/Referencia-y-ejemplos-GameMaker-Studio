@@ -333,7 +333,7 @@ questSuccessMessage = "Oh!!! Thank you so much for finding my tea. God bless you
 * A continuación con Gimp (o Photoshop) utilizando la herramienta Sector, sectorizamos la imagen en varios trozos de tamaño 640*480.
 * Una vez particionadas podemos importarlas en Game Maker. Para ello crearemos un grupo llamado Levels en Backgrounds y dentro otro llamado HomeCity.
 * Entonces sólo tenemos que arrastrar las 9 imágenes al grupo creado como Backgrounds y marcarles la opción "Use as Tile Set" dándoles todo el ancho y alto de tamaño (ésto para las versiones 1.3 o mayores de GM:Studio).
-* Ahora creamos una nueva room llamada rm_HomeCity, le daremos de tamaño 1376*1440, el tamaño del mapa original.
+* Ahora creamos una nueva room llamada rm_HomeCity, le daremos de tamaño 1376x1440, el tamaño del mapa original.
 * En Tiles añadimos todos los trozos del mapa que hemos importado de manera que recreamos el mapa original.
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img13.png
@@ -350,3 +350,19 @@ questSuccessMessage = "Oh!!! Thank you so much for finding my tea. God bless you
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img15.png)
 
 * Como vemos seguimos con una cantidad de FPS muy alta incluso con las animaciones de los diferentes objetos en la pantalla.
+
+### Parte 11: Colisiones y rendimiento
+
+* Ya tenemos un background pero nuestro personaje se puede mover por todos sitios. Para evitarlo implementaremos una máscara de colisiones.
+* Empezaremos creando un nuevo sprite 32x32, transparente de cualquier color en Sprites > System > Collisions > spr_Collision.
+* Luego crearemos un objeto llamado obj_Collision en el grupo System y le daremos el sprite que hemos creado anteriormente.
+* Creamos un evento de colisión en el heroe contra el obj_Collision con un código vacío.
+* Volvemos un momento al obj_Collision, le activamos las físicas, le creamos una máscara cuadrada y ponemos la densidad a 0 para que no pueda ser empujado.
+* Paso siguiente crearemos objetos collision en el mapa sobre las zonas que queremos que el héroe no pueda pasar. Podemos darles diferentes tamaños de manera que cubriremos gran parte del mapa.
+* Una vez tenemos todas las máscaras de colisión sobre el background creamos un nuevo sprite llamado spr_Collision_Off de 32x32 vacío y desmarcamos la opción **Visible**.
+* Ahora en la room podemos deseleccionar la opción **Show Invisible Objects** en la lupa y alternar de forma cómoda la visión de las máscaras de colisión que vamos creando.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img16.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img16.png)
+
+

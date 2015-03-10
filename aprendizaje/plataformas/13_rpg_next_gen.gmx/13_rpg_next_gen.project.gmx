@@ -46,6 +46,9 @@
       <sprites name="Unused">
         <sprite>sprites\spr_WindowSkin</sprite>
       </sprites>
+      <sprites name="Collisions">
+        <sprite>sprites\spr_Collision</sprite>
+      </sprites>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -76,6 +79,7 @@
       <object>objects\obj_Tree</object>
     </objects>
     <objects name="System">
+      <object>objects\obj_Collision</object>
       <object>objects\GameState</object>
       <objects name="Window">
         <object>objects\obj_Window_Base</object>
