@@ -159,8 +159,59 @@ draw_sprite(spr_Window_BR,0,x+sprite_width-16,y+sprite_height - 10);
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img9.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img9.png)
 
+### Parte 8: Nuestro primer NPC "Bob"
 
+* Creamos un grupo NPC > Bob en sprites.
+* Creamos sus 4 sprites Down, Up, Left y Right y les damos el ancla al (16,32)
+* Creamos un grupo NPC en objetos y el obj_NPC_Bob y le damos las mismas propiedades físicas y máscara de colisiones que al héroe.
+* Creamos un obj_NPC_Base, le damos las mismas propiedades y máscara de colisiones que al héroe y un sprite por defecto.
+* Añadimos una colisión al Heroe contra el obj_NPC_Base y el hack para la Depth correction en su Step.
+* Hacemos que obj_NPC_Bob sea hijo de obj_NPC_Base de manera que heredará todas sus propiedades y eventos.
+* Lo añadimos a la room.
+* Añadimos ahora al NPC Bob un evento draw para dibujar lo que será su radio de acción y también a nuestro héroe:
 
+```javascript
+/// Debug Script
+draw_self();
+draw_circle(x,y,24,3);
+```
+
+* A continuación creamos una variable **action = false;** en el Create del héroe, y añadimos en el Input Handle Script una captura de la letra Z de manera que al apretar ese botón cambiamos **action** a True:
+
+```javascript
+if (keyboard_check(ord('Z'))){
+    // Interact
+    action = true;
+    
+} else {
+    action = false;
+}
+```
+
+* Cuando apretemos Z, pondremos **action** a True y entonces si estamos cerca de un NPC mostraremos un mensaje. Para hacerlo añadiremos al obj_NPC_Base un script en su Step llamado Hero Interaction:
+
+```javascript
+/// Hero interaction
+var dist = point_distance(obj_Hero.phy_position_x,obj_Hero.phy_position_y,phy_position_x,phy_position_y);
+if (dist < 32){
+    if (obj_Hero.action == true){
+        show_message("Test");
+    }
+}
+```
+
+* Añadimos al Create del obj_NPC_Base una nueva variable **message = "Undefined NPC";**.
+* Y en el objeto hijo obj_NPC_Bob, añadimos la función **event_inherited** en su Create de manera que heredaremos todos los eventos del padre y sus variables:
+
+```javascript
+event_inherited();
+message = "Hello... I'm Bob.";
+```
+
+* Ahora cambiamos **show_message("Test")** por **show_message(message);** y probamos si nuestro NPC habla:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img10.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img10.png)
 
 
 

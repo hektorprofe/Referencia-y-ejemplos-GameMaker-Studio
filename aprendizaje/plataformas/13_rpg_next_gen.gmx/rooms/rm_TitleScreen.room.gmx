@@ -52,11 +52,6 @@
   </views>
   <instances>
     <instance objName="GameState" x="32" y="32" name="inst_0EC84B13" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Window_Base" x="32" y="320" name="inst_8D47C3FD" locked="0" code="" scaleX="9" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Window_Base" x="32" y="96" name="inst_43B4EA7F" locked="0" code="" scaleX="2.5" scaleY="2.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Window_Base" x="224" y="32" name="inst_2B12D145" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Window_Base" x="224" y="192" name="inst_BDF390CB" locked="0" code="" scaleX="2.5" scaleY="1.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Window_Base" x="416" y="224" name="inst_75DD7D16" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
