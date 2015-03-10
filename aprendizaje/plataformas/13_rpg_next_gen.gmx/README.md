@@ -357,9 +357,8 @@ questSuccessMessage = "Oh!!! Thank you so much for finding my tea. God bless you
 * Empezaremos creando un nuevo sprite 32x32, transparente de cualquier color en Sprites > System > Collisions > spr_Collision.
 * Luego crearemos un objeto llamado obj_Collision en el grupo System y le daremos el sprite que hemos creado anteriormente.
 * Creamos un evento de colisión en el heroe contra el obj_Collision con un código vacío.
-* Volvemos un momento al obj_Collision, le activamos las físicas, le creamos una máscara cuadrada y ponemos la densidad a 0 para que no pueda ser empujado.
+* Volvemos un momento al obj_Collision, le activamos las físicas, le creamos una máscara cuadrada y ponemos la densidad a 0 para que no pueda ser empujadoy muy importante, desmarcamos la casilla **Visible**.
 * Paso siguiente crearemos objetos collision en el mapa sobre las zonas que queremos que el héroe no pueda pasar. Podemos darles diferentes tamaños de manera que cubriremos gran parte del mapa.
-* Una vez tenemos todas las máscaras de colisión sobre el background creamos un nuevo sprite llamado spr_Collision_Off de 32x32 vacío y desmarcamos la opción **Visible**.
 * Ahora en la room podemos deseleccionar la opción **Show Invisible Objects** en la lupa y alternar de forma cómoda la visión de las máscaras de colisión que vamos creando.
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img16.png
