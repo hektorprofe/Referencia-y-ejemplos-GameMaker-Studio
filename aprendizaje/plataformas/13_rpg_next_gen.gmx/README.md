@@ -696,35 +696,107 @@ scr_Create_Window(str,1,mouse_x,mouse_y);
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img25.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img25.png)
 
+### Parte 15: Caminos de patrullas y movimiento de NPC
 
+* Empezamos creando 4 nuevos sprites para un NPC que llamaremos Guard.
+* Duplicamos el NPC Bob a obj_NPC_Guard con el sprite spr_Guard_Down por defecto.
+* Lo añadimos al mapa en algun sitio en medio del camino.
+* Ahora vamos a crear un Path llamado path_Guard. Empezando por la posición inicial del Guarda creamos un camino que éste seguirá.
+* Podemos activar de fondo la room para ver el recorrido:
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img26.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img26.png)
 
+* A continuación vamos a crear un nuevo sprite spr_Follow_Target, algo sencillo, con una bola dentro. Le centramos el anchor.
+* Ahora creamos un nuevo objeto obj_Follow_Target y le otorgamos el sprite anterior.
+* En el NPC_Base_Create añadimos el código
 
+```javascript
+// Create a target for every NPC
+my_target = instance_create(x,y,obj_Follow_Target);
+my_path = -1;
+``` 
 
+* Todos los NPC podrán tendran un objeto target y un path, utilizarlos o no es cosa nuestra, pero de base ahí están.
+* Es necesario crear un objeto target para poder hacer que el NPC se mueva correctamente en nuestro mundo de físicas.
+* En el obj_NPC_Guard_Create personalizamos un poco nuestro guarda y le otorgamos un path:
 
+```javascript
+event_inherited();
+hasquest = true;
+message = "Hello there. This town is safe under my control";
+my_path = path_Guard;
+event_user(0); // Evento asociado para empezar el movimiento
+``` 
 
+* Vamos a crear el evento personalizado Obj_NPC_Base.User Defined 0 encargado de poner en marcha el Path en el objeto auxiliar (la bola):
 
+```javascript
+with(my_target){
+	path_start(other.my_path,1,0,1);
+}
+```
 
+* En este punto tenemos la bolita moviéndose por la pantalla pero nuestro Guarda todavía no la siguie:
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img27.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img27.png)
 
+* Ahora vamos al obj_NPC_Base.Step y añadimos un nuevo bloque de código para hacer que el NPC se mueva en dirección a su target object:
 
+```javascript
+/// Follow Path if available
+if(my_path != -1)
+{
+    // Calculate the direction where is the target
+    	dir = point_direction(my_target.x,my_target.y,phy_position_x,phy_position_y);
+    	dis = point_distance(my_target.x,my_target.y,phy_position_x,phy_position_y);
+    
+    // Calculate moving position 2px into target
+    	dx = lengthdir_x(2,dir);
+    	dy = lengthdir_y(2,dir);
+    
+    // And Move it   
+   	phy_position_x -= dx;
+   	phy_position_y -= dy;
+}
+```
 
+* Con ésto el héroe ya se mueve pero si lo bloqueamos veremos que no controla las colisiones correctamente:
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img28.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img28.png)
 
+* Vamos a crear un evento de colisión con obj_Collision en el obj_NPC_Base con un código vacío.
+* Sin embargo ésto no soluciona el problema del todo y crea uno nuevo, y es que eventualmente el Guarda se nos queda atrapado en el Pub! Esto sucede porque está siguiendo la posición x del target.
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img29.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img29.png)
 
+* Para solucionarlo (por ahora) vamos a hacer que si el Guard se aleja demasiado de su target se teletransporte detrás automáticamente añadiendo al step una comprobación de distancia:
 
+```javascript
+/// Follow Path if available
+if(my_path != -1)
+{
+    // Calculate the direction where is the target
+    	dir = point_direction(my_target.x,my_target.y,phy_position_x,phy_position_y);
+    	dis = point_distance(my_target.x,my_target.y,phy_position_x,phy_position_y);
+    
+    // Calculate moving position 2px into target
+    	dx = lengthdir_x(2,dir);
+    	dy = lengthdir_y(2,dir);
+    
+    // And Move it   
+   	phy_position_x -= dx;
+   	phy_position_y -= dy;
 
-
-
-
-
-
-
-
-
-
-
-
+   	// If distance is increasing teleport the npc
+   	if (dis > 32){
+   		phy_position_x = my_target.x;
+   		phy_position_y = my_target.y;
+   	}
+}
+```
 
 

@@ -28,6 +28,7 @@
             <string>image_speed = 0;
 
 action = false;
+mov_speed = 2;
 </string>
           </argument>
         </arguments>
@@ -75,28 +76,33 @@ depth = phy_position_y * -1;
             <string>/// Handle Input Logic
 
 moving = false;
+new_mov_speed = mov_speed;
+
+if (keyboard_check(vk_shift)){
+    new_mov_speed = new_mov_speed * 5;
+}
 
 if (keyboard_check(vk_left)){
     sprite_index = spr_Hero_Left;
-    phy_position_x -= 2;
+    phy_position_x -= new_mov_speed;
     moving = true;
 }
 
 if (keyboard_check(vk_right)){
     sprite_index = spr_Hero_Right;
-    phy_position_x += 2;
+    phy_position_x += new_mov_speed;
     moving = true;
 }
 
 if (keyboard_check(vk_up)){
     sprite_index = spr_Hero_Up;
-    phy_position_y -= 2;
+    phy_position_y -= new_mov_speed;
     moving = true;
 }
 
 if (keyboard_check(vk_down)){
     sprite_index = spr_Hero_Down;
-    phy_position_y += 2;
+    phy_position_y += new_mov_speed;
     moving = true;
 }
 
@@ -107,7 +113,7 @@ if (!moving) {
 else image_speed = 0.2;
 
 
-if (keyboard_check(ord('Z'))){
+if (keyboard_check_pressed(ord('Z'))){
     // Interact
     action = true;
     

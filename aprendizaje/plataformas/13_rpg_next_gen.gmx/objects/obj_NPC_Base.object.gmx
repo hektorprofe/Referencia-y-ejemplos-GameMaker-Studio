@@ -25,16 +25,49 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0;
+            <string>/// Initiate IVARS
+image_speed = 0;
 image_index = 1;
 
-var message             = "Undefined Message NPC";
-var questMessage        = "Undefined Quest Message NPC";
-var questSuccessMessage = "Undefined Quest Success Message NPC";
+message             = "Undefined Message NPC";
+questMessage        = "Undefined Quest Message NPC";
+questSuccessMessage = "Undefined Quest Success Message NPC";
 
-var hasquest       = false;
-var quest          = "";
-var questCondition = "";
+hasquest       = false;
+quest          = "";
+questCondition = "";
+
+is_talking = false;
+talk_window = noone;
+
+// Create a target for every NPC
+my_target = instance_create(x,y,obj_Follow_Target);
+my_path = -1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Stop talking
+is_talking = false;
+with (talk_window) instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -87,19 +120,167 @@ if (dist &lt; 32){
         if (hasquest){
             // If that quest has been successed show success
             if (GameState.switches[? questCondition]){
-                show_message(questSuccessMessage);
+                if !(is_talking) {
+                    talk_window = scr_Create_Window(questSuccessMessage,1,id);
+                    is_talking = true;
+                }
             } else {
                 // Else
-                show_message(questMessage);
-                GameState.switches[? quest] = true;
-                show_debug_message("Quest Activated: " +  quest);
+                if !(is_talking) {
+                    talk_window = scr_Create_Window(questMessage,1,id);
+                    is_talking = true;
+                    GameState.switches[? quest] = true;
+                    //show_debug_message("Quest Activated: " +  quest);
+                }
             }
         } else {
-            // Else show inhertied custom message
-            show_message(message);
+            if !(is_talking) {
+                // Else show inhertied custom message
+                talk_window = scr_Create_Window(message,1,id);
+                is_talking = true;
+            }
         }
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check if should stop talking
+if (is_talking &amp;&amp; alarm[0]==-1){
+    alarm[0] = room_speed * 5; //cerrar en 5 segundos
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Follow Path if available
+if(my_path != -1)
+{
+    // Calculate the direction where is the target
+    dir = point_direction(my_target.x,my_target.y,phy_position_x,phy_position_y);
+    dis = point_distance(my_target.x,my_target.y,phy_position_x,phy_position_y);
+    
+    // Calculate moving position 2px into target
+    dx = lengthdir_x(2,dir);
+    dy = lengthdir_y(2,dir);
+    
+    // And Move it   
+    phy_position_x -= dx;
+    phy_position_y -= dy;
+    
+    // If distance is increasing teleport the npc
+   	if (dis &gt; 32){
+        phy_position_x = my_target.x;
+        phy_position_y = my_target.y;
+   	}
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Collision">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Nothing
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start path moving with associated object
+with(my_target){
+    path_start(other.my_path,2,0,1);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+draw_self();
+physics_draw_debug();
 </string>
           </argument>
         </arguments>

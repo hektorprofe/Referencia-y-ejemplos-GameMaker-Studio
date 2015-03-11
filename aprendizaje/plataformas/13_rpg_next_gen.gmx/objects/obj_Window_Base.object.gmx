@@ -29,14 +29,21 @@
 alpha = 0;  // La transparencia será el máximo
 print_text = ""; // Texto que se va a ir mostrando
 time = 0;   // Tiempo en que se irá mostrando el texto
-depth = depth - instance_number(obj_Window_Base); // Profundidad
+depth = depth - room_height - instance_number(obj_Window_Base); // Profundidad
 
 /// Play first sound while letters appearing
 if (audio_is_playing(snd_Talking) == false)
 {   
     audio_play_sound(snd_Talking, 10, false);
 }
-stop_sound = true;      
+stop_sound = true; 
+
+// Talking box sizes
+box_width = 0;
+box_height = 0;
+
+// origin object to follow
+origin_object = noone;
 </string>
           </argument>
         </arguments>
@@ -116,6 +123,33 @@ else
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Relocate the window
+
+x = origin_object.x-box_width/2;
+y = origin_object.y-box_height/2 - 60; // negative offset top
+
+    
+
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="10">
       <action>
@@ -182,6 +216,8 @@ draw_sprite(spr_Window_TR,0,x+sprite_width-16,y);
 draw_sprite(spr_Window_BL,0,x,y + sprite_height - 10);
 draw_sprite(spr_Window_BR,0,x+sprite_width-16,y+sprite_height - 10);
 
+draw_text(x,y+100,string(x));
+draw_text(x,y+120,string(y));
 </string>
           </argument>
         </arguments>

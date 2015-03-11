@@ -20,6 +20,12 @@
         <sprite>sprites\spr_Bob_Up</sprite>
         <sprite>sprites\spr_Bob_Down</sprite>
       </sprites>
+      <sprites name="Guard">
+        <sprite>sprites\spr_Guard_Down</sprite>
+        <sprite>sprites\spr_Guard_Left</sprite>
+        <sprite>sprites\spr_Guard_Right</sprite>
+        <sprite>sprites\spr_Guard_Up</sprite>
+      </sprites>
     </sprites>
     <sprites name="Objects">
       <sprites name="Nature">
@@ -28,6 +34,7 @@
       </sprites>
       <sprites name="Misc">
         <sprite>sprites\spr_Tea</sprite>
+        <sprite>sprites\spr_Follow_Target</sprite>
       </sprites>
     </sprites>
     <sprites name="Party">
@@ -88,7 +95,9 @@
       </backgrounds>
     </backgrounds>
   </backgrounds>
-  <paths name="paths"/>
+  <paths name="paths">
+    <path>paths\path_Guard</path>
+  </paths>
   <scripts name="scripts">
     <scripts name="System">
       <scripts name="Window">
@@ -123,8 +132,12 @@
       </objects>
     </objects>
     <objects name="NPC">
-      <object>objects\obj_NPC_Base</object>
+      <objects name="Base">
+        <object>objects\obj_Follow_Target</object>
+        <object>objects\obj_NPC_Base</object>
+      </objects>
       <object>objects\obj_NPC_Bob</object>
+      <object>objects\obj_NPC_Guard</object>
     </objects>
     <objects name="Quests">
       <objects name="NPC Quest">
