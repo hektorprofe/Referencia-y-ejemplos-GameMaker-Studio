@@ -1032,6 +1032,83 @@ if (is_talking && alarm[0]==-1){
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img30.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img30.png)
 
+### Parte Extra: Animar los NPC (propio)
 
+Para animar los NPC necesitaremos tener un esquema genérico de sus sprites de movimiento, por ejemplo:
 
+* Animación por defecto (sprite + indice de imagen)
+* Animación hacia arriba
+* Animación hacia abajo
+* Animación hacia la izquierda
+* Animación hacia la derecha
+
+Empezaremos por añadir en el obj_NPC_Base.Create un espacio para almacenar los diferentes sprites de dirección:
+
+```javascript
+// Animation vars
+deault_Sprite = 0;
+default_Index = 0;
+default_Sprite_Speed = 0;
+left_Sprite = 0;
+right_Sprite = 0;
+up_Sprite = 0;
+down_Sprite = 0;
+default_Animation_Speed = 0.1;
+```
+
+Y añadiremos un nuevo código al obj_NPC_Base.Step para que en función de la próxima posición dónde se moverá el NPC dibuje un sprite u otro:
+
+```javascript
+/// Process the animation
+if(phy_position_x+dx<phy_position_x){
+    sprite_index=right_Sprite;
+    image_speed = default_Animation_Speed;
+}
+
+else if(phy_position_x+dx>phy_position_x){
+    sprite_index=left_Sprite;
+    image_speed = default_Animation_Speed;
+}
+
+else if(phy_position_y+dy>phy_position_y){
+    sprite_index=up_Sprite;
+    image_speed = default_Animation_Speed;
+}
+
+else if(phy_position_y+dy<phy_position_y){
+    sprite_index=down_Sprite;
+    image_speed = default_Animation_Speed;
+}
+else {
+    sprite_index=down_Sprite;
+    image_index = default_Index;
+    image_speed = default_Sprite_Speed;
+}
+```
+
+Por último en el obj_NPC_Guard.Create inicializaremos todas las variables de animación:
+```javascript
+event_inherited();
+
+hasquest = false;
+message = "Hello there.#This town is safe under my control!";
+
+my_path = path_Guard;
+event_user(0); // Evento asociado para empezar el movimiento
+
+/// Set animation variables
+deault_Sprite = spr_Guard_Down;
+left_Sprite = spr_Guard_Left;
+right_Sprite = spr_Guard_Right;
+up_Sprite = spr_Guard_Up;
+down_Sprite = spr_Guard_Down;
+default_Index = 1;
+default_Sprite_Speed = 0;
+default_Animation_Speed = 0.2;
+```
+
+El resultado es viable aunque da problemas por las colisiones. **Si cambiamos la densidad del NPC a 0** entonces funciona totalmente bien:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img31.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img31.png)
 

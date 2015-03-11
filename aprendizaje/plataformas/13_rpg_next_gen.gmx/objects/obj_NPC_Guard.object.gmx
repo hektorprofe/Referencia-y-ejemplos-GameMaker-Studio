@@ -32,6 +32,16 @@ message = "Hello there.#This town is safe under my control!";
 
 my_path = path_Guard;
 event_user(0); // Evento asociado para empezar el movimiento
+
+/// Set animation variables
+deault_Sprite = spr_Guard_Down;
+left_Sprite = spr_Guard_Left;
+right_Sprite = spr_Guard_Right;
+up_Sprite = spr_Guard_Up;
+down_Sprite = spr_Guard_Down;
+default_Index = 1;
+default_Sprite_Speed = 0;
+default_Animation_Speed = 0.2;
 </string>
           </argument>
         </arguments>
@@ -55,6 +65,7 @@ event_user(0); // Evento asociado para empezar el movimiento
           <argument>
             <kind>1</kind>
             <string>/// Debug Script
+event_inherited();
 draw_self();
 draw_circle(x,y,24,3);
 </string>
@@ -66,7 +77,7 @@ draw_circle(x,y,24,3);
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
-  <PhysicsObjectDensity>0.100000001490116</PhysicsObjectDensity>
+  <PhysicsObjectDensity>0</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>

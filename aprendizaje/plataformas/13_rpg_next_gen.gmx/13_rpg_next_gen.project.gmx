@@ -136,8 +136,8 @@
         <object>objects\obj_Follow_Target</object>
         <object>objects\obj_NPC_Base</object>
       </objects>
-      <object>objects\obj_NPC_Bob</object>
       <object>objects\obj_NPC_Guard</object>
+      <object>objects\obj_NPC_Bob</object>
     </objects>
     <objects name="Quests">
       <objects name="NPC Quest">
