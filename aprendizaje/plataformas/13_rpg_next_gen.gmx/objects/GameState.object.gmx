@@ -88,11 +88,30 @@ switches[? "last_pos_y"] = 1184;
           <argument>
             <kind>1</kind>
             <string>/// Creamos una ventana al hacer clic con el mouse
-with ( instance_create(mouse_x-32,mouse_y-32,obj_Window_Base)){
-    image_xscale = 1 + random (4);
-    image_yscale = 1 + random (2);
-    event_user(0);    
+var str;
+switch(irandom(4))
+{
+    case 0: 
+        str = "Lorem ipsum dolor sit amet,#consectetur adipiscing elit.#Aliquam ultricies imperdiet augue.#Ut cursus lacus dui.";
+        break
+    case 1: 
+        str = "Aliquam ultricies imperdiet augue.#Ut cursus lacus dui.";
+        break
+
+    case 2: 
+        str = "In posuere diam quis massa accumsan rhoncus id in est.";
+        break
+
+    case 3: 
+        str = "Donec vel est feugiat.";
+        break
+
+    default: 
+        str = "Etiam in justo nisl.";
+        break
 }
+    
+scr_Create_Window(str,1,mouse_x,mouse_y);
 </string>
           </argument>
         </arguments>

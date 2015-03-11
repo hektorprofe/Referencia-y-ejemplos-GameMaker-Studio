@@ -4,7 +4,14 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sounds name="System">
+      <sounds name="Window">
+        <sound>sound\snd_Talking</sound>
+        <sound>sound\snd_Talking2</sound>
+      </sounds>
+    </sounds>
+  </sounds>
   <sprites name="sprites">
     <sprites name="NPC">
       <sprites name="Bob">
@@ -82,6 +89,16 @@
     </backgrounds>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <scripts name="System">
+      <scripts name="Window">
+        <script>scripts\scr_Create_Window.gml</script>
+      </scripts>
+    </scripts>
+  </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_Window</font>
+  </fonts>
   <objects name="objects">
     <objects name="Party">
       <object>objects\obj_Hero</object>

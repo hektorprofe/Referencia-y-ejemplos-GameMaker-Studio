@@ -558,8 +558,143 @@ draw_sprite_stretched_ext(spr_Window_Base,0,x+4,y+4,sprite_width - 4, sprite_hei
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img24.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img24.png)
 
+### Parte Extra: Añadir texto y sonido a las ventanas (propio)
 
+En este apartado he decidido adaptar a mi manera el generador de ventanas para añadirle texto apareciendo poco a poco y un efecto de sonido como el de los juegos de Phoenix Wright.
 
+* Primero creamos un script llamado scr_Create_Window que se encargará de crear la instancia de la ventana e inicializar una serie de variables (como el tamaño de la misma) a partir de la longitud del texto que queremos mostrar:
+
+```javascript
+// Nombre: Script Ventana
+// Descripción: Muestra un texto dentro una caja creada dinámicamente
+// a partir del tamaño del texto, y lo muestra poco a poco.
+// Uso: scr_text("Text",speed,x,y);
+
+with ( instance_create(argument2,argument3,obj_Window_Base)){
+    
+    padding = 16;
+    maxlength = view_wview[0];
+    text = argument0;           // Establecemos el texto del primer argumento
+    spd = argument1;            // Establecemos la velocidad del segundo argumento
+    font = fnt_Window;         // Establecemos una fuente
+
+    text_length = string_length(text); // Longitud del texto
+    font_size = font_get_size(font);   // Tamaño de la fuente
+
+    // Establecemos la fuente
+    draw_set_font(font);
+
+    // Tamaño aproximado del texto w y h
+    text_width = string_width_ext(text, font_size + (font_size/2), maxlength);
+    text_height = string_height_ext(text, font_size + (font_size/2), maxlength);
+
+    // Le sumamos los márgenes interiores (paddings)
+    box_width = text_width + (padding*2);
+    box_height = text_height + (padding*2);   
+
+    // Calculamos el redimensionamiento de escalado, por defecto 48x48 equivale 1x1
+    image_xscale = 1 * box_width / (48+padding);
+    image_yscale = 1 * box_height / (48+padding+6); // offset de 6 inferior
+    
+    // Llamamos al evento que dibujará la ventana    
+    event_user(0);    
+}
+```
+
+* Ahora en el **Create** del obj_Window_Base ponemos el código que iniciará las variables y empezará a reproducir el primer sonido al escribir:
+
+```javascript
+start = false;
+alpha = 0;  	 // La transparencia será el máximo
+print_text = ""; // Texto que se va a ir mostrando
+time = 0;   	 // Tiempo en que se irá mostrando el texto
+depth = depth - instance_number(obj_Window_Base); // Profundidad
+
+/// Play first sound while letters appearing
+if (audio_is_playing(snd_Talking) == false)
+{   
+    audio_play_sound(snd_Talking, 10, false);
+}
+stop_sound = true;   
+```   
+
+En el **Step** tendremos dos códigos, el de calcular el tamaño (ya lo tenemos) y uno nuevo en el que iremos guardando las letras del texto a escribir en el Draw y manejaremos el sonido:
+
+```javascript
+/// Show letters little by little and manage sound
+if (time < text_length)
+{   
+    time += spd; // Sumamos al tiempo la velocidad que graduamos nosotros
+    print_text = string_copy(text,0,time); // E iremos añadiendo poco a poco el texto     
+    
+    /// Play sound while letters appearing
+    if (audio_is_playing(snd_Talking) == false){   
+        if (audio_is_playing(snd_Talking2) == false){
+            audio_play_sound(snd_Talking2, 10, true);
+        }
+    }
+}
+// When text is completed then stop sound
+else
+{
+    // Check if we should stop sound
+    if (stop_sound) 
+    {
+        // Stop it
+        audio_stop_sound(snd_Talking2);
+        stop_sound = false;
+    }
+}
+```   
+
+* El evento **User Defined 0** también está correcto, pero en **Draw** vamos a dibujar también a parte de la ventana el texto por encima:
+
+```javascript
+/// Draw text
+draw_set_color(c_white);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+draw_text_ext(
+    x + padding,               // Dentro del margen interior horizontal
+    y + padding,               // Dentro del margen interior vertical
+    print_text,                // El texto a escribir
+    font_size + (font_size/2), // Distancia en px entre cada línea
+    maxlength                  // Ancho máximo en px antes de cada salto de línea
+);
+``` 
+
+* Ahora sólo nos queda actualizar nuestro evento **Global Left Pressed** para crear correctamente la instancia. A modo de pruebas generaré varios textos con diferentes tamaños:
+
+```javascript
+/// Creamos una ventana al hacer clic con el mouse
+var str;
+switch(irandom(4))
+{
+    case 0: 
+        str = "Lorem ipsum dolor sit amet,#consectetur adipiscing elit.#Aliquam ultricies imperdiet augue.#Ut cursus lacus dui.";
+        break
+    case 1: 
+        str = "Aliquam ultricies imperdiet augue.#Ut cursus lacus dui.";
+        break
+
+    case 2: 
+        str = "In posuere diam quis massa accumsan rhoncus id in est.";
+        break
+
+    case 3: 
+        str = "Donec vel est feugiat.";
+        break
+
+    default: 
+        str = "Etiam in justo nisl.";
+        break
+}
+    
+scr_Create_Window(str,1,mouse_x,mouse_y);
+``` 
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img25.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img25.png)
 
 
 

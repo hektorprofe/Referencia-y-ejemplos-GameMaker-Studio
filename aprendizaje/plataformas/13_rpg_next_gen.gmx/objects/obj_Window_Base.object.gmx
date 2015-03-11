@@ -26,6 +26,17 @@
           <argument>
             <kind>1</kind>
             <string>start = false;
+alpha = 0;  // La transparencia será el máximo
+print_text = ""; // Texto que se va a ir mostrando
+time = 0;   // Tiempo en que se irá mostrando el texto
+depth = depth - instance_number(obj_Window_Base); // Profundidad
+
+/// Play first sound while letters appearing
+if (audio_is_playing(snd_Talking) == false)
+{   
+    audio_play_sound(snd_Talking, 10, false);
+}
+stop_sound = true;      
 </string>
           </argument>
         </arguments>
@@ -48,13 +59,58 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (start == true){
+            <string>/// Calculate new resizes
+if (start == true){
     // lerp =&gt; interpolación en %
     // lerp(0,10,0.5) devuelve 5 (el 50% entre 0 y 10)
     // lerp(0,10,2) devuelve 20 (el 200% entre 0 y 10)
     image_yscale = lerp(image_yscale, target_yscale, 0.4);
     progress = image_yscale / target_yscale;
     y = lerp(start_y, target_y, progress);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Show letters little by little and manage sound
+if (time &lt; text_length)
+{   
+    time += spd; // Sumamos al tiempo la velocidad que graduamos nosotros
+    print_text = string_copy(text,0,time); // E iremos añadiendo poco a poco el texto     
+    
+    /// Play sound while letters appearing
+    if (audio_is_playing(snd_Talking) == false){   
+        if (audio_is_playing(snd_Talking2) == false){
+            audio_play_sound(snd_Talking2, 10, true);
+        }
+    }
+}
+// When texts is completed then
+else
+{
+    // Check if we should stop sound
+    if (stop_sound) 
+    {
+        // Stop it
+        audio_stop_sound(snd_Talking2);
+        stop_sound = false;
+    }
 }
 </string>
           </argument>
@@ -111,7 +167,7 @@ start = true; // Establecemos a true para poder comenzar el proceso de escalado
             <string>/// Draw Window
 
 // Draw Background
-draw_sprite_stretched_ext(spr_Window_Base,0,x+4,y+4,sprite_width - 4, sprite_height - 4,c_white,0.25);
+draw_sprite_stretched_ext(spr_Window_Base,0,x+4,y+4,sprite_width - 4, sprite_height - 4,c_white,0.75);
 
 // Draw H V Axis
 draw_sprite_stretched(spr_Window_T,0,x+8,y,sprite_width-8,16);
@@ -126,6 +182,37 @@ draw_sprite(spr_Window_TR,0,x+sprite_width-16,y);
 draw_sprite(spr_Window_BL,0,x,y + sprite_height - 10);
 draw_sprite(spr_Window_BR,0,x+sprite_width-16,y+sprite_height - 10);
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw text
+draw_set_color(c_white);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+draw_text_ext(
+    x + padding,               // Dentro del margen interior horizontal
+    y + padding,               // Dentro del margen interior vertical
+    print_text,                // El texto a escribir
+    font_size + (font_size/2), // Distancia en px entre cada línea
+    maxlength                  // Ancho máximo en px antes de cada salto de línea
+);
 </string>
           </argument>
         </arguments>
