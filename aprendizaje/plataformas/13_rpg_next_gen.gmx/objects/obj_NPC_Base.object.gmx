@@ -37,6 +37,7 @@ hasquest       = false;
 quest          = "";
 questCondition = "";
 
+// Manage the text window
 is_talking = false;
 talk_window = noone;
 

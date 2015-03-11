@@ -799,4 +799,239 @@ if(my_path != -1)
 }
 ```
 
+### Parte Extra: Ventanas de texto en NPC en movimiento (propio)
+
+He adaptado un poco más mi script generador de ventanas de diálogo para hacer que aparezcan sobre los NPC y se muevan con ellos en el caso que éstos tengan un Path.
+
+**scr_Create_Window**
+```javascript
+// Nombre: Script Ventana
+// Descripción: Muestra un texto dentro una caja creada dinámicamente
+// a partir del tamaño del texto, y lo muestra poco a poco.
+// Uso: scr_text("Text",speed,origin_object);
+var window = instance_create(argument2.x,argument2.y,obj_Window_Base);
+with (window){
+    
+    origin_object = argument2;
+
+    padding = 16;
+    maxlength = view_wview[0];
+    text = argument0;           // Establecemos el texto del primer argumento
+    spd = argument1;            // Establecemos la velocidad del segundo argumento
+    font = fnt_Window;         // Establecemos una fuente
+
+    text_length = string_length(text); // Longitud del texto
+    font_size = font_get_size(font);   // Tamaño de la fuente
+
+    // Establecemos la fuente
+    draw_set_font(font);
+
+    // Tamaño aproximado del texto w y h
+    text_width = string_width_ext(text, font_size + (font_size/2), maxlength);
+    text_height = string_height_ext(text, font_size + (font_size/2), maxlength);
+
+    // Le sumamos los márgenes interiores (paddings)
+    box_width = text_width + (padding*2);
+    box_height = text_height + (padding*2);   
+    
+    // Relocate window position
+    x = x-box_width/2;
+    y = y-box_height/2 - 60; // negative offset top
+
+    // Calculamos el redimensionamiento de escalado, por defecto 48x48 equivale 1x1
+    image_xscale = 1 * box_width / (48+padding);
+    image_yscale = 1 * box_height / (48+padding+6);
+    
+    // Llamamos al evento que dibujará la ventana    
+    event_user(0);
+}   
+    
+// return id
+return window; 
+```
+
+**obj_Window_Base.Create**
+```javascript
+start = false;
+alpha = 0;  // La transparencia será el máximo
+print_text = ""; // Texto que se va a ir mostrando
+time = 0;   // Tiempo en que se irá mostrando el texto
+depth = depth - room_height - instance_number(obj_Window_Base); // Profundidad
+
+/// Play first sound while letters appearing
+if (audio_is_playing(snd_Talking) == false)
+{   
+    audio_play_sound(snd_Talking, 10, false);
+}
+stop_sound = true; 
+
+// Talking box sizes
+box_width = 0;
+box_height = 0;
+
+// origin object to follow
+origin_object = noone;
+```
+
+**obj_Window_Base.Step_1**
+```javascript
+/// Calculate new resizes
+if (start == true){
+    // lerp => interpolación en %
+    // lerp(0,10,0.5) devuelve 5 (el 50% entre 0 y 10)
+    // lerp(0,10,2) devuelve 20 (el 200% entre 0 y 10)
+    image_yscale = lerp(image_yscale, target_yscale, 0.4);
+    progress = image_yscale / target_yscale;
+    y = lerp(start_y, target_y, progress);
+}
+```
+
+**obj_Window_Base.Step_2**
+```javascript
+/// Show letters little by little and manage sound
+if (time < text_length)
+{   
+    time += spd; // Sumamos al tiempo la velocidad que graduamos nosotros
+    print_text = string_copy(text,0,time); // E iremos añadiendo poco a poco el texto     
+    
+    /// Play sound while letters appearing
+    if (audio_is_playing(snd_Talking) == false){   
+        if (audio_is_playing(snd_Talking2) == false){
+            audio_play_sound(snd_Talking2, 10, true);
+        }
+    }
+}
+// When texts is completed then
+else
+{
+    // Check if we should stop sound
+    if (stop_sound) 
+    {
+        // Stop it
+        audio_stop_sound(snd_Talking2);
+        stop_sound = false;
+    }
+}
+```
+
+**obj_Window_Base.Step_3**
+```javascript
+/// Relocate the window
+x = origin_object.x-box_width/2;
+y = origin_object.y-box_height/2 - 60; // negative offset top
+```
+
+**obj_Window_Base.User Defined 0**
+```javascript
+/// User Defined 0
+target_y = y; // Guardamos la posición y donde se crea la ventana
+start_y = y + sprite_height / 2; // La ventana se empezará a dibujar en el centro vertical
+y = start_y; // Damos a y el nuevo valor de inicio
+
+target_yscale = image_yscale; // Guardamos el escalado inicial vertical de la ventana
+image_yscale = 0; // Reiniciamos a 0 el escalado vertical
+start = true; // Establecemos a true para poder comenzar el proceso de escalado
+```
+
+**obj_Window_Base.Draw 1**
+```javascript
+/// Draw Window
+
+// Draw Background
+draw_sprite_stretched_ext(spr_Window_Base,0,x+4,y+4,sprite_width - 4, sprite_height - 4,c_white,0.75);
+
+// Draw H V Axis
+draw_sprite_stretched(spr_Window_T,0,x+8,y,sprite_width-8,16);
+draw_sprite_stretched(spr_Window_B,0,x,y+sprite_height-10,sprite_width,16);
+
+draw_sprite_stretched(spr_Window_ML,0,x,y,16,sprite_height);
+draw_sprite_stretched(spr_Window_MR,0,x + sprite_width - 16,y,16,sprite_height);
+
+// Draw Corners
+draw_sprite(spr_Window_TL,0,x,y);
+draw_sprite(spr_Window_TR,0,x+sprite_width-16,y);
+draw_sprite(spr_Window_BL,0,x,y + sprite_height - 10);
+draw_sprite(spr_Window_BR,0,x+sprite_width-16,y+sprite_height - 10);
+```
+
+**obj_Window_Base.Draw 2**
+```javascript
+/// Draw text
+draw_set_color(c_white);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+draw_text_ext(
+    x + padding,               // Dentro del margen interior horizontal
+    y + padding,               // Dentro del margen interior vertical
+    print_text,                // El texto a escribir
+    font_size + (font_size/2), // Distancia en px entre cada línea
+    maxlength                  // Ancho máximo en px antes de cada salto de línea
+);
+```
+
+Ahora para manejar las ventanas de texto añadiremos al **obj_NPC_Base.Create**:
+
+```javascript
+// Manage the text window
+is_talking = false;
+talk_window = noone;
+```
+
+Crearemos una alarma **obj_NPC_Base.Alarm 0** para manejar cuando se puede volver a hablar con el personaje (para no ir sacando múltiples ventanas) y destruir la instancia actual:
+
+```javascript
+/// Stop talking
+is_talking = false;
+with (talk_window) instance_destroy();
+```
+
+Ahora modificaremos el **obj_NPC_Base.Step2**  para que en lugar de mostrar un message box genérico muestre nuestra ventana de diálogo:
+
+```javascript
+/// Hero interaction
+var dist = point_distance(obj_Hero.phy_position_x,obj_Hero.phy_position_y,phy_position_x,phy_position_y);
+if (dist < 32){
+    if (obj_Hero.action == true){
+        // If the NPC has a quest
+        if (hasquest){
+            // If that quest has been successed show success
+            if (GameState.switches[? questCondition]){
+                if !(is_talking) {
+                    talk_window = scr_Create_Window(questSuccessMessage,1,id);
+                    is_talking = true;
+                }
+            } else {
+                // Else
+                if !(is_talking) {
+                    talk_window = scr_Create_Window(questMessage,1,id);
+                    is_talking = true;
+                    GameState.switches[? quest] = true;
+                    //show_debug_message("Quest Activated: " +  quest);
+                }
+            }
+        } else {
+            if !(is_talking) {
+                // Else show inhertied custom message
+                talk_window = scr_Create_Window(message,1,id);
+                is_talking = true;
+            }
+        }
+    }
+}
+```
+
+Y añadimos un pequeño código en  **obj_NPC_Base.Step4** que destruirá la instancia a los 5 segundos si el NPC está hablando: 
+
+```javascript
+/// Check if should stop talking
+if (is_talking && alarm[0]==-1){
+    alarm[0] = room_speed * 5; //cerrar en 5 segundos
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img30.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img30.png)
+
+
+
 
