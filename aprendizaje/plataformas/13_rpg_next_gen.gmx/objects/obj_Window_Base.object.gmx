@@ -8,6 +8,89 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>start = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (start == true){
+    // lerp =&gt; interpolación en %
+    // lerp(0,10,0.5) devuelve 5 (el 50% entre 0 y 10)
+    // lerp(0,10,2) devuelve 20 (el 200% entre 0 y 10)
+    image_yscale = lerp(image_yscale, target_yscale, 0.4);
+    progress = image_yscale / target_yscale;
+    y = lerp(start_y, target_y, progress);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// User Defined 0
+target_y = y; // Guardamos la posición y donde se crea la ventana
+start_y = y + sprite_height / 2; // La ventana se empezará a dibujar en el centro vertical
+y = start_y; // Damos a y el nuevo valor de inicio
+
+target_yscale = image_yscale; // Guardamos el escalado inicial vertical de la ventana
+image_yscale = 0; // Reiniciamos a 0 el escalado vertical
+start = true; // Establecemos a true para poder comenzar el proceso de escalado
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -28,7 +111,7 @@
             <string>/// Draw Window
 
 // Draw Background
-draw_sprite_stretched(spr_Window_Base,0,x+4,y+4,sprite_width - 4, sprite_height - 4);
+draw_sprite_stretched_ext(spr_Window_Base,0,x+4,y+4,sprite_width - 4, sprite_height - 4,c_white,0.25);
 
 // Draw H V Axis
 draw_sprite_stretched(spr_Window_T,0,x+8,y,sprite_width-8,16);
@@ -42,7 +125,6 @@ draw_sprite(spr_Window_TL,0,x,y);
 draw_sprite(spr_Window_TR,0,x+sprite_width-16,y);
 draw_sprite(spr_Window_BL,0,x,y + sprite_height - 10);
 draw_sprite(spr_Window_BR,0,x+sprite_width-16,y+sprite_height - 10);
-
 
 </string>
           </argument>

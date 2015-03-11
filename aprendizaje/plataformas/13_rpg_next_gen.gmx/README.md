@@ -507,6 +507,59 @@ switches[? "last_pos_y"] = 1184;
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img23.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img23.png)
 
+### Parte 14: Ventanas animadas
+
+* Vamos de vuelta a nuestro obj_Window_Base.
+* Le añadimos un evento Create con **start = false;**.
+* Un Step con:
+
+```javascript
+if (start == true){
+	// lerp => interpolación en %
+	// lerp(0,10,0.5) devuelve 5 (el 50% entre 0 y 10)
+	// lerp(0,10,2) devuelve 20 (el 200% entre 0 y 10)
+	image_yscale = lerp(image_yscale, target_yscale, 0.4);
+	progress = image_yscale / target_yscale;
+	y = lerp(start_y, target_y, progress);
+}
+```
+
+* A continuación creamos un evento de usuario en la ventana:
+
+```javascript
+/// User Defined 0
+target_y = y; // Guardamos la posición y donde se crea la ventana
+start_y = y + sprite_height / 2; // La ventana se empezará a dibujar en el centro vertical
+y = start_y; // Damos a y el nuevo valor de inicio
+
+target_yscale = image_yscale; // Guardamos el escalado inicial vertical de la ventana
+image_yscale = 0; // Reiniciamos a 0 el escalado vertical
+start = true; // Establecemos a true para poder comenzar el proceso de escalado
+```
+
+* Para probar las ventanas podemos crear un evento Global Clic Left en el GameState con el siguiente código:
+
+```javascript
+/// Creamos una ventana al hacer clic con el mouse
+with ( instance_create(mouse_x-32,mouse_y-32,obj_Window_Base)){
+    image_xscale = 1 + random (4);
+    image_yscale = 1 + random (2);
+    event_user(0);    
+}
+```
+
+* Ahora para darle un toque más interesante podemos modificar el color de fondo sobre la marcha y añadirle un poco de transparencia. Lo podeos hacer fácilmente modificando el método **draw_sprite_stretched** del background a:
+
+```javascript
+// Draw Background
+draw_sprite_stretched_ext(spr_Window_Base,0,x+4,y+4,sprite_width - 4, sprite_height - 4,c_black,0.3);
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img24.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img24.png)
+
+
+
 
 
 
