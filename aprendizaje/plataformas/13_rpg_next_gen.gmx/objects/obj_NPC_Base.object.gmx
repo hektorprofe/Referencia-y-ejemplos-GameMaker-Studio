@@ -44,6 +44,9 @@ talk_window = noone;
 // Create a target for every NPC
 my_target = instance_create(x,y,obj_Follow_Target);
 my_path = -1;
+my_path_speed = 2;
+dx = 0;
+dy = 0;
 
 // Animation vars
 deault_Sprite = 0;
@@ -78,7 +81,10 @@ default_Animation_Speed = 0.1;
             <kind>1</kind>
             <string>/// Stop talking
 is_talking = false;
-with (talk_window) instance_destroy();
+with (talk_window) {
+    instance_destroy();
+}
+event_user(2); // Continue walking
 </string>
           </argument>
         </arguments>
@@ -134,6 +140,7 @@ if (dist &lt; 32){
                 if !(is_talking) {
                     talk_window = scr_Create_Window(questSuccessMessage,1,id);
                     is_talking = true;
+                    event_user(1); // Stop moving shile talking
                 }
             } else {
                 // Else
@@ -141,6 +148,7 @@ if (dist &lt; 32){
                     talk_window = scr_Create_Window(questMessage,1,id);
                     is_talking = true;
                     GameState.switches[? quest] = true;
+                    event_user(1); // Stop moving shile talking
                     //show_debug_message("Quest Activated: " +  quest);
                 }
             }
@@ -149,6 +157,7 @@ if (dist &lt; 32){
                 // Else show inhertied custom message
                 talk_window = scr_Create_Window(message,1,id);
                 is_talking = true;
+                event_user(1); // Stop moving shile talking
             }
         }
     }
@@ -174,15 +183,14 @@ if (dist &lt; 32){
           <argument>
             <kind>1</kind>
             <string>/// Follow Path if available
-if(my_path != -1)
-{
+if(my_path != -1 &amp;&amp; my_target.path_speed != 0){
     // Calculate the direction where is the target
     dir = point_direction(my_target.x,my_target.y,phy_position_x,phy_position_y);
     dis = point_distance(my_target.x,my_target.y,phy_position_x,phy_position_y);
     
     // Calculate moving position 2px into target
-    dx = lengthdir_x(2,dir);
-    dy = lengthdir_y(2,dir);
+    dx = lengthdir_x(my_path_speed,dir);
+    dy = lengthdir_y(my_path_speed,dir);
     
     // And Move it   
    phy_position_x -= dx;
@@ -239,30 +247,38 @@ if (is_talking &amp;&amp; alarm[0]==-1){
           <argument>
             <kind>1</kind>
             <string>/// Process the animation
-if(phy_position_x+dx&lt;phy_position_x){
-    sprite_index=right_Sprite;
-    image_speed = default_Animation_Speed;
-}
 
-else if(phy_position_x+dx&gt;phy_position_x){
-    sprite_index=left_Sprite;
-    image_speed = default_Animation_Speed;
-}
-
-else if(phy_position_y+dy&gt;phy_position_y){
-    sprite_index=up_Sprite;
-    image_speed = default_Animation_Speed;
-}
-
-else if(phy_position_y+dy&lt;phy_position_y){
-    sprite_index=down_Sprite;
-    image_speed = default_Animation_Speed;
-}
-else {
-    sprite_index=down_Sprite;
-    image_index = default_Index;
+if(my_target.path_speed == 0 ){
+    sprite_index = down_Sprite;
     image_speed = default_Sprite_Speed;
+    image_index = default_Index;
+} 
+else{
+    if(phy_position_x+dx&lt;phy_position_x){
+        sprite_index=right_Sprite;
+        image_speed = default_Animation_Speed;
+    }
+    
+    else if(phy_position_x+dx&gt;phy_position_x){
+        sprite_index=left_Sprite;
+        image_speed = default_Animation_Speed;
+    }
+    
+    else if(phy_position_y+dy&gt;phy_position_y){
+        sprite_index=up_Sprite;
+        image_speed = default_Animation_Speed;
+    }
+    
+    else if(phy_position_y+dy&lt;phy_position_y){
+        sprite_index=down_Sprite;
+        image_speed = default_Animation_Speed;
+    }
 }
+/*
+show_debug_message("phy_x: " + string(phy_position_x));
+show_debug_message("phy_x+dx: " + string(phy_position_x+dx));
+show_debug_message("phy_y: " + string(phy_position_y));
+show_debug_message("phy_y+dy: " + string(phy_position_y+dy));*/
 </string>
           </argument>
         </arguments>
@@ -291,6 +307,59 @@ else {
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Continue path moving with associated object
+var ps = my_path_speed;
+with(my_target){
+    path_speed = ps;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Pause path moving with associated object
+with(my_target){
+    path_speed = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
@@ -309,8 +378,9 @@ else {
           <argument>
             <kind>1</kind>
             <string>/// Start path moving with associated object
+var ps = my_path_speed;
 with(my_target){
-    path_start(other.my_path,2,1,1);
+    path_start(other.my_path,ps,1,1);
 }
 </string>
           </argument>

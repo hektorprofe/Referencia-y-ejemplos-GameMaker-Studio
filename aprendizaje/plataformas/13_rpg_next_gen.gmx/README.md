@@ -1112,3 +1112,153 @@ El resultado es viable aunque da problemas por las colisiones. **Si cambiamos la
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img31.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img31.png)
 
+### Parte Extra: Parar animación y movimiento del NPC al hablar
+
+He decidido antes de continuar acabar de pulir la animación del NPC si éste se encuentra quieto. Para gestionarlo utilizaremos la variable **path_speed** del objeto target que nos permitirá graduar la velocidad de movimiento.
+
+Empiezo creando tres nuevas variables en el **obj_NPC_Base.Create** para manejar la velocidad por defecto de la patrol, así como una predeclaración de las dx y dy que se usan en el cálculo de movimiento del NPC:
+
+```javascript
+my_path_speed = 2;
+dx = 0;
+dy = 0;
+```
+
+Ahora creo dos nuevos eventos de usuario para Pausar el Path y reaunudarlo, así como modifico el primer evento de usuario para indicar la velocida de movimiento en **my_path_speed**:
+
+```javascript
+/// Obj_NPC_Base.User Event 0
+//Start path moving with associated object
+var ps = my_path_speed;
+with(my_target){
+    path_start(other.my_path,ps,1,1);
+}
+```
+
+```javascript
+/// Obj_NPC_Base.User Event 1
+// Pause path moving with associated object
+with(my_target){
+    path_speed = 0;
+}
+```
+
+```javascript
+/// Obj_NPC_Base.User Event 2
+// Continue path moving with associated object
+var ps = my_path_speed;
+with(my_target){
+    path_speed = ps;
+}
+```
+
+Ahora actualizaré la alarma para indicar que al destruir la ventana de texto se continue la marcha con el event 2:
+
+```javascript
+/// Obj_NPC_Base.Alarm 0
+// Stop talking
+is_talking = false;
+with (talk_window) {
+    instance_destroy();
+}
+event_user(2); // Continue walking
+```
+
+También actualizaré el Step con la interacción del héroe para parar la velocidad de movimiento utilizando el event 1:
+
+```javascript
+/// Obj_NPC_Base.Step 2
+// Hero interaction
+var dist = point_distance(obj_Hero.phy_position_x,obj_Hero.phy_position_y,phy_position_x,phy_position_y);
+if (dist < 32){
+    if (obj_Hero.action == true){
+        // If the NPC has a quest
+        if (hasquest){
+            // If that quest has been successed show success
+            if (GameState.switches[? questCondition]){
+                if !(is_talking) {
+                    talk_window = scr_Create_Window(questSuccessMessage,1,id);
+                    is_talking = true;
+                    event_user(1); // Stop moving while talking
+                }
+            } else {
+                // Else
+                if !(is_talking) {
+                    talk_window = scr_Create_Window(questMessage,1,id);
+                    is_talking = true;
+                    GameState.switches[? quest] = true;
+                    event_user(1); // Stop moving while talking
+                    //show_debug_message("Quest Activated: " +  quest);
+                }
+            }
+        } else {
+            if !(is_talking) {
+                // Else show inhertied custom message
+                talk_window = scr_Create_Window(message,1,id);
+                is_talking = true;
+                event_user(1); // Stop moving while talking
+            }
+        }
+    }
+}
+```
+
+Y el Step que maneja el movimiento del NPC cambiaré la velocidad 2 por la establecida en la variable:
+
+```javascript
+/// Obj_NPC_Base.Step 2
+// Follow Path if available
+if(my_path != -1 && my_target.path_speed != 0){
+    // Calculate the direction where is the target
+    dir = point_direction(my_target.x,my_target.y,phy_position_x,phy_position_y);
+    dis = point_distance(my_target.x,my_target.y,phy_position_x,phy_position_y);
+    
+    // Calculate moving position at custom speed into target
+    dx = lengthdir_x(my_path_speed,dir);
+    dy = lengthdir_y(my_path_speed,dir);
+    
+    // And Move it   
+   phy_position_x -= dx;
+   phy_position_y -= dy;
+    
+    // If distance is increasing teleport the npc
+   if (dis > 32){
+        phy_position_x = my_target.x;
+        phy_position_y = my_target.y;
+   }
+}
+```
+
+Por último, ahora que tenemos una velocidad de path variable será muy sencillo detectar cuando el NPC estará parado (path_speed será 0) así que podemos animar el NPC en parado:
+
+```javascript
+/// Obj_NPC_Base.Step 2
+// Process the animation
+
+// If NPC is quiet
+if(my_target.path_speed == 0 ){
+    sprite_index = down_Sprite;
+    image_speed = default_Sprite_Speed;
+    image_index = default_Index;
+} 
+// If is moving
+else { 
+    if(phy_position_x+dx<phy_position_x){
+        sprite_index=right_Sprite;
+        image_speed = default_Animation_Speed;
+    } else if(phy_position_x+dx>phy_position_x){
+        sprite_index=left_Sprite;
+        image_speed = default_Animation_Speed;
+    } else if(phy_position_y+dy>phy_position_y){
+        sprite_index=up_Sprite;
+        image_speed = default_Animation_Speed;
+    } else if(phy_position_y+dy<phy_position_y){
+        sprite_index=down_Sprite;
+        image_speed = default_Animation_Speed;
+    }
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img31.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img31.png)
+

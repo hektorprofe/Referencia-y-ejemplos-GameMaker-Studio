@@ -35,9 +35,8 @@ switches[? "quest_teaparty_started"]    = false;
 switches[? "quest_teaparty_gottea"]     = false;
 
 // Initial Player position
-switches[? "last_pos_x"] = 288+15;
-switches[? "last_pos_y"] = 1184;
-
+switches[? "last_pos_x"] = 288 + 16;
+switches[? "last_pos_y"] = 1184 + 4;
 
 
 //show_message(switches[? "introscene"]);
