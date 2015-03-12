@@ -1262,3 +1262,77 @@ else {
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img32.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img32.png)
 
+### Parte 16: Monstruos
+
+* Para este tema empezamos creando un nuevo mapa de pruebas dónde posicionaremos nuestros enemigos.
+* Para llegar a este nuevo mapa tendremos que salir del pueblo por el sur, así que una vez tengamos el mapa preparado con la room en marcha, yo le he llamado rm_Desert, crearemos un nuevo Warp Zone (en realidad serán 3 para abarcar todo el camino), e indicaremos en sus creation code la posición exacto de la room dónde iran a parar, el primero de la izquierda qudaría así:
+
+```javascript
+event_inherited();
+dest_room = rm_Desert;
+dest_x = 192 + 15;
+dest_y = 26;
+```
+
+* Y a su vez el primero de la izquierda de vuelta a la ciudad desde rm_Desert quedaría:
+
+```javascript
+event_inherited();
+dest_room = rm_HomeCity;
+dest_x = 640+16;
+dest_y = 1344+16;
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img33.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img33.png)
+
+* Bien, ahora vamos a ponernos manos a la obra creando el nuevo grupo de sprites Enemies > Desert Mobs y como antes creamos los 4 sprites de turno y tal.
+* Creamos el obj_Desert_Monster, activamos las físicas, le damos un 0.1 de densidad, la máscara redonda y el sprite que toca.
+* Le ponemos un image_speed 0.1 en el Create para limitar la animación.
+* Clonamos el objeto y creamos un obj_Base_Monster para declarar unas variables comunes que luego se heredarán, así que ponemos al obj_Desert_Monster como hijo del obj_Base_Monster.
+* Añadimos al Héroe un evento de colisión vacío contra el monster base.
+* Y en la base del monstruo una colisión contra los demás monstruos y otra contra las máscara de colisión general.
+* Ahora vamos a añadir movimiento a los mobs. Para ello vamos a crear un evento Create, una alarma y un Step:
+
+**obj_Desert_Monster.Create**
+```javascript
+randomize();
+alarm[0] = random(60);
+dx = 0;
+dy = 0;
+```
+
+**obj_Desert_Monster.Alarm 0**
+```javascript
+dir = random(360);
+dx = lengthdir_x(2, dir);
+dy = lengthdir_y(2, dir);
+
+/// No usamos esto, pero es interesante el efecto
+// physics_apply_impulse(x,y,dx,dy);
+
+alarm[0] = random(60);
+```
+
+**obj_Desert_Monster.Step**
+```javascript
+phy_position_x += dx;
+phy_position_x += dy;
+```
+
+* Con ésto los bichos se moverán pero lamentablemente se saldrán de mapa mientras se mueven a todos lados aleatoriamente.
+* La forma más sencilla de limitarles el movimiento es crear una pequeña máscara de colisión que sólo les afecte a ellos.
+* Así que podemos duplicar fácilmente la actual y llamar a la nueva obj_Enemy_Collision y hacer que tengan colisiones únicamente los enemigos con ella, haciendo que queda de una forma muy sutil como en la siguiente imagen:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img34.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img34.png)
+
+* Añadimos la colisión del monstruo base contra esta nueva máscara. Ahora ya tendremos los bichos moviéndose por ahí sin salirse de sus límites, como en un RPG de verdad ^^:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img35.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img35.png)
+
+
+
+
+
