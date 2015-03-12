@@ -1332,6 +1332,44 @@ phy_position_x += dy;
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img35.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img35.png)
 
+* Y ya si queremos rizar el rizo podemos añadirle animaciones en el step:
+
+```javascript
+/// Process the animation
+
+if(phy_position_x+dx<phy_position_x){
+    sprite_index=spr_Desert_Mob_Left;
+}
+
+else if(phy_position_x+dx>phy_position_x){
+    sprite_index=spr_Desert_Mob_Right;
+}
+
+else if(phy_position_y+dy>phy_position_y){
+    sprite_index=spr_Desert_Mob_Down;
+}
+
+else if(phy_position_y+dy<phy_position_y){
+    sprite_index=spr_Desert_Mob_Up;
+}
+
+if(phy_position_y+dy==phy_position_y && phy_position_x+dx==phy_position_x){
+    sprite_index=spr_Desert_Mob_Down;
+}
+```
+
+* Acompañados de un cambio en la distancia de la alarm para que de tanto en tanto sea 0 y se queden quitas:
+
+```javascript
+randomize();
+dir = random(360);
+dx = lengthdir_x(irandom(2), dir);
+dy = lengthdir_y(irandom(2), dir);
+alarm[0] = random(60);
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img36.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img36.png)
 
 
 

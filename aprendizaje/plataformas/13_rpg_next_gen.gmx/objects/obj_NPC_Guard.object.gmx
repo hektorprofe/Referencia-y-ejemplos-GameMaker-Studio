@@ -28,7 +28,7 @@
             <string>event_inherited();
 
 hasquest = false;
-message = "Hello there.#This town is safe under my control!";
+message = "Hola!.#Bajo mi control la ciudad#se encuentra a salvo.";
 
 my_path = path_Guard;
 event_user(0); // Evento asociado para empezar el movimiento

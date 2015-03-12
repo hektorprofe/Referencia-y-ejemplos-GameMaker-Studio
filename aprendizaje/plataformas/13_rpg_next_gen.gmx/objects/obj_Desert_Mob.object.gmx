@@ -54,8 +54,8 @@ dy = 0;
             <kind>1</kind>
             <string>randomize();
 dir = random(360);
-dx = lengthdir_x(2, dir);
-dy = lengthdir_y(2, dir);
+dx = lengthdir_x(irandom(2), dir);
+dy = lengthdir_y(irandom(2), dir);
 
 /// No usamos esto, pero es interesante el efecto
 // physics_apply_impulse(x,y,dx,dy);
@@ -67,6 +67,48 @@ alarm[0] = random(60);
       </action>
     </event>
     <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Process the animation
+
+if(phy_position_x+dx&lt;phy_position_x){
+    sprite_index=spr_Desert_Mob_Left;
+}
+
+else if(phy_position_x+dx&gt;phy_position_x){
+    sprite_index=spr_Desert_Mob_Right;
+}
+
+else if(phy_position_y+dy&gt;phy_position_y){
+    sprite_index=spr_Desert_Mob_Down;
+}
+
+else if(phy_position_y+dy&lt;phy_position_y){
+    sprite_index=spr_Desert_Mob_Up;
+}
+
+if(phy_position_y+dy==phy_position_y &amp;&amp; phy_position_x+dx==phy_position_x){
+    sprite_index=spr_Desert_Mob_Down;
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
