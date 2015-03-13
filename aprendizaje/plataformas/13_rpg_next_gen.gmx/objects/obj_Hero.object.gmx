@@ -33,6 +33,9 @@ attack_type = 1;
 
 phy_fixed_rotation = true;
 
+max_hp = 100;
+hp = max_hp;
+
 
 </string>
           </argument>
@@ -313,6 +316,7 @@ with(attack){
           <argument>
             <kind>1</kind>
             <string>draw_text(10,10, "Attack Type: " + string(attack_type));
+draw_text(10,25, "HP: " + string(hp) + "/" + string(max_hp));
 </string>
           </argument>
         </arguments>
@@ -419,8 +423,8 @@ draw_circle(x,y,24,3);
   <PhysicsObjectDensity>0.100000001490116</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>99</PhysicsObjectLinearDamping>
-  <PhysicsObjectAngularDamping>99</PhysicsObjectAngularDamping>
+  <PhysicsObjectLinearDamping>20</PhysicsObjectLinearDamping>
+  <PhysicsObjectAngularDamping>0.100000001490116</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>

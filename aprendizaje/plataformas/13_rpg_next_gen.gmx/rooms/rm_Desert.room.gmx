@@ -115,22 +115,19 @@
     <instance objName="obj_Warp" x="256" y="-28" name="inst_BF3CC60F" locked="0" code="event_inherited();&#xA;dest_room = rm_HomeCity;&#xA;dest_x = 704+16;&#xA;dest_y = 1344+16;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Desert_Mob" x="320" y="38" name="inst_27A731A8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision" x="170" y="64" name="inst_645B5DB8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="200" y="0" name="inst_6A2AEA1F" locked="0" code="" scaleX="2.8125" scaleY="3.125" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="120" y="-20" name="inst_D232323C" locked="0" code="" scaleX="2.5" scaleY="0.9375" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="260" y="110" name="inst_06758100" locked="0" code="" scaleX="2.8125" scaleY="1.25" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="290" y="150" name="inst_FCCE6542" locked="0" code="" scaleX="2.8125" scaleY="1.25" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="288" y="-20" name="inst_17683EA3" locked="0" code="" scaleX="3.125" scaleY="0.9375" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="330" y="190" name="inst_D634E9CC" locked="0" code="" scaleX="2.5" scaleY="0.9375" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="360" y="220" name="inst_FA23553B" locked="0" code="" scaleX="1.5625" scaleY="3.125" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="230" y="100" name="inst_591F37AE" locked="0" code="" scaleX="2.5" scaleY="0.9375" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="280" y="320" name="inst_7B9DC744" locked="0" code="" scaleX="2.8125" scaleY="0.9375" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Collision_Enemy" x="410" y="260" name="inst_A11522ED" locked="0" code="" scaleX="4.375" scaleY="1.5625" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision_Enemy" x="120" y="-20" name="inst_D232323C" locked="0" code="" scaleX="8.4375" scaleY="0.625" colour="4294967295" rotation="0"/>
     <instance objName="obj_Desert_Mob" x="160" y="40" name="inst_18A7BF8B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Desert_Mob" x="170" y="130" name="inst_90A5D797" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_Desert_Mob" x="400" y="360" name="inst_8D0FB4CF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Desert_Mob" x="840" y="330" name="inst_8D0FB4CF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Desert_Mob" x="420" y="130" name="inst_B1812CC5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Desert_Mob" x="335" y="296" name="inst_FB08BAD4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Desert_Mob" x="449" y="232" name="inst_2E87F46D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Desert_Mob" x="830" y="710" name="inst_571EE19F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Desert_Mob" x="730" y="680" name="inst_F6BBE116" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision_Enemy" x="700" y="320" name="inst_DC6B0C02" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision_Enemy" x="740" y="320" name="inst_39BDF83B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision_Enemy" x="950" y="700" name="inst_9F568FF8" locked="0" code="" scaleX="0.3125" scaleY="2.1875" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Collision_Enemy" x="950" y="160" name="inst_97CE9E4D" locked="0" code="" scaleX="0.3125" scaleY="5" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_Desert_01" x="0" y="0" w="480" h="320" xo="0" yo="0" id="10000659" name="inst_5C967535" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

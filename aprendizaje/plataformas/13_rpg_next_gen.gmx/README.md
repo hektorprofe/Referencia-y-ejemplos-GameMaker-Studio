@@ -1557,3 +1557,38 @@ if (hero_dist < vision_r){
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img38.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img38.png)
+
+### Parte 18: Ataques de monstruos
+
+* Normalmente en la IA los monstruos tienen varios estados, en esta parte en lugar de utilizar estados crearemos algunas variables para gestionar la velocidad de ataca y el radio de ataque.
+* Para diferenciar entre monstruos que atacan a larga distancia y otros que atacan a corta lo que haremos es crear dos variables en el monstruo **attack_speed** (velocidad de ataque) y **attack_r** (radio de ataque).
+* De esta manera un enemigo perseguirá al héroe cuando éste se encuentre en el rango de visión y dejará de hacerlo cuando se esté lo suficiente cerca como para atacar.
+* Los ataques de los enemigos nos harán un efecto de knockback con physics impulse, por lo que antes de empezar daremos al héroe un **Linear Damping"" de 20 para tampoco pasarnos de rebote.
+* Empezaremos creando un nuevo sprite para el ataque de las plantas, algo así como un ataque de hojas afiladas.
+* A continuación clonaremos uno de los ataques, por ejemplo el obj_Attack_Fire y le cambiaremos el nombre a obj_Attack_Grass y el sprite a spr_Attack_Grass.
+* Cambiaremos la colisión contra los enemigos para que sea contra el obj_Hero y la dejaremos así por ahora:
+
+```javascript
+// angle bullet to enemy
+hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
+hit_dx = lengthdir_x(force,hit_angle);
+hit_dy = lengthdir_y(force,hit_angle);
+
+randomize();
+damage = 1 + random(3);
+
+with (other) {              // other aqui es la bullet
+    physics_apply_impulse(x,y,other.hit_dx,other.hit_dy);
+    phy_fixed_rotation = true;
+}
+```
+
+Y en el Create le daremos una fuerza de 10, que el ataque desaparezca a los 7 steps llamando a la alarma que lo destruirá y muy importante también corregir la rotación para que no empiece a dar vueltas por ahí:
+
+```javascript
+image_speed = 0;
+force = 10;
+alarm[0] = 7;
+phy_fixed_rotation = true;
+```
+

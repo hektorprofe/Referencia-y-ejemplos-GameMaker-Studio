@@ -27,12 +27,62 @@
             <kind>1</kind>
             <string>event_inherited();
 randomize();
+
+
 image_speed = 0.15;
-alarm[0] = random(60);
+alarm[0] = random(90+1);
+
+
 hero_dist = 0;
-vision_r = 48;
+vision_r = 64 + random(32);
+attack_speed = 30;
+attack_r = 64;
+
+
 dx = 0;
 dy = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Attack
+show_debug_message("Attacking");
+hero_dir = point_direction(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
+hero_dis = point_distance(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
+
+spawn_x = lengthdir_x(16, hero_dir); // a 24px del centro del heroe
+spawn_y = lengthdir_y(16, hero_dir); 
+
+//show_debug_message(string(hero_dis) + " " + string(attack_r));
+
+if (hero_dis &lt;= vision_r){
+    attack = instance_create(phy_position_x+spawn_x, phy_position_y+spawn_y, obj_Attack_Grass);
+
+    with (attack){
+        force_x = lengthdir_x(force, other.hero_dir);
+        force_y = lengthdir_y(force, other.hero_dir);
+        phy_rotation = -other.hero_dir;
+        physics_apply_impulse(x,y, lengthdir_x(16, other.dir), lengthdir_y(16, other.dir));
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -57,16 +107,24 @@ dy = 0;
             <kind>1</kind>
             <string>randomize();    
 if (hero_dist &lt; vision_r){
-    dir = point_direction(x,y, obj_Hero.phy_position_x, obj_Hero.phy_position_y);  
-    dist = random(4)+8;
-    dx = lengthdir_x(dist, dir);
-    dy = lengthdir_y(dist, dir); 
-    alarm[0] = 1+random(7);  
+    dir = point_direction(x,y, obj_Hero.phy_position_x, obj_Hero.phy_position_y); 
+    // si está en el rango de disparo no se mueve
+    if (hero_dist &lt; attack_r) {
+        dist = 0;
+        dx = 0;
+        dy = 0;
+    }else{ 
+        dist = random(4)+2;
+        dx = lengthdir_x(dist, dir);
+        dy = lengthdir_y(dist, dir);
+    } 
+    if (alarm[1] == -1) alarm[1] = attack_speed; 
+    alarm[0] = 1+random(7); 
 } else {
-    if (random(2) &gt; 1)
+    if (random(6) &gt; 2)
     {
         dir = random(360);    
-        dist = irandom(4);
+        dist = irandom(8);
         dx = lengthdir_x(dist, dir);
         dy = lengthdir_y(dist, dir);  
         alarm[0] = 1+random(15);  
@@ -148,8 +206,9 @@ if(phy_position_y+dy==phy_position_y &amp;&amp; phy_position_x+dx==phy_position_
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// attack to hero
-hero_dist = point_distance(phy_position_x, phy_position_y, obj_Hero.phy_position_x, obj_Hero.phy_position_y);
+            <string>/// Movit
+phy_position_x += dx / 5;
+phy_position_y += dy / 5;
 </string>
           </argument>
         </arguments>
@@ -170,9 +229,9 @@ hero_dist = point_distance(phy_position_x, phy_position_y, obj_Hero.phy_position
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Movit
-phy_position_x += dx / 5;
-phy_position_y += dy / 5;
+            <string>/// Hero distance
+hero_dist = point_distance(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
+
 </string>
           </argument>
         </arguments>

@@ -180,6 +180,7 @@
       <object>objects\obj_Attack_Fire</object>
       <object>objects\obj_Attack_Ice</object>
       <object>objects\obj_Attack_Lighting</object>
+      <object>objects\obj_Attack_Grass</object>
     </objects>
   </objects>
   <rooms name="rooms">
