@@ -28,7 +28,7 @@
             <string>alarm[0] = 20;
 image_speed = 0.25;
 phy_fixed_rotation = true;
-force = 16;
+force = 3;
 </string>
           </argument>
         </arguments>
@@ -76,8 +76,8 @@ force = 16;
             <kind>1</kind>
             <string>// angle bullet to enemy
 hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
-hit_dx = lengthdir_x(5,hit_angle);
-hit_dy = lengthdir_y(5,hit_angle);
+hit_dx = lengthdir_x(force,hit_angle);
+hit_dy = lengthdir_y(force,hit_angle);
 
 randomize();
 damage = 1 + random(3);

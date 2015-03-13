@@ -1480,6 +1480,7 @@ hp = max_hp;
 
 * Heredamos en nuestro monstruo:
 
+```javascript
 /// obj_Monster_Desert.Create
 event_inherited();
 randomize();
@@ -1492,3 +1493,67 @@ dy = 0;
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img37.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img37.png)
 
+### Parte Extra: Mejorando el movimiento de los mobs
+
+Una pequeña mejora de la IA nos permitirá crear un efecto de movimiento más suave y real. Haremos que el mob se mueva lentamente mientras el héroe no se encuentre en su radio de visión. Al acercarse, el mob se moverá hacia la dirección del héroe mucho más rápido.
+
+```javascript
+/// obj_Monster_Desert.Create
+event_inherited();
+randomize();
+image_speed = 0.15;
+alarm[0] = random(60);
+hero_dist = 0;  // distancia del héroe
+vision_r = 48;  // radio de visión del mob
+dx = 0;
+dy = 0;
+```
+
+```javascript
+/// obj_Monster_Desert.Alarm 0
+randomize();
+if (hero_dist < vision_r){  // si está en el rango de visión
+    dir = point_direction(x,y, obj_Hero.phy_position_x, obj_Hero.phy_position_y);  
+    dist = random(4)+8;
+    dx = lengthdir_x(dist, dir);
+    dy = lengthdir_y(dist, dir); 
+    alarm[0] = 1+random(7);  
+} else {
+    if (random(2) > 1) // si no lo está sólo hay un 50% de que se mueva 
+    {
+        dir = random(360);    
+        dist = irandom(4);
+        dx = lengthdir_x(dist, dir);
+        dy = lengthdir_y(dist, dir);  
+        alarm[0] = 1+random(15);  
+    } else {
+        dx = 0;
+        dy = 0;   
+        alarm[0] = 1+random(30);  
+    }
+}
+
+```javascript
+/// obj_Monster_Desert.Step
+// Movit
+phy_position_x += dx / 5;
+phy_position_y += dy / 5;
+```
+
+Podemos crear un modo debug para dibujar el radio de detección del héroe, de color verde si no se encuentra dentro, y rojo si se detecta:
+
+```javascript
+/// obj_Monster_Desert.Draw
+event_inherited();
+draw_self();
+
+if (hero_dist < vision_r){
+    draw_circle_color(x,y,vision_r, c_red,c_red,1);
+    draw_line_colour(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y,c_red,c_red);
+} else{
+    draw_circle_color(x,y,vision_r, c_green,c_green,1);
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img38.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img38.png)

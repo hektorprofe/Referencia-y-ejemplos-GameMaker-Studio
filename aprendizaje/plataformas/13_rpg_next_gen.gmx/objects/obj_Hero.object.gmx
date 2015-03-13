@@ -79,12 +79,12 @@ depth = phy_position_y * -1;
           <argument>
             <kind>1</kind>
             <string>/// Handle Input Logic
-
+phy_fixed_rotation = true;
 moving = false;
 new_mov_speed = mov_speed;
 
-if (keyboard_check(vk_shift)){
-    new_mov_speed = new_mov_speed * 5;
+if (mouse_check_button(mb_right)){
+    new_mov_speed = new_mov_speed * 2;
 }
 
 if (keyboard_check(vk_left)){
@@ -222,6 +222,30 @@ if (keyboard_check_pressed(ord('Z'))){
         </arguments>
       </action>
     </event>
+    <event eventtype="6" enumb="55">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>attack_type += 1;
+if (attack_type&gt;3) attack_type=1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="6" enumb="53">
       <action>
         <libid>1</libid>
@@ -263,10 +287,8 @@ switch(attack_type){
 attack = instance_create(phy_position_x+spawn_x, phy_position_y+spawn_y, other.attack_obj);
 
 with(attack){
-    force_x = lengthdir_x(force, other.dir); 
-    force_y = lengthdir_y(force, other.dir); 
     phy_rotation = -other.dir;
-    physics_apply_impulse(x,y, force_x, force_y);
+    physics_apply_impulse(x,y, lengthdir_x(16, other.dir), lengthdir_y(16, other.dir));
 }
 </string>
           </argument>
@@ -397,8 +419,8 @@ draw_circle(x,y,24,3);
   <PhysicsObjectDensity>0.100000001490116</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>
-  <PhysicsObjectAngularDamping>0.100000001490116</PhysicsObjectAngularDamping>
+  <PhysicsObjectLinearDamping>99</PhysicsObjectLinearDamping>
+  <PhysicsObjectAngularDamping>99</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
