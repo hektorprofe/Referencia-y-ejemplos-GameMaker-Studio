@@ -77,6 +77,11 @@
         <sprite>sprites\spr_Desert_Mob_Right</sprite>
       </sprites>
     </sprites>
+    <sprites name="Attacks">
+      <sprite>sprites\spt_Attack_Fire</sprite>
+      <sprite>sprites\spr_Attack_Ice</sprite>
+      <sprite>sprites\spr_Attack_Lighting</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="Environment">
@@ -169,6 +174,11 @@
       <objects name="Desert Mobs">
         <object>objects\obj_Desert_Mob</object>
       </objects>
+    </objects>
+    <objects name="Attacks">
+      <object>objects\obj_Attack_Fire</object>
+      <object>objects\obj_Attack_Ice</object>
+      <object>objects\obj_Attack_Lighting</object>
     </objects>
   </objects>
   <rooms name="rooms">

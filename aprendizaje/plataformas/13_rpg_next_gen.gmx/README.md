@@ -1371,6 +1371,124 @@ alarm[0] = random(60);
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img36.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img36.png)
 
+### Parte 17: Ataques en el héroe
 
+* En este RPG en tiempo real los ataques van a ser básicamente disparos mágicos. Tendremos varios diferentes y podremos cambiar entre ellos con las teclas 1-2-3. 
 
+* Por defecto el ataque será el primero:
+
+```javascript
+///obj_Hero.Create
+...
+attack_type = 1;
+```
+
+* Añadimos 3 eventos key_press para los dígitos 1,2 y 3 que simplemente cambiarán el ataque por defecto:
+
+```javascript
+///obj_Hero.Key_press
+attack_type = 1; // 2 o 3
+```
+
+* Ahora creamos un evento Draw GUI en el héroe para mostrar información sobre el tipo de ataque activo:
+
+```javascript
+draw_text(10,10, "Attack Type": + string(attack_type));
+```
+
+* Creamos un obj_Attack_Fire (luego crearemos otros tipos):
+
+```javascript
+///spr_Attack_Fire.Create
+```
+
+```javascript
+///spr_Attack_Fire.Create
+alarm[0] = 20;
+image_speed = 0.25;
+phy_fixed_rotation = true;
+force = 16;
+```
+
+```javascript
+///spr_Attack_Fire.Alarm 0
+instance_destroy();
+
+```javascript
+///spr_Attack_Fire.Collision with obj_Monster_Base
+// angle bullet to enemy
+hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
+hit_dx = lengthdir_x(5,hit_angle);
+hit_dy = lengthdir_y(5,hit_angle);
+
+randomize();
+damage = 1 + random(3);
+
+with (other) {              // other aqui es la bullet
+    hp -= other.damage;
+    physics_apply_impulse(x,y,other.hit_dx,other.hit_dy);
+    phy_fixed_rotation = true;
+    if(hp<=0){
+        instance_destroy();
+    }
+}
+
+instance_destroy();
+```
+
+* Creamos el disparo en el héroe al apretar el botón del ratón:
+
+```javascript
+/// obj_Hero.global_Left_Pressed
+// Create a bullet
+dir = point_direction(phy_position_x, phy_position_y, mouse_x, mouse_y);
+spawn_x = lengthdir_x(16, dir); // a 24px del centro del heroe
+spawn_y = lengthdir_y(16, dir); 
+attack_obj = 0;
+
+// Select the attack
+switch(attack_type){
+    case 1:
+        attack_obj = obj_Attack_Fire;
+        break;
+    case 2:
+        attack_obj = obj_Attack_Ice;
+        break;
+    case 3:
+        attack_obj = obj_Attack_Lighting;
+        break;
+}
+
+// restamos el offset -16 para crearlo justo sobre le heroe
+attack = instance_create(phy_position_x+spawn_x, phy_position_y+spawn_y, other.attack_obj);
+
+with(attack){
+    force_x = lengthdir_x(force, other.dir); 
+    force_y = lengthdir_y(force, other.dir); 
+    phy_rotation = -other.dir;
+    physics_apply_impulse(x,y, force_x, force_y);
+}
+```
+
+* Añadimos vida genérica en el monstruo base:
+
+```javascript
+/// obj_Monster_Base.Create
+max_hp = 10;
+hp = max_hp;
+```
+
+* Heredamos en nuestro monstruo:
+
+/// obj_Monster_Desert.Create
+event_inherited();
+randomize();
+image_speed = 0.15;
+alarm[0] = random(60);
+dx = 0;
+dy = 0;
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img37.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img37.png)
 

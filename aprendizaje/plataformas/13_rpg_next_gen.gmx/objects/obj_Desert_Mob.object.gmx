@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>randomize();
+            <string>event_inherited();
+randomize();
 image_speed = 0.15;
 alarm[0] = random(60);
 dx = 0;
