@@ -97,7 +97,7 @@ force = 10;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// angle bullet to enemy
+            <string>// angle bullet to hero
 hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
 hit_dx = lengthdir_x(force,hit_angle);
 hit_dy = lengthdir_y(force,hit_angle);
@@ -105,10 +105,11 @@ hit_dy = lengthdir_y(force,hit_angle);
 randomize();
 damage = 1 + irandom(2);
 
-with (other) {              // other aqui es la bullet
+with (other) {              // other aqui es el heroe
     physics_apply_impulse(x,y,other.hit_dx,other.hit_dy);
     phy_fixed_rotation = true;
     
+    // Gestionamos el daño del ataque aquí
     hp -= other.damage;
     if (hp &lt;= 0)
     {

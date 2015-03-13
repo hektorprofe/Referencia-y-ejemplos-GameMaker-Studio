@@ -63,7 +63,7 @@ dy = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Attack
+            <string>/// Attack the hero
 show_debug_message("Attacking");
 hero_dir = point_direction(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
 hero_dis = point_distance(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
@@ -105,7 +105,8 @@ if (hero_dis &lt;= vision_r){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>randomize();    
+            <string>/// Manage the attack
+randomize();    
 if (hero_dist &lt; vision_r){
     dir = point_direction(x,y, obj_Hero.phy_position_x, obj_Hero.phy_position_y); 
     // si está en el rango de disparo no se mueve

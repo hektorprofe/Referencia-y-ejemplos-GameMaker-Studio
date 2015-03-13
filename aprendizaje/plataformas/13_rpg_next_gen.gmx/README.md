@@ -1564,26 +1564,46 @@ if (hero_dist < vision_r){
 * Para diferenciar entre monstruos que atacan a larga distancia y otros que atacan a corta lo que haremos es crear dos variables en el monstruo **attack_speed** (velocidad de ataque) y **attack_r** (radio de ataque).
 * De esta manera un enemigo perseguirá al héroe cuando éste se encuentre en el rango de visión y dejará de hacerlo cuando se esté lo suficiente cerca como para atacar.
 * Los ataques de los enemigos nos harán un efecto de knockback con physics impulse, por lo que antes de empezar daremos al héroe un **Linear Damping"" de 20 para tampoco pasarnos de rebote.
-* Empezaremos creando un nuevo sprite para el ataque de las plantas, algo así como un ataque de hojas afiladas.
+* Empezaremos dandole algo de vida a nuestro héroe para que los ataques nos de los enemigos nos hagan daño:
+
+```javascript
+///Obj_Hero.Create
+image_speed = 0;
+action = false;
+mov_speed = 2;
+attack_type = 1;
+max_hp = 100; // Vida máxima
+hp = max_hp;  // Vida actual
+```
+
+* Ahora crearemos un nuevo sprite para el ataque de las plantas, algo así como un ataque de hojas afiladas.
 * A continuación clonaremos uno de los ataques, por ejemplo el obj_Attack_Fire y le cambiaremos el nombre a obj_Attack_Grass y el sprite a spr_Attack_Grass.
 * Cambiaremos la colisión contra los enemigos para que sea contra el obj_Hero y la dejaremos así por ahora:
 
 ```javascript
-// angle bullet to enemy
+// angle bullet to hero
 hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
 hit_dx = lengthdir_x(force,hit_angle);
 hit_dy = lengthdir_y(force,hit_angle);
 
 randomize();
-damage = 1 + random(3);
+damage = 1 + irandom(2);
 
-with (other) {              // other aqui es la bullet
+with (other) {              // other aqui es el heroe
     physics_apply_impulse(x,y,other.hit_dx,other.hit_dy);
     phy_fixed_rotation = true;
+    
+    // Gestionamos el daño del ataque aquí
+    hp -= other.damage;
+    if (hp <= 0)
+    {
+        show_message("GAME OVER");
+        game_restart();
+    }
 }
 ```
 
-Y en el Create le daremos una fuerza de 10, que el ataque desaparezca a los 7 steps llamando a la alarma que lo destruirá y muy importante también corregir la rotación para que no empiece a dar vueltas por ahí:
+* Luego en el Create le daremos una fuerza de 10, haremos que el ataque desaparezca a los 7 steps llamando a la alarma que lo destruirá y muy importante también corregir la rotación para que no empiece a dar vueltas por ahí:
 
 ```javascript
 image_speed = 0;
@@ -1591,4 +1611,79 @@ force = 10;
 alarm[0] = 7;
 phy_fixed_rotation = true;
 ```
+
+* Ahora vamos de vuelta a nuestro mob **obj_Desert_Mob** y modificaremos la  **alarm 0** para gestionar el movimiento:
+
+```javascript
+/// Manage the movement and trigget attack
+randomize();    
+// si el héroe está en el campo de visión del mob
+if (hero_dist < vision_r){
+    dir = point_direction(x,y, obj_Hero.phy_position_x, obj_Hero.phy_position_y); 
+    // si está en el rango de disparo no se mueve
+    if (hero_dist < attack_r) {
+        dist = 0;
+        dx = 0;
+        dy = 0;
+    }else{ // caso contrario se intenta acercar a él
+        dist = random(4)+2;
+        dx = lengthdir_x(dist, dir);
+        dy = lengthdir_y(dist, dir);
+    } 
+    // acabamos intentando lanzar un disparo (alarma 1)
+    if (alarm[1] == -1) alarm[1] = attack_speed; 
+    // y moviéndo de nuevo el mob rápidamente
+    alarm[0] = 1+random(7); 
+} else {
+	// si el héroe no está en el campo de visión nos movemos
+	// por ahí aleatoriamente sin prisas ni largas pausas
+    if (random(6) > 2)
+    {
+        dir = random(360);    
+        dist = irandom(8);
+        dx = lengthdir_x(dist, dir);
+        dy = lengthdir_y(dist, dir);  
+        alarm[0] = 1+random(15);  
+    } else {
+        dx = 0;
+        dy = 0;   
+        alarm[0] = 1+random(30);  
+    }
+}
+```
+
+* Y ahora crearemos la **alarm 1** que manejará el disparo en sí, sólo si el héroe aún se encuentra dentro del campo de visión:
+
+```javascript
+/// Attack the hero
+hero_dir = point_direction(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
+hero_dis = point_distance(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
+
+spawn_x = lengthdir_x(16, hero_dir); // a 24px del centro del heroe
+spawn_y = lengthdir_y(16, hero_dir); 
+
+if (hero_dis <= vision_r){
+    attack = instance_create(phy_position_x+spawn_x, phy_position_y+spawn_y, obj_Attack_Grass);
+
+    with (attack){
+        force_x = lengthdir_x(force, other.hero_dir);
+        force_y = lengthdir_y(force, other.hero_dir);
+        phy_rotation = -other.hero_dir;
+        physics_apply_impulse(x,y, lengthdir_x(16, other.dir), lengthdir_y(16, other.dir));
+    }
+}
+```
+
+* Por último antes de probar los cambios añadimos al Draw GUI del héroe el HP para saber nuestra vida (a modo debug):
+
+```javascript
+draw_text(10,10, "Attack Type: " + string(attack_type));
+draw_text(10,25, "HP: " + string(hp) + "/" + string(max_hp));
+```
+
+El resultado es magnífico:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img39.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img39.png)
+
 
