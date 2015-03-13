@@ -1681,7 +1681,7 @@ draw_text(10,10, "Attack Type: " + string(attack_type));
 draw_text(10,25, "HP: " + string(hp) + "/" + string(max_hp));
 ```
 
-El resultado es magnífico:
+El resultado es magnífico, los enemigos únicamente se acercan lo suficiente para dispararnos y si salimos de su rango dejan de seguirnos y atacarnos ^_^:
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img39.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img39.png)
