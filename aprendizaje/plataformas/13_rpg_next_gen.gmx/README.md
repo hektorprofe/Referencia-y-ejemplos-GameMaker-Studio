@@ -1862,7 +1862,7 @@ GameState.switches[? "boss_room_completed"] = false;
 
 * Vamos con nuestro Dark Lord. Le activamos las físicas y las colisiones contra las paredes. Añadimos los siguientes eventos:
 
-**obj_Boss_Dark_Lord.Create* 
+**obj_Boss_Dark_Lord.Create** 
 ```javascript
 image_speed = 0.3;
 hero_dist = 0;
@@ -1874,19 +1874,19 @@ hp = max_hp;
 if(GameState.switches[? "boss_room_completed"]) instance_destroy();
 ```
 
-**obj_Boss_Dark_Lord.Step* 
+**obj_Boss_Dark_Lord.Step**
 ```javascript
 hero_dist = point_distance(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
 ```
 
-**obj_Boss_Dark_Lord.Collision with obj_Collision* 
+**obj_Boss_Dark_Lord.Collision with obj_Collision** 
 ```javascript
 /// Nothing
 ```
 
 * También dibujaremos una barra de vida y el nombre del boss:
 
-**obj_Boss_Dark_Lord.Draw* 
+**obj_Boss_Dark_Lord.Draw** 
 ```javascript
 if (hero_dist < 220)
 {
@@ -1901,7 +1901,7 @@ if (hero_dist < 220)
 
 * A continuación añadimos la colisión de los ataques contra el boss y jugando con la variable del GameState podremos activar o desactivar las gemas y la puerta y también la zona que inicia la batalla:
 
-**obj_Attack_1.Collision with obj_Boss_Dark_Lord* 
+**obj_Attack_1.Collision with obj_Boss_Dark_Lord** 
 ```javascript
 // angle bullet to enemy
 hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
@@ -1930,12 +1930,12 @@ alarm[1] = 2;
 
 Cuando ganamos al jefazo podemos cambiar el color de las gemas para que quede mucho mejor e incluso reproducir un sonido, pero antes también tendremos que desactivar el ataque si el boss se ha completado:
 
-**obj_Evil_Gem.Alarm 1* 
+**obj_Evil_Gem.Alarm 1** 
 ```javascript
 if (hero_dis <= vision_r && GameState.switches[? "boss_room_completed"] == false){
 ```
 
-**obj_Evil_Gem.Alarm 1* 
+**obj_Evil_Gem.Alarm 1** 
 ```javascript
 if (GameState.switches[? "boss_room_completed"] == false){
     draw_self();
