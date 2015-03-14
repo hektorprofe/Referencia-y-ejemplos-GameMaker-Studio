@@ -1935,7 +1935,7 @@ Cuando ganamos al jefazo podemos cambiar el color de las gemas para que quede mu
 if (hero_dis <= vision_r && GameState.switches[? "boss_room_completed"] == false){
 ```
 
-**obj_Evil_Gem.Alarm 1** 
+**obj_Evil_Gem.Draw** 
 ```javascript
 if (GameState.switches[? "boss_room_completed"] == false){
     draw_self();
