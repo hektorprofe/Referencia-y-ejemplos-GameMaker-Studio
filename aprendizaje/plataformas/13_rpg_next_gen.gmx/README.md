@@ -1684,6 +1684,51 @@ draw_text(10,25, "HP: " + string(hp) + "/" + string(max_hp));
 El resultado es magnífico, los enemigos únicamente se acercan lo suficiente para dispararnos y si salimos de su rango dejan de seguirnos y atacarnos ^_^:
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img39.png
-)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img39.png)
 
+### Parte 19: Creando un jefe de mazmorra
+
+* La intención es que la sala de la pelea contra el jefe final quedará bloqueada al pasar cierto punto y no podremos huir hasta derrotar al malo malísimo.
+* Empezamos creando una nueva room para la batalla final y un objeto obj_Boss_Dark_Lord para el enemigo final con un sprite cool.
+* Aprovechamos para crear una gema que más tarda nos hará servicio y ponemos algunas instancias por la sala:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img42.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img42.png)
+
+* Creamos un obj_Gate le damos de padre el obj_Colision, activamos las físicas, damos una máscara de colisión y densidad 9. En el create desactivamos las físicas con código y la creamos transparente y con una profundidad inferior a la del héroe:
+
+```javascript
+phy_active = false;
+image_alpha = 0;
+depth = (y * -1) - (obj_Hero.depth * -1);
+```
+
+* Ahora creamos una especie de warp de otro color que activará el boss, obj_Start_Boss y la puerta para encerrarnos. Hacemos que por defecto la puerta no tenga físicas y sea transparente, y al colisionar el héroe con el warp de activacion la puerta se volverá visible y se activarán las físicas de manera que nos quedaremos atrapados.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img40.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img40.png)
+
+* Para gestionar correctamente el momento crearemos una entrada en nuestro maper (en GameState):
+
+```javascript
+// First Boss
+switches[? "boss_room_entered"]     = false;
+```
+* Que cambiaremos a true cuando el jugador pise la zona de activación:
+
+```javascript
+if (!obj_Gate.phy_active){ 
+    obj_Gate.phy_active= true;
+    GameState.switches[? "boss_room_entered"] = true;
+}
+```
+* Añadimos en el Step de la obj_Gate la comprobación a ver si el héroe ha tocado la zona de activación y hacemos visible la puerta:
+
+if (GameState.switches[? "boss_room_entered"] == true){
+    image_alpha = lerp(image_alpha, 1.0, 0.1);
+}
+
+* El efecto que resulta es muy bueno si se juega correctamente con las transparencias y las colisiones:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img41.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img41.png)
 

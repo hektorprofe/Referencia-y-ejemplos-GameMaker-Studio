@@ -10,9 +10,31 @@
         <sound>sound\snd_Talking</sound>
         <sound>sound\snd_Talking2</sound>
       </sounds>
+      <sounds name="Battle">
+        <sound>sound\snd_Music_Battle</sound>
+        <sound>sound\snd_Music_Walking</sound>
+      </sounds>
     </sounds>
   </sounds>
   <sprites name="sprites">
+    <sprites name="Attacks">
+      <sprite>sprites\spt_Attack_Fire</sprite>
+      <sprite>sprites\spr_Attack_Ice</sprite>
+      <sprite>sprites\spr_Attack_Lighting</sprite>
+      <sprite>sprites\spr_Attack_Grass</sprite>
+      <sprite>sprites\spr_Laser</sprite>
+    </sprites>
+    <sprites name="Bosses">
+      <sprite>sprites\spr_Dark_Lord</sprite>
+    </sprites>
+    <sprites name="Enemies">
+      <sprites name="Desert Mobs">
+        <sprite>sprites\spr_Desert_Mob_Down</sprite>
+        <sprite>sprites\spr_Desert_Mob_Up</sprite>
+        <sprite>sprites\spr_Desert_Mob_Left</sprite>
+        <sprite>sprites\spr_Desert_Mob_Right</sprite>
+      </sprites>
+    </sprites>
     <sprites name="NPC">
       <sprites name="Bob">
         <sprite>sprites\spr_Bob_Left</sprite>
@@ -35,6 +57,10 @@
       <sprites name="Misc">
         <sprite>sprites\spr_Tea</sprite>
         <sprite>sprites\spr_Follow_Target</sprite>
+        <sprite>sprites\spr_Gem</sprite>
+        <sprite>sprites\spr_Gem_Glow</sprite>
+        <sprite>sprites\spr_Column</sprite>
+        <sprite>sprites\spr_Gate</sprite>
       </sprites>
     </sprites>
     <sprites name="Party">
@@ -62,26 +88,13 @@
       </sprites>
       <sprites name="Collisions">
         <sprite>sprites\spr_Collision</sprite>
+        <sprite>sprites\spr_Collision_Event</sprite>
         <sprite>sprites\spr_Collision_Enemy</sprite>
       </sprites>
       <sprites name="Warp">
         <sprite>sprites\spr_Hero_Start</sprite>
         <sprite>sprites\spr_Base_Warp</sprite>
       </sprites>
-    </sprites>
-    <sprites name="Enemies">
-      <sprites name="Desert Mobs">
-        <sprite>sprites\spr_Desert_Mob_Down</sprite>
-        <sprite>sprites\spr_Desert_Mob_Up</sprite>
-        <sprite>sprites\spr_Desert_Mob_Left</sprite>
-        <sprite>sprites\spr_Desert_Mob_Right</sprite>
-      </sprites>
-    </sprites>
-    <sprites name="Attacks">
-      <sprite>sprites\spt_Attack_Fire</sprite>
-      <sprite>sprites\spr_Attack_Ice</sprite>
-      <sprite>sprites\spr_Attack_Lighting</sprite>
-      <sprite>sprites\spr_Attack_Grass</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -116,6 +129,12 @@
         <background>background\bg_Desert_05</background>
         <background>background\bg_Desert_06</background>
       </backgrounds>
+      <backgrounds name="Cave">
+        <background>background\bg_Cave_01</background>
+        <background>background\bg_Cave_02</background>
+        <background>background\bg_Cave_03</background>
+        <background>background\bg_Cave_04</background>
+      </backgrounds>
     </backgrounds>
   </backgrounds>
   <paths name="paths">
@@ -132,12 +151,53 @@
     <font>fonts\fnt_Window</font>
   </fonts>
   <objects name="objects">
-    <objects name="Party">
-      <object>objects\obj_Hero</object>
+    <objects name="Attacks">
+      <object>objects\obj_Attack_Fire</object>
+      <object>objects\obj_Attack_Ice</object>
+      <object>objects\obj_Attack_Lighting</object>
+      <object>objects\obj_Attack_Grass</object>
+      <object>objects\obj_Attack_Base</object>
+    </objects>
+    <objects name="Bosses">
+      <objects name="Cave">
+        <objects name="Boss">
+          <object>objects\obj_Boss_Dark_Lord</object>
+        </objects>
+        <objects name="Misc">
+          <object>objects\obj_Gate</object>
+          <object>objects\obj_Column</object>
+          <object>objects\obj_Evil_Gem</object>
+          <object>objects\obj_Start_Boss</object>
+        </objects>
+      </objects>
+    </objects>
+    <objects name="Enemies">
+      <object>objects\obj_Monster_Base</object>
+      <objects name="Desert Mobs">
+        <object>objects\obj_Desert_Mob</object>
+      </objects>
     </objects>
     <objects name="Nature">
       <object>objects\obj_Flower</object>
       <object>objects\obj_Tree</object>
+    </objects>
+    <objects name="NPC">
+      <objects name="Base">
+        <object>objects\obj_Follow_Target</object>
+        <object>objects\obj_NPC_Base</object>
+      </objects>
+      <object>objects\obj_NPC_Guard</object>
+      <object>objects\obj_NPC_Bob</object>
+    </objects>
+    <objects name="Party">
+      <object>objects\obj_Hero</object>
+    </objects>
+    <objects name="Quests">
+      <objects name="NPC Quest">
+        <objects name="NPC Bob">
+          <object>objects\obj_Tea</object>
+        </objects>
+      </objects>
     </objects>
     <objects name="System">
       <object>objects\obj_Collision</object>
@@ -155,39 +215,13 @@
         </objects>
       </objects>
     </objects>
-    <objects name="NPC">
-      <objects name="Base">
-        <object>objects\obj_Follow_Target</object>
-        <object>objects\obj_NPC_Base</object>
-      </objects>
-      <object>objects\obj_NPC_Guard</object>
-      <object>objects\obj_NPC_Bob</object>
-    </objects>
-    <objects name="Quests">
-      <objects name="NPC Quest">
-        <objects name="NPC Bob">
-          <object>objects\obj_Tea</object>
-        </objects>
-      </objects>
-    </objects>
-    <objects name="Enemies">
-      <object>objects\obj_Monster_Base</object>
-      <objects name="Desert Mobs">
-        <object>objects\obj_Desert_Mob</object>
-      </objects>
-    </objects>
-    <objects name="Attacks">
-      <object>objects\obj_Attack_Fire</object>
-      <object>objects\obj_Attack_Ice</object>
-      <object>objects\obj_Attack_Lighting</object>
-      <object>objects\obj_Attack_Grass</object>
-    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_TitleScreen</room>
     <room>rooms\rm_HomeCity</room>
     <room>rooms\rm_Pub</room>
     <room>rooms\rm_Desert</room>
+    <room>rooms\rm_Cave</room>
     <rooms name="Unused">
       <room>rooms\rm_Intro</room>
     </rooms>

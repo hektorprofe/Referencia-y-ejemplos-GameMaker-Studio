@@ -128,6 +128,7 @@
     <instance objName="obj_Collision_Enemy" x="740" y="320" name="inst_39BDF83B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision_Enemy" x="950" y="700" name="inst_9F568FF8" locked="0" code="" scaleX="0.3125" scaleY="2.1875" colour="4294967295" rotation="0"/>
     <instance objName="obj_Collision_Enemy" x="950" y="160" name="inst_97CE9E4D" locked="0" code="" scaleX="0.3125" scaleY="5" colour="4294967295" rotation="0"/>
+    <instance objName="obj_Warp" x="950" y="220" name="inst_E6C6F0F0" locked="0" code="event_inherited();&#xA;dest_room = rm_Cave;&#xA;dest_x = 400;&#xA;dest_y = 900+16;&#xA;" scaleX="0.3125" scaleY="2.1875" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bg_Desert_01" x="0" y="0" w="480" h="320" xo="0" yo="0" id="10000659" name="inst_5C967535" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
