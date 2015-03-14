@@ -50,8 +50,11 @@ depth = (y * -1) - (obj_Hero.depth * -1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (GameState.switches[? "boss_room_entered"] == true){
+            <string>if (GameState.switches[? "boss_room_entered"] == true &amp;&amp; GameState.switches[? "boss_room_completed"] == false){
     image_alpha = lerp(image_alpha, 1.0, 0.1);
+} else {
+    phy_active = false;
+    image_alpha = 0;
 }
 </string>
           </argument>

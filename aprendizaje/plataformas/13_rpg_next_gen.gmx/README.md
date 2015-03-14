@@ -1849,3 +1849,107 @@ instance_destroy();
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img44.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img44.png)
 
+* Ahora es el momento de darle vidilla a nuestro jefe final. Pero antes de empezar vamos a añadir un snippet para configurar correctamente el tamaño de la GUI en relación al tamaño de nuestro viewport en el **GameState.Room_Start** event:
+
+```javascript
+display_set_gui_size(view_wport[0], view_hport[0]);
+```
+
+* A continuación añadiremos en nuestro maper unas variables para controlar si se ha completado el boss o no:
+```javascript
+GameState.switches[? "boss_room_completed"] = false;
+```
+
+* Vamos con nuestro Dark Lord. Le activamos las físicas y las colisiones contra las paredes. Añadimos los siguientes eventos:
+
+**obj_Boss_Dark_Lord.Create* 
+```javascript
+image_speed = 0.3;
+hero_dist = 0;
+name = "Dark Lord";
+max_hp = 100;
+hp = max_hp;
+
+// Si ya hemos completado el boss lo destruimos
+if(GameState.switches[? "boss_room_completed"]) instance_destroy();
+```
+
+**obj_Boss_Dark_Lord.Step* 
+```javascript
+hero_dist = point_distance(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
+```
+
+**obj_Boss_Dark_Lord.Collision with obj_Collision* 
+```javascript
+/// Nothing
+```
+
+* También dibujaremos una barra de vida y el nombre del boss:
+
+**obj_Boss_Dark_Lord.Draw* 
+```javascript
+if (hero_dist < 220)
+{
+    draw_healthbar(133,32,133+400,40,hp,c_white,c_red,c_green,0,false,true);
+    draw_set_color(c_black);
+    draw_text( (view_wport[0]/2 - string_width(name) / 2), 10, name);
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img45.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img45.png)
+
+* A continuación añadimos la colisión de los ataques contra el boss y jugando con la variable del GameState podremos activar o desactivar las gemas y la puerta y también la zona que inicia la batalla:
+
+**obj_Attack_1.Collision with obj_Boss_Dark_Lord* 
+```javascript
+// angle bullet to enemy
+hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
+hit_dx = lengthdir_x(force,hit_angle);
+hit_dy = lengthdir_y(force,hit_angle);
+
+randomize();
+damage = 1 + random(3);
+
+with (other) {              // other aqui es la bullet
+    hp -= other.damage;
+    physics_apply_impulse(x,y,other.hit_dx,other.hit_dy);
+    phy_fixed_rotation = true;
+    if(hp<=0){
+        GameState.switches[? "boss_room_completed"] = true;
+        instance_destroy();
+
+        // reproducimos un sonido de victoria
+        audio_stop_all();
+        audio_play_sound(snd_Music_Winner,1,false);
+    }
+}
+
+alarm[1] = 2;
+```
+
+Cuando ganamos al jefazo podemos cambiar el color de las gemas para que quede mucho mejor e incluso reproducir un sonido, pero antes también tendremos que desactivar el ataque si el boss se ha completado:
+
+**obj_Evil_Gem.Alarm 1* 
+```javascript
+if (hero_dis <= vision_r && GameState.switches[? "boss_room_completed"] == false){
+```
+
+**obj_Evil_Gem.Alarm 1* 
+```javascript
+if (GameState.switches[? "boss_room_completed"] == false){
+    draw_self();
+    draw_sprite_ext(spr_Gem_Glow,0,x,y,1,1,0,c_white,glow_a);
+} else {
+    // Cambiamos el sprite a otro color si hemos completado el boss
+    sprite_index = spr_Gem_Win;
+    draw_self();
+    draw_sprite_ext(spr_Gem_Glow_Win,0,x,y,1,1,0,c_white,glow_a);
+}
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img46.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img46.png)
+
+Y con ésto finaliza el juego. No descarto añadir futuras mejoras de cosas puntuales porque he aprendido muchísimas cosas y la valoración es hiper positiva de cara a hacer futuras implementaciones.
+

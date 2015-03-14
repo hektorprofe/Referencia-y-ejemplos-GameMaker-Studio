@@ -64,7 +64,7 @@ spawn_y = lengthdir_y(16, hero_dir);
 
 //show_debug_message(string(hero_dis) + " " + string(attack_r));
 
-if (hero_dis &lt;= vision_r){
+if (hero_dis &lt;= vision_r &amp;&amp; GameState.switches[? "boss_room_completed"] == false){
     attack = instance_create(x+spawn_x, y+spawn_y, obj_Attack_Laser);
 
     with (attack){
@@ -153,9 +153,14 @@ if (glow){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-draw_self();
-draw_sprite_ext(spr_Gem_Glow,0,x,y,1,1,0,c_white,glow_a);
+            <string>if (GameState.switches[? "boss_room_completed"] == false){
+    draw_self();
+    draw_sprite_ext(spr_Gem_Glow,0,x,y,1,1,0,c_white,glow_a);
+} else {
+    sprite_index = spr_Gem_Win;
+    draw_self();
+    draw_sprite_ext(spr_Gem_Glow_Win,0,x,y,1,1,0,c_white,glow_a);
+}
 /*hero_dist = point_distance(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
 
 if (hero_dist &lt; vision_r){

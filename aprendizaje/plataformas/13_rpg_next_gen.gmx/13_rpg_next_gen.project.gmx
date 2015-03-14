@@ -13,6 +13,7 @@
       <sounds name="Battle">
         <sound>sound\snd_Music_Battle</sound>
         <sound>sound\snd_Music_Walking</sound>
+        <sound>sound\snd_Music_Winner</sound>
       </sounds>
     </sounds>
   </sounds>
@@ -58,7 +59,9 @@
         <sprite>sprites\spr_Tea</sprite>
         <sprite>sprites\spr_Follow_Target</sprite>
         <sprite>sprites\spr_Gem</sprite>
+        <sprite>sprites\spr_Gem_Win</sprite>
         <sprite>sprites\spr_Gem_Glow</sprite>
+        <sprite>sprites\spr_Gem_Glow_Win</sprite>
         <sprite>sprites\spr_Column</sprite>
         <sprite>sprites\spr_Gate</sprite>
       </sprites>

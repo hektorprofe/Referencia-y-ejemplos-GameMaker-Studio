@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!obj_Gate.phy_active){ 
+            <string>if (GameState.switches[? "boss_room_completed"] == false){ 
     obj_Gate.phy_active= true;
     GameState.switches[? "boss_room_entered"] = true;
     audio_stop_all();
