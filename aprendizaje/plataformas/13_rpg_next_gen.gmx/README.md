@@ -1686,7 +1686,7 @@ El resultado es magnífico, los enemigos únicamente se acercan lo suficiente pa
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img39.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img39.png)
 
-### Parte 19: Creando un jefe de mazmorra
+### Parte 19: Creando un jefe de mazmorra - Parte 1
 
 * La intención es que la sala de la pelea contra el jefe final quedará bloqueada al pasar cierto punto y no podremos huir hasta derrotar al malo malísimo.
 * Empezamos creando una nueva room para la batalla final y un objeto obj_Boss_Dark_Lord para el enemigo final con un sprite cool.
@@ -1695,7 +1695,7 @@ El resultado es magnífico, los enemigos únicamente se acercan lo suficiente pa
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img42.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img42.png)
 
-* Creamos un obj_Gate le damos de padre el obj_Colision, activamos las físicas, damos una máscara de colisión y densidad 9. En el create desactivamos las físicas con código y la creamos transparente y con una profundidad inferior a la del héroe:
+* Creamos un obj_Gate le damos de padre el obj_Colision, activamos las físicas, damos una máscara de colisión y densidad 0. En el create desactivamos las físicas con código y la creamos transparente y con una profundidad inferior a la del héroe:
 
 ```javascript
 phy_active = false;
@@ -1724,12 +1724,128 @@ if (!obj_Gate.phy_active){
 ```
 * Añadimos en el Step de la obj_Gate la comprobación a ver si el héroe ha tocado la zona de activación y hacemos visible la puerta:
 
+```javascript
 if (GameState.switches[? "boss_room_entered"] == true){
     image_alpha = lerp(image_alpha, 1.0, 0.1);
 }
+```
 
 * El efecto que resulta es muy bueno si se juega correctamente con las transparencias y las colisiones:
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img41.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img41.png)
+
+### Parte 19: Creando un jefe de mazmorra - Parte 2
+
+* Comenzaremos configurando nuestras gemas maléficas:
+
+**obj_Evil_Gem.Create**
+```javascript
+glow = false;
+glow_a = 0;
+depth = (y * -1) - (obj_Hero.depth * -1);
+vision_r = 144;
+```
+
+**obj_Evil_Gem.Alarm 0**
+```javascript
+glow = true;
+alarm[1] = 60;
+```
+
+**obj_Evil_Gem.Alarm 1**
+```javascript
+/// Fire event
+glow = false;
+
+/// Attack the hero
+show_debug_message("Attacking");
+hero_dir = point_direction(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
+hero_dis = point_distance(x,y,obj_Hero.phy_position_x,obj_Hero.phy_position_y);
+
+spawn_x = lengthdir_x(16, hero_dir); // a 24px del centro del heroe
+spawn_y = lengthdir_y(16, hero_dir); 
+
+//show_debug_message(string(hero_dis) + " " + string(attack_r));
+
+if (hero_dis <= vision_r){
+    attack = instance_create(x+spawn_x, y+spawn_y, obj_Attack_Laser);
+
+    with (attack){
+        force_x = lengthdir_x(force, other.hero_dir);
+        force_y = lengthdir_y(force, other.hero_dir);
+        phy_rotation = -other.hero_dir;
+        physics_apply_impulse(x,y, force_x, force_y);
+    }
+}
+``` 
+
+**obj_Evil_Gem.Step** 
+```javascript
+if (GameState.switches[? "boss_room_entered"] == true){
+    if (alarm[0] <= 0) alarm[0] = 125 + random(30); 
+    // a esta alarma le restamos 60*2 y nos queda activa durante 5+random steps
+    // la resta debe ser siempre positiva o las alarmas se encontraran
+}
+
+if (glow){
+    glow_a = lerp(glow_a, 1, 0.1);
+} else {
+    glow_a = lerp(glow_a, 0, 0.1);
+}
+```
+
+**obj_Evil_Gem.Draw** 
+```javascript
+draw_self();
+draw_sprite_ext(spr_Gem_Glow,0,x,y,1,1,0,c_white,glow_a);
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img43.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img43.png)
+
+* Ahora crearemos el obj_Attack_Laser clonado de obj_Attack_Grass que representará los disparos de las gemas hacia el héroe:
+
+**obj_Attack_Laser.Create** 
+```javascript
+force = 0.5; // fuerza de movimiento de la bala
+alarm[0] = force*240; // tiempo de vida
+image_speed = 0;
+phy_fixed_rotation = true;
+depth = -10000;
+```
+
+**obj_Attack_Laser.Alarm 0** 
+```javascript
+instance_destroy();
+```
+
+**obj_Attack_Laser.Collision with obj_Hero** 
+```javascript
+// angle bullet to hero
+hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
+hit_dx = lengthdir_x(force,hit_angle);
+hit_dy = lengthdir_y(force,hit_angle);
+
+randomize();
+damage = 1 + irandom(2);
+
+with (other) {              // other aqui es el heroe
+    physics_apply_impulse(x,y,other.hit_dx,other.hit_dy);
+    phy_fixed_rotation = true;
+    
+    // Gestionamos el daño del ataque aquí
+    hp -= other.damage;
+    if (hp <= 0)
+    {
+        show_message("GAME OVER");
+        game_restart();
+    }
+}
+
+instance_destroy();
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img44.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/plataformas/13_rpg_next_gen.gmx/Screens/img44.png)
 

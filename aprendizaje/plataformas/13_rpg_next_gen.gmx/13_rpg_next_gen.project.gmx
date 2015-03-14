@@ -156,6 +156,7 @@
       <object>objects\obj_Attack_Ice</object>
       <object>objects\obj_Attack_Lighting</object>
       <object>objects\obj_Attack_Grass</object>
+      <object>objects\obj_Attack_Laser</object>
       <object>objects\obj_Attack_Base</object>
     </objects>
     <objects name="Bosses">
