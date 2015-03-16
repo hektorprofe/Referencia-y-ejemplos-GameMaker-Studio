@@ -80,6 +80,46 @@ force = 1;
         </arguments>
       </action>
     </event>
+    <event eventtype="4" ename="obj_Monster_Base">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// angle bullet to enemy
+hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
+hit_dx = lengthdir_x(force,hit_angle);
+hit_dy = lengthdir_y(force,hit_angle);
+
+randomize();
+damage = 1 + random(3);
+
+with (other) {              // other aqui es la bullet
+    hp -= other.damage;
+    physics_apply_impulse(x,y,other.hit_dx,other.hit_dy);
+    phy_fixed_rotation = true;
+    if(hp&lt;=0){
+        instance_destroy();
+    }
+}
+
+alarm[1] = 2;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="4" ename="obj_Boss_Dark_Lord">
       <action>
         <libid>1</libid>
@@ -113,46 +153,6 @@ with (other) {              // other aqui es la bullet
         GameState.switches[? "boss_room_completed"] = true;
         audio_stop_all();
         audio_play_sound(snd_Music_Winner,1,false);
-        instance_destroy();
-    }
-}
-
-alarm[1] = 2;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_Monster_Base">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>// angle bullet to enemy
-hit_angle = point_direction(x,y,other.phy_position_x,other.phy_position_y);
-hit_dx = lengthdir_x(force,hit_angle);
-hit_dy = lengthdir_y(force,hit_angle);
-
-randomize();
-damage = 1 + random(3);
-
-with (other) {              // other aqui es la bullet
-    hp -= other.damage;
-    physics_apply_impulse(x,y,other.hit_dx,other.hit_dy);
-    phy_fixed_rotation = true;
-    if(hp&lt;=0){
         instance_destroy();
     }
 }

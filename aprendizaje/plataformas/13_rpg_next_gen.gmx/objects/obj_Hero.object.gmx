@@ -133,7 +133,7 @@ if (keyboard_check_pressed(ord('Z'))  || keyboard_check(ord('E'))){
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Monster_Base">
+    <event eventtype="4" ename="obj_Collision">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -179,7 +179,7 @@ if (keyboard_check_pressed(ord('Z'))  || keyboard_check(ord('E'))){
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Collision">
+    <event eventtype="4" ename="obj_Tree">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -202,7 +202,7 @@ if (keyboard_check_pressed(ord('Z'))  || keyboard_check(ord('E'))){
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Tree">
+    <event eventtype="4" ename="obj_Monster_Base">
       <action>
         <libid>1</libid>
         <id>603</id>
