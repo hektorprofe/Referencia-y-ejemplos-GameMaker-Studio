@@ -1,7 +1,7 @@
 # Creando el servidor con nodejs
 Este ejemplo se ha creado a partir de la serie de videotutoriales **Lets Build A MMORPG** del usuario [rmkdev](https://www.youtube.com/channel/UCJvrLzbg4VPRxzf2vhW7G4A).
 
-## Parte 1
+## Parte 1: Arquitectura del server
 * Empezamos creando un fichero server.js.
 * Añadimos un fichero package.json con los repositorios de nodejs que vamos a utilizar.
 * Hacemos un **npm install** para instalar los repositorios.
@@ -31,7 +31,7 @@ require(__dirname + '/Resources/config.js');
 console.log(config.database);
 ```
 
-## Parte 2
+## Parte 2: Cargando resources
 Antes de comenzar podemos activar la sintaxis de nodejs en webstorm en **Settings | Javascript | Libraries**, así nos será más fácil proceder.
 Además añadiremos los módulos centrales de nodejs en: **File | Settings | Javascript | Node.js** y haciendo clic en Configure.
 
