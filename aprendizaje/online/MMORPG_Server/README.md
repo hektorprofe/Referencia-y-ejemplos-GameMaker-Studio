@@ -183,7 +183,7 @@ net.createServer(function(socket){
 * El problema aquí es que cuando el cliente recibe los paquetitos de información, la va procesando toda de golpe añadiéndola a su buffer local en tiempo real.
 * Nosotros mismos tendremos que encargarnos de manejar estos buffers e indicarle al cliente sus longitudes. De manera que el cliente irá troceando su buffer local para interpretar las órdenes recibidas.
 * En otras palabras, iremos indicando la longitud de cada buffer en el paquete.
-* Empezaremos creando el **packet.js** en la raíz del proyecto. Éste objeto nos permitirá crear nuestros buffers:
+* Empezaremos creando el **packet.js** en la raíz del proyecto. Este objeto nos permitirá crear nuestros buffers:
 ```javascript
 var zeroBuffer = new Buffer('00', 'hex');
 
@@ -226,7 +226,7 @@ module.exports = packet = {
     }
 }
 ```
-* A continuación lo imporamos globalmente en nuestro **server.js**:
+* A continuación lo importamos globalmente en nuestro **server.js**:
 ```javascript
 require('./packet.js');
 ```
@@ -243,7 +243,7 @@ this.initiate = function(){
 ```
 * Si ponemos el servidor en marcha y conectamos un cliente no veremos nada nuevo, pero al no dar error sabremos que hemos escrito un paquete al cliente:
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img3.png
-)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img3.png)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img4.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img4.png)
 
 
