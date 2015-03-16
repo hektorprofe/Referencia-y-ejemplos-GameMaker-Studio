@@ -32,16 +32,18 @@ map_files.forEach(function(mapFile){
 
 // Create the server
 net.createServer(function(socket){
+
     console.log("Socket connected");
-    socket.on('error', function(err){
-        console.log("Socket error: " + err.toString());
-    });
-    socket.on('end', function(){
-        console.log("Socket closed");
-    });
-    socket.on('data', function(data){
-        console.log("Socket data: " + data.toString());
-    });
+    var c_inst = new require('./client.js');
+    var thisClient = new c_inst();
+
+    thisClient.socket = socket;
+    thisClient.initiate();
+
+    socket.on('error', thisClient.error);
+    socket.on('end', thisClient.end);
+    socket.on('data', thisClient.data);
+
 }).listen(config.port);
 
 console.log("Initialize Completed.\nServer Port: " + config.port + " | Environment: " + config.environment);

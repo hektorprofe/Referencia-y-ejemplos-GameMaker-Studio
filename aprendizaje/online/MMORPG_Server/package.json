@@ -7,6 +7,7 @@
     "extend":"*",
     "binary-parser":"*",
     "mongoose":"*",
+    "performance-now":"*",
     "underscore":"*"
   }
 }

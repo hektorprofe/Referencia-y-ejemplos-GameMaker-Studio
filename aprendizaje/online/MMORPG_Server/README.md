@@ -118,8 +118,60 @@ network_connect_raw(socket,"127.0.0.1",8082);
 
 * Así que pondremos por defecto el fondo bg_Connecting.
 * Ahora si ponemos en marcha nuestro servidor y ejecutamos el juego veremos como se conecta el cliente, así como se desconecta cuando se capturan el evento **end**:
+
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img2.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img2.png)
 
+## Parte 4: Representando al cliente
+* Para poder manejar a cada cliente específico necesitaremos representarlo de alguna forma en tiempo real dentro del servidor.
+* Una librería de nodejs que nos ayudará a gestionar mejor el tiempo es **performance-now**, la añadimos al **package.json** y la instalamos con **npm install**.
+* Vamos a crear un nuevo fichero **client.js** en la raíz de nuestro proyecto:
+```javascript
+var now = require('performance-now');
+var _ = require('underscore');
+
+module.exports = function(){
+    // These objects will be added at runtime.
+    // this.socket = {}
+    // this.user = {}
+
+    this.initiate = function(){
+        console.log("Client initiating");
+    }
+
+    this.data = function(data){
+        console.log("Client data: " + data.toString());
+    }
+
+    this.error = function(err){
+        console.log("Client error: " + err.toString());
+    }
+
+    this.end = function(){
+        console.log("Client closed");
+    }
+}
+```
+* Ahora necesitamos crear la representación de este cliente con varias funciones dentro del servidor cuando se conecte un socket.
+* Para hacerlo crearemos una instancia del cliente justo al conectarse un nuevo socket, entonces le asignaremos el socket e iniciaremos el cliente.
+* También substituiremos las antiguas funciones por las específicas del cliente:
+```javascript
+// Create the server
+net.createServer(function(socket){
+    console.log("Socket connected");
+    var c_inst = new require('./client.js');
+    var thisClient = new c_inst()
+
+    thisClient.socket = socket;
+    thisClient.initiate();
+
+    socket.on('error', thisClient.error);
+    socket.on('end', thisClient.end);
+    socket.on('data', thisClient.data);
+}).listen(config.port);
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img3.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img3.png)
 
 
