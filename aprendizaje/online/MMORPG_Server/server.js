@@ -30,11 +30,18 @@ map_files.forEach(function(mapFile){
     maps[map.room] = map;
 });
 
-console.log(config.database);
-console.log(maps);
+// Create the server
+net.createServer(function(socket){
+    console.log("Socket connected");
+    socket.on('error', function(err){
+        console.log("Socket error: " + err.toString());
+    });
+    socket.on('end', function(){
+        console.log("Socket closed");
+    });
+    socket.on('data', function(data){
+        console.log("Socket data: " + data.toString());
+    });
+}).listen(config.port);
 
-// 1. Load the initializers
-// 2. Load data models
-// 3. Load game maps data
-// 4. Initiate the server and listen to the internet
-// Server logic
+console.log("Initialize Completed.\nServer Port: " + config.port + " | Environment: " + config.environment);

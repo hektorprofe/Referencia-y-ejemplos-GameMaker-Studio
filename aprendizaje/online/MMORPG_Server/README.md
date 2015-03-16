@@ -83,5 +83,43 @@ model_files.forEach(function(modelFile){
 console.log(maps);
 ```
 
+## Parte 3: Creando la red y el cliente de prueba
+* En primer lugar vamos a crear el servidor en **server.js** utilizando la librería net, capaz de crear el bucle del servicio y tratar los sockets que se vayan conectando:
+```javascript
+// Create the server
+net.createServer(function(socket){
+    console.log("Socket connected");
+    socket.on('error', function(err){
+        console.log("Socket error: " + err.toString());
+    });
+    socket.on('end', function(){
+        console.log("Socket closed");
+    });
+    socket.on('data', function(data){
+        console.log("Socket data: " + data.toString());
+    });
+}).listen(config.port);
+
+console.log("Initialize Completed.\nServer Port: " + config.port + " | Environment: " + config.environment);
+```
+
+* Ahora creamos un nuevo proyecto de Game Maker.
+* Creamos un objeto llamado **Network** que nos manejará toda la conexión con el servidor, lo hacemos persistente y le damos el siguiente código en el **Create**:
+```javascript
+/// Initiate the connection
+socket = network_create_socket(network_socket_tcp);
+network_connect_raw(socket,"127.0.0.1",8082);
+```
+* Ahora vamos a crear una room nueva, le llamaremos **rm_init**,con el tamaño que queramos y le pondremos una instancia del objeto **Network** dentro.
+* Podemos ahora crear 3 fondos para gestionar la conexión del cliente y ponerlos en la room:
+    * bg_Loading: Pantalla del juego mientras carga.
+    * bg_Connecting: Pantalla del juego mientras conecta (por defecto).
+    * bg_Title_Screen: Pantalla del juego preparado para jugar.
+
+* Así que pondremos por defecto el fondo bg_Connecting.
+* Ahora si ponemos en marcha nuestro servidor y ejecutamos el juego veremos como se conecta el cliente, así como se desconecta cuando se capturan el evento **end**:
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img2.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img2.png)
+
 
 
