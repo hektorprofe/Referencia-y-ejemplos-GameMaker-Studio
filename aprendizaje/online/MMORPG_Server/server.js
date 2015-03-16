@@ -4,6 +4,8 @@
 
 // Import required libraries
 require(__dirname + '/Resources/config.js');
+require('./packet.js');
+
 var fs = require('fs');
 var net = require('net');
 

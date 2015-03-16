@@ -174,4 +174,78 @@ net.createServer(function(socket){
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img3.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img3.png)
 
+## Parte 5: Enviando paquetes utilizando buffers
+
+* Cuando el servidor envía información a los clientes lo hace escribiendo información en el socket abierto contra el cliente.
+* Sin embargo en Game Maker necesitaremos ser más rudimentarios porque no basta con escribir un texto.
+* Game Maker nos permite crear un socket de tipo TCP. Ésto significa poca pérdida de datos, pero más complejidad para nosotros a la hora de enviar la información.
+* Digamos que tendremos que empaquetar la información en pequeños trocitos que almacenarán los datos. A estos trocitos los llamaremos buffers.
+* El problema aquí es que cuando el cliente recibe los paquetitos de información, la va procesando toda de golpe añadiéndola a su buffer local en tiempo real.
+* Nosotros mismos tendremos que encargarnos de manejar estos buffers e indicarle al cliente sus longitudes. De manera que el cliente irá troceando su buffer local para interpretar las órdenes recibidas.
+* En otras palabras, iremos indicando la longitud de cada buffer en el paquete.
+
+* Empezaremos creando el **packet.js** en la raíz del proyecto. Éste objeto nos permitirá crear nuestros buffers:
+
+```javascript
+var zeroBuffer = new Buffer('00', 'hex');
+
+module.exports = packet = {
+    // params: array of javascript objects to be turn in buffers
+    build: function(params){
+        var packetParts = [];
+        var packetSize = 0;
+
+        params.forEach(function(param){
+            var buffer;
+            if (typeof param === 'string'){
+                // if param is a string
+                buffer = new Buffer(param, 'utf8');
+                buffer = Buffer.concat([buffer,zeroBuffer], buffer.length+1);
+            } else if (typeof param === 'number'){
+                // if param is a number
+                buffer = new Buffer(2); // 2 bytes
+                buffer.writeUInt16LE(param,0);
+            } else {
+                console.log("WARNING: Unknown data type in packet builder!");
+            }
+
+            packetSize += buffer.length;
+
+            // push the buffer it in the packetParts
+            packetParts.push(buffer);
+        });
+
+        var dataBuffer = Buffer.concat(packetParts, packetSize);
+
+        // now we need also to send the buffer sizes to client in order to split them
+        var size = new Buffer(1);
+        size.writeUInt8(dataBuffer.length+1, 0);
+
+        // at last we create the paquet with the dataBuffer and its size
+        var finalPacket = Buffer.concat([size, dataBuffer], size.length + dataBuffer.length);
+
+        return finalPacket;
+    }
+}
+```
+* A continuación lo imporamos globalmente en nuestro **server.js**:
+```javascript
+require('./packet.js');
+```
+* Por ahora básicamente enviaremos un buffer al cliente con información de un saludo, una cadena de texto **HOLA**.
+* Lo haremos en el código del **client.js** en el momento de la inicialización:
+```javascript
+this.initiate = function(){
+    var client = this; // represents all the function itself
+
+    // Send the connection handshake packet to the client
+    client.socket.write(packet.build(["HELLO", now().toString()]));
+    console.log("Client initiated and greeted.");
+};
+```
+* Si ponemos el servidor en marcha y conectamos un cliente no veremos nada nuevo, pero al no dar error sabremos que hemos escrito un paquete al cliente:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img3.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img3.png)
+
 
