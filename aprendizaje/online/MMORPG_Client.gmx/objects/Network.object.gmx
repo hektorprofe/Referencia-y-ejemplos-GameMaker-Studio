@@ -25,9 +25,76 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Initiate the connection
+            <string>/// Initate the connection
+// ivars
+reading = 0;
+savedBuffer = buffer_create(1, buffer_grow, 1);
+cutBuffer = buffer_create(1, buffer_grow, 1);
+
+// Initiate the socket
 socket = network_create_socket(network_socket_tcp);
 network_connect_raw(socket,"127.0.0.1",8082);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="68">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// when a packet comes in
+show_debug_message("networking event triggered");
+
+switch(async_load[?"type"]){
+    case network_type_data:
+        // decrypt the package every time a new buffer arrives and put to local buffer
+        buffer_copy(async_load[?"buffer"], 0, async_load[?"size"], savedBuffer, buffer_tell(savedBuffer));
+        // move to the current position we need to read within the buffer
+        buffer_seek(savedBuffer, buffer_seek_relative, async_load[?"size"] + 1);
+        // create endless loop to read all buffer info till it ends
+        while(true){
+            var size = buffer_peek(savedBuffer, reading, buffer_u8);
+            // if the saved buffer is bigger than the current position plus the size of data that we are looking for 
+            if(buffer_get_size(savedBuffer) &gt;= reading + size){
+                // now we can copy the data out of the savedBuffer into the curBuffer
+                buffer_copy(savedBuffer, reading, size, cutBuffer, 0);
+                buffer_seek(cutBuffer, 0, 1);
+                
+                // we manage the current packet
+                handle_packet(cutBuffer);
+                
+                // now we have succesfully pulled the information out and proccessed to our handle packet function
+                // we can now determine if there's still more data left to read and allow our loop continue or resize
+                // the savedBuffer back to one byte and then set the reading position back to zero and end the while loop
+                if (buffer_get_size(savedBuffer) != reading+size){
+                    reading += size;
+                } else {
+                    // we reach the end of the buffer to process
+                    // we can resize the savedBuffer to nothing
+                    buffer_resize(savedBuffer, 1);
+                    reading = 0;
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        break;
+}
 </string>
           </argument>
         </arguments>

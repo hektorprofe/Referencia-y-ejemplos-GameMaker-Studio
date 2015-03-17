@@ -12,6 +12,9 @@
     <background>background\bg_Title_Screen</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\handle_packet.gml</script>
+  </scripts>
   <objects name="objects">
     <objects name="Sockets">
       <object>objects\Network</object>
@@ -19,6 +22,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
+    <room>rooms\rm_login</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

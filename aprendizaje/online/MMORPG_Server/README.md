@@ -246,4 +246,68 @@ this.initiate = function(){
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img4.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img4.png)
 
+## Parte 6: Recibiendo los paquetes
+
+* Creamos en el objeto Network un evento **Networking** que se llamará cada vez que se recibe un paquete.
+* En él tendremos que manejar los datos y evitar los posibles fallos. Es un código complicado que se debe leer con calma:
+```javascript
+/// when a packet comes in
+show_debug_message("networking event triggered");
+
+switch(async_load[?"type"]){
+    case network_type_data:
+        // decrypt the package every time a new buffer arrives and put to local buffer
+        buffer_copy(async_load[?"buffer"], 0, async_load[?"size"], savedBuffer, buffer_tell(savedBuffer));
+        // move to the current position we need to read within the buffer
+        buffer_seek(savedBuffer, buffer_seek_relative, async_load[?"size"] + 1);
+        // create endless loop to read all buffer info till it ends
+        while(true){
+            var size = buffer_peek(savedBuffer, reading, buffer_u8);
+            // if the saved buffer is bigger than the current position plus the size of data that we are looking for
+            if(buffer_get_size(savedBuffer) >= reading + size){
+                // now we can copy the data out of the savedBuffer into the curBuffer
+                buffer_copy(savedBuffer, reading, size, cutBuffer, 0);
+                buffer_seek(cutBuffer, 0, 1);
+
+                // we manage the current packet
+                handle_packet(cutBuffer);
+
+                // now we have succesfully pulled the information out and proccessed to our handle packet function
+                // we can now determine if there's still more data left to read and allow our loop continue or resize
+                // the savedBuffer back to one byte and then set the reading position back to zero and end the while loop
+                if (buffer_get_size(savedBuffer) != reading+size){
+                    reading += size;
+                } else {
+                    // we reach the end of the buffer to process
+                    // we can resize the savedBuffer to nothing
+                    buffer_resize(savedBuffer, 1);
+                    reading = 0;
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        break;
+}
+```
+* A continuación creamos el script **handle_paquet** con el que manejaremos los datos recibidos.
+```javascript
+/// argument0: data buffer
+var command = buffer_read(argument0, buffer_string);
+show_debug_message("Networking Event: " + string(command));
+
+switch(command){
+    case "HELLO":
+        server_time = buffer_read(argument0, buffer_string);
+        room_goto_next();
+        show_debug_message("Server welcomes you @ " + server_time);
+        break;
+}
+```
+* Y creamos una nueva room **rm_Login** a la que nos dirigiremos cuando el comando recibido sea "HELLO".
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img5.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img5.png)
+
+
 
