@@ -478,6 +478,101 @@ userSchema.statics.login = function(username, password, callback){
 module.exports = User = gamedb.model('User', userSchema);
 ```
 
+## Parte 9: Implementando el login
+
+* Lo primero que añadiremos a nuestro proyecto de game maker es una función para escribir en el socket, es decir, hasta ahora podíamos sólo recibir datos del servidor pero no enviarle. Con esta función **network_write** podremos hacer exactamente éso:
+```javascript
+//argument0: socket
+//argument1: buffer of data to send
+
+//Initialize
+var packetSize = buffer_tell(argument1);
+var bufPacket = buffer_create(1, buffer_grow, 1);
+
+// Write the size, and the packet... into new buffer
+buffer_write(bufPacket, buffer_u8, packetSize+1);
+buffer_copy(argument1, 0, packetSize, bufPacket, 1);
+buffer_seek(buffPacket, 0, packetSize+1);
+
+// Send the packet to server
+network_send_raw(argument0, bufPacket, buffer_tell(bufPacket));
+
+// Destroy the buffers
+buffer_delete(argument1);
+buffer_delete(bufPacket);
+```
+* Ahora añadimos la acción en el momento de hacer clic derecho en el **btn_Login**:
+```javascript
+event_inherited();
+if (string_length(txt_Username.text) > 0 && string_length(txt_Password.text) > 0){
+    var login_packet = buffer_create(1, buffer_grow, 1);
+    buffer_write(login_packet, buffer_string, "login");
+    buffer_write(login_packet, buffer_string, txt_Username.text);
+    buffer_write(login_packet, buffer_string, txt_Password.text);
+    network_write(Network.socket, login_packet);
+} else {
+    show_message("Error: Username or password cannot be blank");
+}
+```
+* A continuación vamos a crear un inicializador para manejar los paquetes llamado **00_paquetmodels.js**:
+```javascript
+var Parser = require('binary-parser').Parser;
+
+// FF F0 E7 AA BC... 00
+var StringOptions = {length:99, zeroTerminated:true};
+module.exports = PacketModels = {
+    //wich command is comming in
+    header: new Parser().skip(1)
+        .string("command", StringOptions),
+
+    login: new Parser().skip(1)
+        .string("command", StringOptions)
+        .string("username", StringOptions)
+        .string("password", StringOptions)
+};
+```
+* Y añadimos las funciones **parse** e **interpret** en el **packet.js**:
+```javascript
+// Parse a package to be handled for a client
+parse: function(c, data){
+    var idx = 0; //index
+    while( idx < data.length ){
+        var packetSize = data.readUInt8(idx);
+        var extractedPacket = new Buffer(packetSize);
+        data.copy(extractedPacket,0, idx, idx+packetSize)
+
+        // Example recived data: X00000X1111X222X33
+        // extractedPacket = X00000 when X=6 (count itself)
+
+        this.interpret(c,extractedPacket);
+        idx += packetSize;
+    }
+},
+
+// What the packet is and what to do with that packet
+interpret: function(c, datapacket){
+    var header = PacketModels.header.parse(datapacket);
+    console.log("Interpret: " + header.command); // from paquetmodels -> header -> command
+
+    switch( header.command.toUpperCase()){
+        case "LOGIN":
+            var data = PacketModels.login.parse(datapacket);
+            User.login(data.username, data.password, function(result, user){
+               if (result){
+                   c.user = user;
+                   c.enter_room(c.user.current_room);
+                   c.socket.write(packet.build(["LOGIN","TRUE", c.user.current_room, c.user.pos_x, c.user.pos_y, c.user.username]));
+               } else {
+                   c.socket.write(packet.build(["LOGIN","FALSE"]));
+               }
+            });// from the user object
+            break;
+        case "REGISTER":
+            // do something
+            break;
+    }
+}
+```
 
 
 

@@ -18,6 +18,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\handle_packet.gml</script>
+    <script>scripts\network_write.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Sockets">
