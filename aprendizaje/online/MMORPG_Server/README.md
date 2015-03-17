@@ -305,9 +305,117 @@ switch(command){
         break;
 }
 ```
-* Y creamos una nueva room **rm_Login** a la que nos dirigiremos cuando el comando recibido sea "HELLO".
+* Y creamos una nueva room **rm_Login** a la que nos dirigiremos cuando el comando recibido sea "HELLO":
+
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img5.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img5.png)
+
+## Parte 7: Creando una interfaz de usuario
+
+* Creamos una jerarquía de objetos **ui_base**, **ui_focus_base** (hijo de ui_base), **ui_textbox_base** (hijo de ui_focus_base) y **ui_button_base** (hijo de ui_base) con un sprite de base.
+* A continuación creamos los textboxes y los botones específicos de la **rm_login**:
+    * **txt_Username**: (hijo de ui_text_base)
+    * **txt_Password**: (hijo de ui_text_base)
+    * **btn_Login**: (hijo de ui_button_base)
+    * **btn_Register**: (hijo de ui_button_base)
+* Ahora los ponemos dentro de la room creando un formulario:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img6.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img6.png)
+
+* Creamos los placeholder de los textboxes:
+```javascript
+/// Create
+event_inherited();
+placeholder = "Username";
+```
+* Añadimos los eventos de ui_focus_base y ui_textbox_base:
+```javascript
+/// ui_focus_base: Create
+event_inherited();
+focused = false;
+```
+```javascript
+/// ui_focus_base: Left Released
+event_inherited();
+focused = true;
+```
+```javascript
+/// ui_focus_base: Global Left Pressed
+event_inherited();
+with(ui_focus_base){
+    focused = false;
+}
+```
+```javascript
+/// ui_textbox_base: Create
+event_inherited();
+text = "";
+```
+```javascript
+/// ui_textbox_base: Draw
+draw_self();
+if (focused){
+    draw_rectangle(x,y,x+(16*image_xscale),y+(16*image_yscale),true);
+}
+if (string_length(text)>0 || focused){
+    draw_text(x+3,y+8,string(text));
+} else {
+    draw_text(x+3,y+8,string(placeholder));
+}
+```
+```javascript
+/// ui_textbox_base: Press any key
+if (focused) {
+    if(keyboard_key == vk_backspace){
+        text = string_copy(text, 0, string_length(text)-1);
+    } else {
+        text += keyboard_lastchar;
+    }
+}
+```
+* Creamos el texto de los botones:
+```javascript
+/// Create
+event_inherited();
+text = "Login";
+```
+* Añadimos los eventos de ui_button_base:
+```javascript
+/// ui_button_base: Create
+text = "";
+hover = false;
+```
+```javascript
+/// ui_button_base: Mouse Enter
+event_inherited();
+hover = true;
+```
+```javascript
+/// ui_button_base: Mouse Leave
+event_inherited();
+hover = false;
+```
+```javascript
+/// ui_button_base: Draw
+if (hover){
+    draw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,image_angle,c_gray, 1.0);
+} else {
+    draw_self();
+}
+draw_text(x+3,y+8,string(text));
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img7.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img7.png)
+
+* Añadimos el evento Left Released al **btn_Login** para mostrar un mensaje por pantalla:
+```javascript
+show_message("Username: " + txt_Username.text + " - Password: " + txt_Password.text);
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img8.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img8.png)
 
 
 

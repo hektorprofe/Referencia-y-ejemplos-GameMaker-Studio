@@ -100,7 +100,7 @@ switch(async_load[?"type"]){
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="82">
+    <event eventtype="9" enumb="27">
       <action>
         <libid>1</libid>
         <id>331</id>
