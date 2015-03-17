@@ -65,17 +65,25 @@ module.exports = packet = {
             case "LOGIN":
                 var data = PacketModels.login.parse(datapacket);
                 User.login(data.username, data.password, function(result, user){
-                   if (result){
-                       c.user = user;
-                       c.enter_room(c.user.current_room);
-                       c.socket.write(packet.build(["LOGIN","TRUE", c.user.current_room, c.user.pos_x, c.user.pos_y, c.user.username]));
-                   } else {
-                       c.socket.write(packet.build(["LOGIN","FALSE"]));
-                   }
+                    console.log("Login Result: " + result);
+                    if (result){
+                        c.user = user;
+                        //c.enter_room(c.user.current_room);
+                        c.socket.write(packet.build(["LOGIN","TRUE", c.user.current_room, c.user.pos_x, c.user.pos_y, c.user.username]));
+                    } else {
+                        c.socket.write(packet.build(["LOGIN","FALSE"]));
+                    }
                 });// from the user object
                 break;
             case "REGISTER":
-                // do something
+                var data = PacketModels.register.parse(datapacket);
+                User.register(data.username, data.password, function(result){
+                    if (result){
+                        c.socket.write(packet.build(["REGISTER","TRUE"]));
+                    } else {
+                        c.socket.write(packet.build(["REGISTER","FALSE"]));
+                    }
+                });
                 break;
         }
     }

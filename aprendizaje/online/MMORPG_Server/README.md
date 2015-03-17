@@ -560,7 +560,7 @@ interpret: function(c, datapacket){
             User.login(data.username, data.password, function(result, user){
                if (result){
                    c.user = user;
-                   c.enter_room(c.user.current_room);
+                   //c.enter_room(c.user.current_room);
                    c.socket.write(packet.build(["LOGIN","TRUE", c.user.current_room, c.user.pos_x, c.user.pos_y, c.user.username]));
                } else {
                    c.socket.write(packet.build(["LOGIN","FALSE"]));
@@ -573,6 +573,62 @@ interpret: function(c, datapacket){
     }
 }
 ```
+
+## Parte 10: Implementando el registro
+
+* Empezaremos añadiendo una acción al **btn_Register** para cuando se haga clic encima procesar el registro:
+```javascript
+event_inherited();
+if (string_length(txt_Username.text) > 0 && string_length(txt_Password.text) > 0){
+    var register_packet = buffer_create(1, buffer_grow, 1);
+    buffer_write(register_packet, buffer_string, "register");
+    buffer_write(register_packet, buffer_string, txt_Username.text);
+    buffer_write(register_packet, buffer_string, txt_Password.text);
+    network_write(Network.socket, register_packet);
+} else {
+    show_message("Error: Username or password cannot be blank");
+}
+```
+* Ahora volvemos al servidor para implementar nuestra fución de registro en el fichero **packet.js**, pero antes añadiremos al **00_paquemodels.js** la nueva funcionalidad:
+```javascript
+register: new Parser().skip(1)
+    .string("command", StringOptions)
+    .string("username", StringOptions)
+    .string("password", StringOptions)
+```
+* Ahora sí añadimos el código del registro en nuestro paquete:
+```javascript
+case "REGISTER":
+    var data = PacketModels.register.parse(datapacket);
+    User.register(data.username, data.password, function(result){
+        if (result){
+            c.socket.write(packet.build(["REGISTER","TRUE"]));
+        } else {
+            c.socket.write(packet.build(["REGISTER","FALSE"]));
+        }
+    });
+```
+* Y modificamos la función **this.data()** de **client.js** para que analice el paquete.recibido:
+```javascript
+this.data = function(data){
+    packet.parse(client, data);
+    //console.log("Client data: " + data.toString());
+};
+```
+* Ahora podemos registrar un usuario en nuestro servidor:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img9.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img9.png)
+
+* Si inspeccionamos la base de datos con robomongo parece que nuestro usuario está ahí guardado correctamente:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img10.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img10.png)
+
+* Y si intentamos hacer un login, lo encuentra bien y el logeo es satisfactorio:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img11.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img11.png)
 
 
 

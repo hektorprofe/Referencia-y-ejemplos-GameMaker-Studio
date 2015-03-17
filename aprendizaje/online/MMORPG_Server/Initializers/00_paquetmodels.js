@@ -1,7 +1,7 @@
 /**
  * Created by Hector on 17/03/2015.
  */
-var Parser = require('binary-parser').Parser;
+var Parser = require('binary-parser').Parser; // ver 1.1.3 bugged, use 1.1.2 instead
 
 // FF F0 E7 AA BC... 00
 var StringOptions = {length:99, zeroTerminated:true};
@@ -12,6 +12,11 @@ module.exports = PacketModels = {
         .string("command", StringOptions),
 
     login: new Parser().skip(1)
+        .string("command", StringOptions)
+        .string("username", StringOptions)
+        .string("password", StringOptions),
+
+    register: new Parser().skip(1)
         .string("command", StringOptions)
         .string("username", StringOptions)
         .string("password", StringOptions)
