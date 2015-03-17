@@ -32,7 +32,7 @@ var conf = {
     test: {
         ip: args.ip || "0.0.0.0",
         port: args.port || 8082,
-        database: "mongodb://127.0.0.1/mmodb_test"
+        database: "mongodb://127.0.0.1/mymmo_test"
     }
 };
 

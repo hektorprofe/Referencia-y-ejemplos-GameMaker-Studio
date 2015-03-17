@@ -417,5 +417,68 @@ show_message("Username: " + txt_Username.text + " - Password: " + txt_Password.t
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img8.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img8.png)
 
+## Parte 8: Creando el registro y autenticación de usuarios con mongodb
+
+* Para esta parte ya empezamos a necesitar un sistema de persistencia. En este caso utilizarmeos mongodb, además del cliente robomongo.
+* Luego si hay problemas para poner en marcha el servicio en Windows 8 podemos utilizar el comando **mongod --dbpath=C:/mongo/data/db** o la ruta que queramos.
+* Una vez con el server en marcha y conectado robomongo vamos a crear una base de datos por ejemplo **mymmo_test**.
+* Creamos una nueva colección llamada **users** donde guardaremos toda la información de los jugadores.
+* A continuación crearemos en el servidor y en el directorio **Initializers** un nuevo fichero **01_mongodb.js** (el 01 es para que se ejecute primero):
+```javascript
+var mongoose = require('mongoose');
+// Para crear una conexión dentro de mongoose
+module.exports = gamedb = mongoose.createConnection(config.database);
+```
+* Ahora crearemos un nuevo modelo llamado **user.js** en **Models** que tendrá dos métodos diferentes, register y login que crearán un usuario en la base de datos de mongo o lo autenticarán contra ella:
+```javascript
+var mongoose = require('mongoose');
+var userSchema = new mongoose.Schema({
+    username: {type: String, unique: true},
+    password: String,
+    sprite: String,
+    current_room: String,
+    pos_x: Number,
+    pos_y: Number
+});
+
+userSchema.statics.register = function(username, password, callback){
+    var new_user = new User({
+        username: username,
+        password: password,
+        sprite: "spr_Hero",
+        current_room: maps[config.starting_zone].room,
+        pos_x:maps[config.starting_zone].start_x,
+        pos_y:maps[config.starting_zone].start_y
+    });
+
+    new_user.save(function(err){
+        if(!err){
+            callback(true);
+        } else {
+            callback(false);
+        }
+    })
+};
+
+userSchema.statics.login = function(username, password, callback){
+    User.findOne({username: username}, function(err, user){
+       if (!err && user){
+           if (user.password == password){
+               callback(true, user);
+           } else {
+               callback(false, null);
+           }
+       } else {
+           // error || user not exists
+           callback(false, null);
+       }
+    });
+};
+
+module.exports = User = gamedb.model('User', userSchema);
+```
+
+
+
 
 
