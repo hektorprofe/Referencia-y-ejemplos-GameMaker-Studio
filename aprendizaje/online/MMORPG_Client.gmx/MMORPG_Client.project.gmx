@@ -44,6 +44,7 @@
         <object>objects\txt_Password</object>
         <object>objects\btn_Login</object>
         <object>objects\btn_Register</object>
+        <object>objects\btn_Login_Android</object>
       </objects>
     </objects>
     <objects name="Players">

@@ -45,6 +45,16 @@ module.exports = function(){
     };
 
     this.end = function(){
-        console.log("Client closed");
+         // Remove clients with socket closed
+         var i = 0;
+         maps[client.user.current_room].clients.forEach(function(otherClient){
+             //console.log("Looping through clients: " + i.toString() + " = " + maps[client.user.current_room].clients[i].user.username);
+             if(otherClient.user.username == client.user.username){
+                 maps[client.user.current_room].clients.splice(i, 1);
+                 //console.log("maps[].clients: " + maps[client.user.current_room].clients);
+                 console.log("Client closed and deleted from room list");
+             };
+             i += 1;
+         });
     }
 };

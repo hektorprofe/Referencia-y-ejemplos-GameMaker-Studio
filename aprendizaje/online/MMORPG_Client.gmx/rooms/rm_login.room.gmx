@@ -55,6 +55,7 @@
     <instance objName="txt_Password" x="224" y="224" name="inst_54913D03" locked="0" code="" scaleX="12" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="btn_Login" x="224" y="272" name="inst_5C1D0494" locked="0" code="" scaleX="5" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="btn_Register" x="336" y="272" name="inst_36105930" locked="0" code="" scaleX="5" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="btn_Login_Android" x="448" y="272" name="inst_C9EC9406" locked="0" code="" scaleX="3" scaleY="2" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

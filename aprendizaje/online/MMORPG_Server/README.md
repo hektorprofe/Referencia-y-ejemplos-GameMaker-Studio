@@ -883,4 +883,35 @@ case "POS":
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img19.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img19.png)
 
+## Parte Extra: Otras mejoras
+
+### This socket has been ended by the other party
+Este error ocurre cuando un cliente cierra su socket y no lo hemos sacado de la lista virtual de clientes dentro de la room, de manera que el servidor intenta hacer un broadcast a todos los clientes aunque éstos ya no esten ahí y da ese error.
+Para solucionarlo podemos sacar al cliente de la lista cuando se nos notifica el paquete END en el método **end** del **client.js**:
+```javascript
+this.end = function(){
+     // Remove clients with socket closed
+     var i = 0;
+     maps[client.user.current_room].clients.forEach(function(otherClient){
+         //console.log("Looping through clients: " + i.toString() + " = " + maps[client.user.current_room].clients[i].user.username);
+         if(otherClient.user.username == client.user.username){
+             maps[client.user.current_room].clients.splice(i, 1);
+             //console.log("maps[].clients: " + maps[client.user.current_room].clients);
+             console.log("Client closed and deleted from room list");
+         };
+         i += 1;
+     });
+}
+```
+
+### Mostrar los nuevos jugadores al conectarse sin esperar a que se muevan
+Para conseguir este efecto sólo tenemos que añadir un paquete **broadcast** justo después de que el cliente hace login en **packet.js**, de manera que informará de su posición a todos los demás jugadores:
+```javascript
+// Una vez logeado si queremos podemos enviar la posición inicial del cliente para que aparezca en los otros clientes sin moverse antes
+c.broadcast_room(packet.build(["POS", c.user.username, c.user.pos_x, c.user.pos_y]));
+```
+
+
+
+
 
