@@ -632,7 +632,7 @@ this.data = function(data){
 
 ## Parte 11: Manejando el login y el registro en el cliente
 
-* Vamos a empezar creando la función del cliente en **client.js**:
+* Vamos a empezar creando la función que nos permitirá cambiar la room y llevar el recuento de usuarios en el fichero **client.js**:
 ```javascript
 // Client Methods
 this.enter_room = function(selected_room){
@@ -658,7 +658,7 @@ case "REGISTER":
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img12.png)
 
 * Ahora nos ponemos con el login. Lo esencial es replicar las rooms del servidor en el cliente. Así que creamos una nueva room inicial llamada **rm_map_home** tal como tenemos declarada en **hometown.js**.
-* En lo que respecta al login en el cliente lo que haremos es leer todos los parámetros del buffer y dirigirnos a la room inicial del jugador, definida primeramene en la **config.js** como **starting_zone: "rm_map_home"** y luega llamada en el **packet.js** en el momento del login **c.enter_room(c.user.current_room);** y que ejecuta la escritura del socket arriba definida.
+* En lo que respecta al login en el cliente lo que haremos es leer todos los parámetros del buffer y dirigirnos a la room inicial del jugador, definida primeramente en la **config.js** como **starting_zone: "rm_map_home"** y luega llamada en el **packet.js** en el momento del login **c.enter_room(c.user.current_room);** y que ejecuta la escritura del socket arriba definida.
 ```javascript
 case "LOGIN":
     status = buffer_read(argument0, buffer_string);
