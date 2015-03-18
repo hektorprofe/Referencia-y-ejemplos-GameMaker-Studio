@@ -11,12 +11,22 @@ module.exports = function(){
     // this.socket = {}
     // this.user = {}
 
+    // Initialization
     this.initiate = function(){
         // Send the connection handshake packet to the client
         client.socket.write(packet.build(["HELLO", now().toString()]));
         console.log("Client initiated and greeted.");
     };
 
+    // Client Methods
+    this.enter_room = function(selected_room){
+        maps[selected_room].clients.forEach(function(otherClient){
+            otherClient.socket.write(packet.build(["ENTER"], client.username, client.pos_x, client.pos_y));
+        }); // en la room de maps
+        maps[selected_room].clients.push(client);
+    };
+
+    // Socket Stuff
     this.data = function(data){
         packet.parse(client, data);
         //console.log("Client data: " + data.toString());

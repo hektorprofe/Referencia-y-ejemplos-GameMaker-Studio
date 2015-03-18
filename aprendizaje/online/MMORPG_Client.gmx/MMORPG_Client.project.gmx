@@ -42,6 +42,10 @@
   <rooms name="rooms">
     <room>rooms\rm_init</room>
     <room>rooms\rm_login</room>
+    <rooms name="maps">
+      <room>rooms\rm_map_home</room>
+      <room>rooms\rm_map_test</room>
+    </rooms>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

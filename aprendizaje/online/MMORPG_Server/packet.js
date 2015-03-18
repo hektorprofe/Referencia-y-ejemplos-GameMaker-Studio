@@ -68,7 +68,7 @@ module.exports = packet = {
                     console.log("Login Result: " + result);
                     if (result){
                         c.user = user;
-                        //c.enter_room(c.user.current_room);
+                        c.enter_room(c.user.current_room);
                         c.socket.write(packet.build(["LOGIN","TRUE", c.user.current_room, c.user.pos_x, c.user.pos_y, c.user.username]));
                     } else {
                         c.socket.write(packet.build(["LOGIN","FALSE"]));

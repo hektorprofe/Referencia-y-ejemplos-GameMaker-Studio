@@ -589,7 +589,7 @@ if (string_length(txt_Username.text) > 0 && string_length(txt_Password.text) > 0
     show_message("Error: Username or password cannot be blank");
 }
 ```
-* Ahora volvemos al servidor para implementar nuestra fución de registro en el fichero **packet.js**, pero antes añadiremos al **00_paquemodels.js** la nueva funcionalidad:
+* Ahora volvemos al servidor para implementar nuestra fución de registro en el fichero **packet.js**, pero antes añadiremos al **00_paquetmodels.js** la nueva funcionalidad:
 ```javascript
 register: new Parser().skip(1)
     .string("command", StringOptions)
@@ -630,6 +630,56 @@ this.data = function(data){
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img11.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img11.png)
 
+## Parte 11: Manejando el login y el registro en el cliente
 
+* Vamos a empezar creando la función del cliente en **client.js**:
+```javascript
+// Client Methods
+this.enter_room = function(selected_room){
+    maps[selected_room].clients.forEach(function(otherClient){
+        otherClient.socket.write(packet.build(["ENTER"], client.username, client.pos_x, client.pos_y));
+    }); // en la room de maps
+    maps[selected_room].clients.push(client);
+};
+```
+* Creamos la nueva función en el cliente para responder al registro en **handle_packet**:
+```javascript
+case "REGISTER":
+    status = buffer_read(argument0, buffer_string);
+    if (status == "TRUE"){
+        show_message("Register Success: Please Login");
+    } else {
+        show_message("Register Failed: Username Taken");
+    }
+    break;
+```
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img12.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img12.png)
 
+* Ahora nos ponemos con el login. Lo esencial es replicar las rooms del servidor en el cliente. Así que creamos una nueva room inicial llamada **rm_map_home** tal como tenemos declarada en **hometown.js**.
+* En lo que respecta al login en el cliente lo que haremos es leer todos los parámetros del buffer y dirigirnos a la room inicial del jugador, definida primeramene en la **config.js** como **starting_zone: "rm_map_home"** y luega llamada en el **packet.js** en el momento del login **c.enter_room(c.user.current_room);** y que ejecuta la escritura del socket arriba definida.
+```javascript
+case "LOGIN":
+    status = buffer_read(argument0, buffer_string);
+    if (status == "TRUE"){
+        target_room = buffer_read(argument0, buffer_string);
+        target_x = buffer_read(argument0, buffer_u16); // numbers pass across as UInt16LE in server
+        target_y = buffer_read(argument0, buffer_u16);
+        name = buffer_read(argument0, buffer_string);
+
+        goto_room = asset_get_index(target_room);
+        room_goto(goto_room);
+
+        // Inititate a player object on this room
+
+    } else {
+        show_message("Login Failed: Username not exists or password incorrect.");
+    }
+    break;
+```
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img13.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img13.png)
+
+* Es requisito tener siempre una representación de las rooms dentro de la carpeta **GameData/Maps** antes de indicarle al cliente su posición.
