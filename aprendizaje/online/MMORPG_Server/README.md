@@ -893,10 +893,8 @@ this.end = function(){
      // Remove clients with socket closed
      var i = 0;
      maps[client.user.current_room].clients.forEach(function(otherClient){
-         //console.log("Looping through clients: " + i.toString() + " = " + maps[client.user.current_room].clients[i].user.username);
          if(otherClient.user.username == client.user.username){
              maps[client.user.current_room].clients.splice(i, 1);
-             //console.log("maps[].clients: " + maps[client.user.current_room].clients);
              console.log("Client closed and deleted from room list");
          };
          i += 1;
@@ -904,10 +902,11 @@ this.end = function(){
 }
 ```
 
-### Mostrar los nuevos jugadores al conectarse sin esperar a que se muevan
+### Mostrar nuevos jugadores sin esperar a que se muevan
 Para conseguir este efecto sólo tenemos que añadir un paquete **broadcast** justo después de que el cliente hace login en **packet.js**, de manera que informará de su posición a todos los demás jugadores:
 ```javascript
-// Una vez logeado si queremos podemos enviar la posición inicial del cliente para que aparezca en los otros clientes sin moverse antes
+// Una vez logeado si queremos podemos enviar la posición inicial del cliente
+// para que aparezca en los otros clientes sin moverse antes
 c.broadcast_room(packet.build(["POS", c.user.username, c.user.pos_x, c.user.pos_y]));
 ```
 
