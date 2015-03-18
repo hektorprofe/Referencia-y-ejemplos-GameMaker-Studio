@@ -70,10 +70,16 @@ module.exports = packet = {
                         c.user = user;
                         c.enter_room(c.user.current_room);
                         c.socket.write(packet.build(["LOGIN","TRUE", c.user.current_room, c.user.pos_x, c.user.pos_y, c.user.username]));
+
+                        // Una vez logeado si queremos podemos enviar la posición inicial del cliente para que aparezca en los otros clientes sin moverse antes
+                        c.broadcast_room(packet.build(["POS", c.user.username, c.user.pos_x, c.user.pos_y]));
+
                     } else {
                         c.socket.write(packet.build(["LOGIN","FALSE"]));
                     }
                 });// from the user object
+
+
                 break;
             case "REGISTER":
                 var data = PacketModels.register.parse(datapacket);
@@ -88,7 +94,7 @@ module.exports = packet = {
             case "POS":
                 var data = PacketModels.pos.parse(datapacket);
                 c.user.pos_x = data.target_x;
-                c.user.pos_y = data.target_x;
+                c.user.pos_y = data.target_y;
 
                 // is not optimal save every time in db, better do it when disconnect
                 c.user.save();

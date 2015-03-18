@@ -38,4 +38,30 @@ switch(command){
             show_message("Register Failed: Username Taken");
         }
         break;
+        
+    case "POS":
+        username = buffer_read(argument0, buffer_string);
+        target_x = buffer_read(argument0, buffer_u16); // numbers pass across as UInt16LE in server
+        target_y = buffer_read(argument0, buffer_u16);
+        
+        foundPlayer = -1;
+        with(obj_Player_Network){
+            if (name == other.username){
+                other.foundPlayer = id;
+                break;
+            }
+        }
+        if (foundPlayer != -1){
+            // update position
+            with(foundPlayer){
+                target_x = other.target_x;
+                target_y = other.target_y;
+            }
+        } else {
+            // create it if not found
+            with(instance_create(target_x,target_y, obj_Player_Network)){
+                name = other.username;
+            }
+        }
+        break;
 }

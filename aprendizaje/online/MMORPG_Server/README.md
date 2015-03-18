@@ -820,6 +820,67 @@ case "POS":
     console.log(data);
 ```
 
-
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img18.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img18.png)
+
+## Parte 14: Replicando los demás jugadores en el cliente
+
+* Lo primero que haremos es crear un nuevo objeto **obj_Player_Network** no persistente con su sprite y le añadiremos los siguientes eventos:
+```javascript
+/// obj_Player_Network.Create
+moving = false;
+target_x = x;
+target_y = y;
+```
+
+```javascript
+/// obj_Player_Network.Step
+if ( target_x > x) { x += 4; }
+if ( target_x < x) { x -= 4; }
+if ( target_y > y) { y += 4; }
+if ( target_y < y) { y -= 4; }
+```
+
+```javascript
+/// obj_Player_Network.Draw
+draw_self();
+draw_set_halign(fa_left);
+draw_text(x - string_width(name) /2, y - 42, name);
+draw_set_halign(fa_center);
+draw_text(x, y + 42, string(x) + "," + string(y));
+```
+
+* A continuación en el script **handle_packet** procesaremos las posiciones de los demás jugadores al recibir el comando POS:
+```javascript
+case "POS":
+    username = buffer_read(argument0, buffer_string);
+    target_x = buffer_read(argument0, buffer_u16); // numbers pass across as UInt16LE in server
+    target_y = buffer_read(argument0, buffer_u16);
+
+    foundPlayer = -1;
+    with(obj_Player_Network){
+        if (name == other.username){
+            other.foundPlayer = id;
+            break;
+        }
+    }
+    if (foundPlayer != -1){
+        // update position
+        with(foundPlayer){
+            target_x = other.target_x;
+            target_y = other.target_y;
+        }
+    } else {
+        // create it if not found
+        with(instance_create(target_x,target_y, obj_Player_Network)){
+            name = other.username;
+        }
+    }
+    break;
+```
+* Con ésto ya tenemos la representación de todos los demás clientes. Podemos hacer una prueba y poner en marcha varios para ver el resultado final:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img19.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img19.png)
+
+

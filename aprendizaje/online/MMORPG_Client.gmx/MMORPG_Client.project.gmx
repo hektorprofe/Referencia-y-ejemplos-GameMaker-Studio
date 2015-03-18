@@ -48,6 +48,7 @@
     </objects>
     <objects name="Players">
       <object>objects\obj_Player</object>
+      <object>objects\obj_Player_Network</object>
     </objects>
     <objects name="System">
       <object>objects\obj_Blocked</object>
