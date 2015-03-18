@@ -780,3 +780,5 @@ buffer_write(pos_packet, buffer_s32, target_y);
 network_write(Network.socket, pos_packet);
 ```
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img17.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img17.png)
