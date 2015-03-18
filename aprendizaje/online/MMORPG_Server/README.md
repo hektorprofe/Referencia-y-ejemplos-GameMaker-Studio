@@ -782,3 +782,44 @@ network_write(Network.socket, pos_packet);
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img17.png
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img17.png)
+
+## Parte 13: Creando el broadcast de la posición del cliente
+
+* Ahora que tenemos al cliente enviando su posición lo que vamos a hacer es tratar esa información en el servidor.
+* La función que crearemos en **client.js** se encargará de enviar un paquete broadcast con la posición del cliente a todos los demás clientes excepte a sí mismo.
+```javascript
+this.broadcast_room = function(packetData){
+    maps[client.user.current_room].clients.forEach(function(otherClient){
+        // send the data from the user to all other users in same room (but not itself)
+        if (otherClient.user.username != client.user.username) {
+            otherClient.socket.write(packetData);
+        }
+    });
+};
+```
+* Crearemos el parser adjunto que se encargará de formatear el buffer en el **00_paquetmodels.js**:
+```javascript
+pos: new Parser().skip(1)
+    .string("command", StringOptions)
+    .int32le("target_x", StringOptions)
+    .int32le("target_y", StringOptions)
+```
+* Y finalmente en el **paquet.js** trataremos la posición que recibimos del cliente para crear el nuevo paquete de broadcast:
+```javascript
+case "POS":
+    var data = PacketModels.pos.parse(datapacket);
+    c.user.pos_x = data.target_x;
+    c.user.pos_y = data.target_x;
+
+    // is not optimal save every time in db, better do it when disconnect
+    c.user.save();
+
+    // broadcast the information
+    c.broadcast_room(packet.build(["POS", c.user.username, data.target_x, data.target_y]));
+
+    console.log(data);
+```
+
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img18.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img18.png)

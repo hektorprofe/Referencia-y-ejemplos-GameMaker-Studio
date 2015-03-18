@@ -25,6 +25,14 @@ module.exports = function(){
         }); // en la room de maps
         maps[selected_room].clients.push(client);
     };
+    this.broadcast_room = function(packetData){
+        maps[client.user.current_room].clients.forEach(function(otherClient){
+            // send the data from the user to all other users in same room (but not itself)
+            if (otherClient.user.username != client.user.username) {
+                otherClient.socket.write(packetData);
+            }
+        });
+    };
 
     // Socket Stuff
     this.data = function(data){

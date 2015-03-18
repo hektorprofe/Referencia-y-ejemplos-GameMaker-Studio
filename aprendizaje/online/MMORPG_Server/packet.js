@@ -85,6 +85,18 @@ module.exports = packet = {
                     }
                 });
                 break;
+            case "POS":
+                var data = PacketModels.pos.parse(datapacket);
+                c.user.pos_x = data.target_x;
+                c.user.pos_y = data.target_x;
+
+                // is not optimal save every time in db, better do it when disconnect
+                c.user.save();
+
+                // broadcast the information
+                c.broadcast_room(packet.build(["POS", c.user.username, data.target_x, data.target_y]));
+
+                console.log(data);
         }
     }
 

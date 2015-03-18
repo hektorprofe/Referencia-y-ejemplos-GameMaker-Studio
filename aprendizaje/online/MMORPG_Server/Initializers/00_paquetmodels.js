@@ -19,5 +19,10 @@ module.exports = PacketModels = {
     register: new Parser().skip(1)
         .string("command", StringOptions)
         .string("username", StringOptions)
-        .string("password", StringOptions)
+        .string("password", StringOptions),
+
+    pos: new Parser().skip(1)
+        .string("command", StringOptions)
+        .int32le("target_x", StringOptions)
+        .int32le("target_y", StringOptions)
 };
