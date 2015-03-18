@@ -9,11 +9,19 @@
     <sprites name="UI Framework">
       <sprite>sprites\spr_ui_base</sprite>
     </sprites>
+    <sprites name="Players">
+      <sprite>sprites\spr_Hero_Down</sprite>
+    </sprites>
+    <sprites name="System">
+      <sprite>sprites\spr_Blocked</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_Loading</background>
     <background>background\bg_Connecting</background>
     <background>background\bg_Title_Screen</background>
+    <background>background\bg_Tileset</background>
+    <background>background\bg_Tileset_2</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -37,6 +45,12 @@
         <object>objects\btn_Login</object>
         <object>objects\btn_Register</object>
       </objects>
+    </objects>
+    <objects name="Players">
+      <object>objects\obj_Player</object>
+    </objects>
+    <objects name="System">
+      <object>objects\obj_Blocked</object>
     </objects>
   </objects>
   <rooms name="rooms">

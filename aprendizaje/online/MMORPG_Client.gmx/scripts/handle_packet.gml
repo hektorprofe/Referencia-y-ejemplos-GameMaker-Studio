@@ -21,6 +21,9 @@ switch(command){
             room_goto(goto_room);
             
             // Inititate a player object on this room
+            with(instance_create(target_x,target_y,obj_Player)){
+                name = other.name;
+            }
             
         } else {
             show_message("Login Failed: Username not exists or password incorrect.");

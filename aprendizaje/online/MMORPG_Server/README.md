@@ -683,3 +683,100 @@ case "LOGIN":
 )](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img13.png)
 
 * Es requisito tener siempre una representación de las rooms dentro de la carpeta **GameData/Maps** antes de indicarle al cliente su posición.
+
+## Parte 12: Añadiendo el personaje y enviando su posición al servidor
+
+* Empezamos dando un poco de estilo a nuestro mapa inicial, con unos tileset.
+* También creamos un objeto Heroe con sus sprites animados.
+* A continuación de vuelta al script **handle_packet** vamos a iniciar el jugador en la room:
+```javascript
+case "LOGIN":
+    status = buffer_read(argument0, buffer_string);
+    if (status == "TRUE"){
+        target_room = buffer_read(argument0, buffer_string);
+        target_x = buffer_read(argument0, buffer_u16); // numbers pass across as UInt16LE in server
+        target_y = buffer_read(argument0, buffer_u16);
+        name = buffer_read(argument0, buffer_string);
+
+        goto_room = asset_get_index(target_room);
+        room_goto(goto_room);
+
+        // Inititate a player object on this room
+        with(instance_create(target_x,target_y,obj_Player)){
+            name = other.name;
+        }
+
+    } else {
+        show_message("Login Failed: Username not exists or password incorrect.");
+    }
+    break;
+```
+* Lo que notaremos ahora al lanzar el juego es que las dimensiones de la room no cambian y todo se queda chafado:
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img14.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img14.png)
+
+* Para arreglarlo simplementa activamos las views y damos la nueva view el tamaño genérico 640x360, lo mismo para el port t seguimiento al obj_Player con unos bordes el doble de grandes que la room 1280x720.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img15.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img15.png)
+
+* A continuación crearemos el movimiento del personaje. Lo haremos alineado a una cuadrícula invisible, ademas comprobaremos que en la posición donde nos movemos no hay ningún objeto (simulando colisiones):
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img16.png
+)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/online/MMORPG_Server/Screens/img16.png)
+
+* Como nos moveremos en una cuadrícula ajustaremos la posición de movimiento cada 32px, aprovecharemos ese momento (cada 32px) para enviar al servidor un paquete con nuestra posición a través de un evento local del obj_Hero:
+
+```javascript
+/// Obj_Hero.Create
+moving = false;
+target_x = x;
+target_y = y;
+```
+
+```javascript
+/// Obj_Hero.Step
+if ( target_x > x) { x += 4; }
+if ( target_x < x) { x -= 4; }
+if ( target_y > y) { y += 4; }
+if ( target_y < y) { y -= 4; }
+
+if (target_x == x && target_y == y) { moving = false; }
+
+if  (keyboard_check(vk_left) && !moving && place_free(x-32,y)) {
+    target_x -= 32;
+    moving = true;
+    event_user(0);
+}
+
+if  (keyboard_check(vk_right) && !moving && place_free(x+32,y)) {
+    target_x += 32;
+    moving = true;
+    event_user(0);
+}
+
+if  (keyboard_check(vk_up) && !moving && place_free(x,y-32)) {
+    target_y -= 32;
+    moving = true;
+    event_user(0);
+}
+
+if  (keyboard_check(vk_down) && !moving && place_free(x,y+32)) {
+    target_y += 32;
+    moving = true;
+    event_user(0);
+}
+```
+
+```javascript
+/// Obj_Hero.User Defined 0
+// Network Send Update Player Position
+var pos_packet = buffer_create(1,buffer_grow,1);
+buffer_write(pos_packet, buffer_string, "pos");
+buffer_write(pos_packet, buffer_s32, target_x);
+buffer_write(pos_packet, buffer_s32, target_y);
+
+network_write(Network.socket, pos_packet);
+```
+
