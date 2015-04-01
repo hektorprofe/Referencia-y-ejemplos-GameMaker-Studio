@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited();
-text = "Search";
+text = "Duel";
 show = true;
 </string>
           </argument>
@@ -52,15 +52,26 @@ show = true;
             <kind>1</kind>
             <string>event_inherited();
 
-show = false;
+/*show = false;
 hall_loading.show = true;
-hall_btn_search_cancel.show = true;
+hall_btn_search_cancel.show = true;*/
 
-// check if network exists or create
-var search_packet = buffer_create(1, buffer_grow, 1);
-buffer_write(search_packet, buffer_string, "challenge_search");
-buffer_write(search_packet, buffer_string, global.username);
-network_write(network.socket, search_packet);
+if (string_length(hall_textbox_challenger.text) &gt; 3 &amp;&amp; hall_textbox_challenger.text != global.username){
+
+    // check if network exists or create
+    if (instance_number(network) &gt; 0) {
+        
+        var challenge_packet = buffer_create(1, buffer_grow, 1);
+        buffer_write(challenge_packet, buffer_string, "challenge_request");
+        buffer_write(challenge_packet, buffer_string,  hall_textbox_challenger.text);
+        network_write(network.socket, challenge_packet);
+          
+        hall_richtext_duel.text = "Challenging " + hall_textbox_challenger.text + "#Wait please...";
+        hall_textbox_challenger.show = false;
+        hall_btn_request_challenge.show = false;        
+    }
+    
+}
 </string>
           </argument>
         </arguments>

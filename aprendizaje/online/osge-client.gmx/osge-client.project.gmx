@@ -46,11 +46,6 @@
     <objects name="Sockets">
       <object>objects\network</object>
     </objects>
-    <objects name="Buttons">
-      <object>objects\btn_send_end</object>
-      <object>objects\btn_send_login</object>
-      <object>objects\btn_send_register</object>
-    </objects>
     <objects name="UI">
       <objects name="UI Framework">
         <object>objects\ui_base</object>
@@ -74,13 +69,19 @@
           <object>objects\auth_textbox_username</object>
         </objects>
         <objects name="Hall">
-          <object>objects\hall_header</object>
-          <object>objects\hall_richtext_users</object>
-          <object>objects\hall_username</object>
-          <object>objects\hall_online_users</object>
+          <object>objects\hall_btn_request_challenge</object>
+          <object>objects\hall_btn_request_accept</object>
+          <object>objects\hall_btn_request_deny</object>
           <object>objects\hall_btn_search</object>
           <object>objects\hall_btn_search_cancel</object>
+          <object>objects\hall_header</object>
           <object>objects\hall_loading</object>
+          <object>objects\hall_loading_request</object>
+          <object>objects\hall_online_users</object>
+          <object>objects\hall_richtext_duel</object>
+          <object>objects\hall_richtext_users</object>
+          <object>objects\hall_textbox_challenger</object>
+          <object>objects\hall_username</object>
         </objects>
         <objects name="Game Online">
           <object>objects\go_btn_surrender</object>

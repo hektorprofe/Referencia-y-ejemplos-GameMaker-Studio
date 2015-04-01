@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>ui_button_base</parentName>
+  <parentName>ui_textbox_base</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,42 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
-text = "Search";
+            <string>/// Create
+event_inherited();
+placeholder = "Username";
+message = "Challenger Username";
+input = noone;
+text = "";
 show = true;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="7">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>event_inherited();
-
-show = false;
-hall_loading.show = true;
-hall_btn_search_cancel.show = true;
-
-// check if network exists or create
-var search_packet = buffer_create(1, buffer_grow, 1);
-buffer_write(search_packet, buffer_string, "challenge_search");
-buffer_write(search_packet, buffer_string, global.username);
-network_write(network.socket, search_packet);
 </string>
           </argument>
         </arguments>

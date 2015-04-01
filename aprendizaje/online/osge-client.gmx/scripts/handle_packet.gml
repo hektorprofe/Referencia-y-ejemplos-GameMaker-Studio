@@ -99,5 +99,29 @@ switch(command){
             go_btn_surrender.exit_now = true;
         }
         break;
+        
+    case "CHALLENGE_REQUEST":
+        global.challenger = buffer_read(argument0, buffer_string);
+        if (room == rm_hall){
+            show_debug_message("Challenge request from " + global.challenger);  
+            hall_richtext_duel.text = global.challenger + " challenges you!";
+            hall_btn_request_accept.show = true;
+            hall_btn_request_deny.show = true;
+        }
+        break;
+        
+    case "CHALLENGE_REQUEST_DENY":
+        show_debug_message("Challenge denied");        
+        hall_richtext_duel.text = ""; 
+        hall_btn_request_challenge.show = true;
+        hall_textbox_challenger.show = true;
+        break;
+        
+    case "CHALLENGE_REQUEST_DISABLED":
+        show_debug_message("Challenge disabled");           
+        hall_richtext_duel.text = ""; 
+        hall_btn_request_challenge.show = true;
+        hall_textbox_challenger.show = true;
+        break;        
     
 }
