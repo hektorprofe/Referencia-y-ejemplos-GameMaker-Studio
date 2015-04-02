@@ -56,6 +56,9 @@ show = false;
 hall_loading.show = true;
 hall_btn_search_cancel.show = true;*/
 
+// disable countdown before continue
+hall_btn_request_deny.countdown = false;
+
 // check if network exists or create
 if (instance_number(network) &gt; 0) {
     var accept_packet = buffer_create(1, buffer_grow, 1);
@@ -67,6 +70,7 @@ if (instance_number(network) &gt; 0) {
 show = false;
 hall_btn_request_deny.show = false;
 hall_richtext_duel.text = "";
+hall_btn_search.show = true; 
 </string>
           </argument>
         </arguments>

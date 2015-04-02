@@ -67,6 +67,9 @@ if (exit_now == false) {
 
 }
 
+// GLOBAL CONTROL OF CHALLENGE
+global.challenging = false; 
+
 // Add animation to all UI objects XD
 with(ui_base) motion_add(180, 25);
 // Move to HALL room            

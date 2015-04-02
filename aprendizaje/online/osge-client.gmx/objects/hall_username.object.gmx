@@ -79,7 +79,10 @@ text = global.username;
           <argument>
             <kind>1</kind>
             <string>if (instance_exists(network)){
-    if (network.connected) draw_circle_colour(x-16,y+14,8,c_green,c_green,false);
+    if (network.connected) {
+        if(global.challenging == true) draw_circle_colour(x-16,y+14,8,c_orange,c_orange,false);
+        else draw_circle_colour(x-16,y+14,8,c_green,c_green,false);
+    }
     else draw_circle_colour(x-16,y+14,8,c_red,c_red,false);
 } else {
     draw_circle_colour(x-16,y+14,8,c_red,c_red,false);

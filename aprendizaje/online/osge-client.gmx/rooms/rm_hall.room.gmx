@@ -58,8 +58,8 @@
     <instance objName="hall_btn_search_cancel" x="336" y="160" name="inst_6AE386EC" locked="0" code="" scaleX="3.5" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="hall_textbox_challenger" x="32" y="272" name="inst_8AB8978E" locked="0" code="" scaleX="8.5" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="hall_btn_request_challenge" x="336" y="272" name="inst_A36B9F51" locked="0" code="" scaleX="3.5" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="hall_btn_request_accept" x="256" y="544" name="inst_9CDB035A" locked="0" code="" scaleX="5" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="hall_btn_request_deny" x="64" y="544" name="inst_57114E00" locked="0" code="" scaleX="5" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="hall_btn_request_accept" x="256" y="544" name="inst_9CDB035A" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="hall_btn_request_deny" x="32" y="544" name="inst_57114E00" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="hall_richtext_duel" x="240" y="496" name="inst_EBFD2B33" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="hall_loading_request" x="240" y="256" name="inst_4A1A37DD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>

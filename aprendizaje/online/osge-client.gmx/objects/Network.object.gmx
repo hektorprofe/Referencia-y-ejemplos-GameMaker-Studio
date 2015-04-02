@@ -30,6 +30,9 @@ connected = false;
 pings = 0;
 pongs = 0;
 
+// THIS CONTROL GLOBAL CHALLENGE
+global.challenging = false;
+
 // ivars
 reading = 0;
 savedBuffer = buffer_create(1, buffer_grow, 1);
@@ -46,6 +49,7 @@ if (global.register == false){
     // Check if HELLO back after 0.3 seconds
     alarm[2] = 10;
 }
+
 </string>
           </argument>
         </arguments>

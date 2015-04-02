@@ -61,6 +61,11 @@ network_write(network.socket, cancel_packet);
 show = false;
 hall_loading.show = false;
 hall_btn_search.show = true;
+hall_btn_request_challenge.show = true; 
+hall_textbox_challenger.show = true;
+
+// GLOBAL CONTROL OF CHALLENGE
+global.challenging = false; 
 </string>
           </argument>
         </arguments>

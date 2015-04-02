@@ -27,7 +27,75 @@
             <kind>1</kind>
             <string>event_inherited();
 text = "Duel";
-show = true;
+show = true;  
+countdown = false;
+countdown_timer = 10;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Countdown alarm
+if (countdown == true){
+    countdown_timer -= 1;
+    if (countdown_timer &lt; 1) {
+        countdown = false;
+        hall_richtext_duel.text = "";
+        hall_textbox_challenger.show = true;
+        hall_btn_request_challenge.show = true; 
+        hall_btn_search.show = true; 
+        countdown_timer = 10;
+        
+        // THIS CONTROL GLOBAL CHALLENGE
+        global.challenging = false;
+    }
+    else {
+        alarm[0] = room_speed;
+    }
+} else {  
+    countdown_timer = 10;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (countdown == true) hall_richtext_duel.text = "Challenging " + hall_textbox_challenger.text + "#Please wait... " + string(countdown_timer);
+        
 </string>
           </argument>
         </arguments>
@@ -61,14 +129,22 @@ if (string_length(hall_textbox_challenger.text) &gt; 3 &amp;&amp; hall_textbox_c
     // check if network exists or create
     if (instance_number(network) &gt; 0) {
         
+        // THIS CONTROL GLOBAL CHALLENGE
+        global.challenging = true;
+        
         var challenge_packet = buffer_create(1, buffer_grow, 1);
         buffer_write(challenge_packet, buffer_string, "challenge_request");
         buffer_write(challenge_packet, buffer_string,  hall_textbox_challenger.text);
         network_write(network.socket, challenge_packet);
-          
-        hall_richtext_duel.text = "Challenging " + hall_textbox_challenger.text + "#Wait please...";
+        
+        hall_btn_search.show = false;  
+        hall_richtext_duel.text = "Challenging " + hall_textbox_challenger.text + "#Please wait... " + string(countdown_timer);
         hall_textbox_challenger.show = false;
-        hall_btn_request_challenge.show = false;        
+        hall_btn_request_challenge.show = false;     
+        
+        // Trigger alarm every 10 seconds   
+        countdown = true;
+        alarm[0] = room_speed;
     }
     
 }
