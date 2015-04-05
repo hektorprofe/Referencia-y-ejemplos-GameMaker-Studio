@@ -27,11 +27,13 @@
             <kind>1</kind>
             <string>// gvars
 global.online_users = 0;
+global.playing_users = 0;
 global.username = "";
 global.password = "";
 global.challenger = "";
 global.board = "null";
 global.register = false;
+global.duels = true;
 </string>
           </argument>
         </arguments>

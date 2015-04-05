@@ -52,7 +52,7 @@
   </views>
   <instances>
     <instance objName="hall_username" x="40" y="17" name="inst_612E7D8E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="hall_online_users" x="464" y="64" name="inst_20135B7A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="hall_online_users" x="464" y="48" name="inst_20135B7A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="hall_btn_search" x="32" y="160" name="inst_0D1BA30C" locked="0" code="" scaleX="8.5" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="hall_loading" x="160" y="144" name="inst_9392F9EE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="hall_btn_search_cancel" x="336" y="160" name="inst_6AE386EC" locked="0" code="" scaleX="3.5" scaleY="2" colour="4294967295" rotation="0"/>
@@ -62,6 +62,7 @@
     <instance objName="hall_btn_request_deny" x="32" y="544" name="inst_57114E00" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="hall_richtext_duel" x="240" y="496" name="inst_EBFD2B33" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="hall_loading_request" x="240" y="256" name="inst_4A1A37DD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="hall_toggle_duels" x="16" y="64" name="inst_1992BA5E" locked="0" code="" scaleX="1.5" scaleY="1.5" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

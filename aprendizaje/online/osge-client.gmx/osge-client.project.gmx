@@ -7,16 +7,11 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="UI">
+      <sprite>sprites\spr_ui_toggle_btn</sprite>
       <sprite>sprites\spr_ui_background</sprite>
       <sprite>sprites\spr_ui_transparent</sprite>
       <sprites name="Auth">
         <sprite>sprites\spr_auth_header</sprite>
-      </sprites>
-      <sprites name="Debug Buttons">
-        <sprite>sprites\spr_send_login</sprite>
-        <sprite>sprites\spr_send_end</sprite>
-        <sprite>sprites\spr_send_register</sprite>
-        <sprite>sprites\spr_send_test</sprite>
       </sprites>
     </sprites>
   </sprites>
@@ -57,6 +52,7 @@
         <object>objects\ui_textbox_base</object>
         <object>objects\ui_success_base</object>
         <object>objects\ui_loading</object>
+        <object>objects\ui_toggle_button</object>
       </objects>
       <objects name="Room Specific">
         <objects name="Auth">
@@ -82,6 +78,7 @@
           <object>objects\hall_richtext_users</object>
           <object>objects\hall_textbox_challenger</object>
           <object>objects\hall_username</object>
+          <object>objects\hall_toggle_duels</object>
         </objects>
         <objects name="Game Online">
           <object>objects\go_btn_surrender</object>

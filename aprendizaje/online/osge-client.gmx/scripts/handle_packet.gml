@@ -36,7 +36,14 @@ switch(command){
         status = buffer_read(argument0, buffer_string);
         if (room == rm_auth){
             if (status == "TRUE"){
+            
                 username = buffer_read(argument0, buffer_string);
+                duels = buffer_read(argument0, buffer_string);
+            
+                // set player options     
+                if (duels == "TRUE") global.duels = true;
+                else global.duels = false;
+            
                 // TODO Inititate a player object on this room
                 show_debug_message("Login Success: " + username);
                 // Set global username
@@ -176,6 +183,10 @@ switch(command){
         hall_textbox_challenger.show = true;
         // disable countdown on hall_btn_request_challenge
         hall_btn_request_challenge.countdown = false;
-        break;        
+        break;      
     
+    case "ROOM_PLAYERS":
+        global.playing_users = buffer_read(argument0, buffer_u16);
+        //show_debug_message(global.playing_users);  
+        break;  
 }
