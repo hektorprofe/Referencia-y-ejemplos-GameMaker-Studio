@@ -154,8 +154,8 @@ if (move == true) {
             <kind>1</kind>
             <string>/// Move to center
 if ( move_to_center == true ) {
-    if (point_distance(x, y, x, view_hview[0]/2 + sprite_height/2 - 15) &gt; 4){
-        move_towards_point(x, view_hview[0]/2 + sprite_height/2 - 15, 4);
+    if (point_distance(x, y, x, view_hview[0]/2 + sprite_height/2 - 15) &gt; 8){
+        move_towards_point(x, view_hview[0]/2 + sprite_height/2 - 15, 8);
     } else {
         y = view_hview[0]/2 + sprite_height/2 - 15;
         move_to_center = false;   
@@ -197,13 +197,16 @@ if ( move_to_center == true ) {
         obj_game.select_enabled = false;
         obj_game.player_text = "";
         show_debug_message("Confirmed hand: " + hand );
+        // Set as current hand
+        obj_game.current_hand = id;
+        
         // Now start the game check   
         with(obj_hand) {
             if (other.id != id){
                 fade = true;
             } else {
                 // create enemy hand
-                var cross = instance_create(view_wview[0]/2,240,obj_cross);
+                var cross = instance_create(view_wview[0]/2-sprite_width/2,240-sprite_height/2,obj_cross);
                 cross.image_xscale = 0.5;
                 cross.image_yscale = 0.5;
                 

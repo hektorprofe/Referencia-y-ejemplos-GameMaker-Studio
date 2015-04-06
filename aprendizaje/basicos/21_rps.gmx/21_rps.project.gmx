@@ -14,6 +14,14 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <scripts name="enemy">
+      <script>scripts\ia_get_play.gml</script>
+    </scripts>
+    <scripts name="winner">
+      <script>scripts\check_winner.gml</script>
+    </scripts>
+  </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_score</font>
   </fonts>
@@ -33,6 +41,7 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_init</room>
     <room>rooms\rm_game</room>
   </rooms>
   <help>

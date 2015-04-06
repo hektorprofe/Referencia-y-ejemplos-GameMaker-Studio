@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>move_to_center = false;
+name = "";
 </string>
           </argument>
         </arguments>
@@ -50,10 +51,10 @@
             <kind>1</kind>
             <string>/// Move to center
 if ( move_to_center == true ) {
-    if (point_distance(x, y, x, view_hview[0]/2 - sprite_height/2 + 15)  &gt; 4){
-        move_towards_point(x, view_hview[0]/2 - sprite_height/2 + 15, 4);
+    if (point_distance(x, y, x, view_hview[0]/2 - sprite_height + 15)  &gt; 8){
+        move_towards_point(x, view_hview[0]/2 - sprite_height + 15, 8);
     } else {
-        y = view_hview[0]/2 - sprite_height/2 + 15;
+        y = view_hview[0]/2 - sprite_height + 15;
         move_to_center = false;   
         speed = 0;
     }
