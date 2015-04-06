@@ -9,18 +9,29 @@
     <sprite>sprites\spr_rock</sprite>
     <sprite>sprites\spr_paper</sprite>
     <sprite>sprites\spr_scissors</sprite>
+    <sprite>sprites\spr_banner</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <fonts name="fonts">
+    <font>fonts\fnt_score</font>
+  </fonts>
   <objects name="objects">
     <objects name="Hands">
       <object>objects\obj_rock</object>
       <object>objects\obj_paper</object>
       <object>objects\obj_scissors</object>
+      <object>objects\obj_hand</object>
+    </objects>
+    <objects name="Ads">
+      <object>objects\obj_ad_test</object>
+    </objects>
+    <objects name="UI">
+      <object>objects\obj_game</object>
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_home</room>
+    <room>rooms\rm_game</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
