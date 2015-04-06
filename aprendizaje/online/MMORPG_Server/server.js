@@ -47,5 +47,3 @@ net.createServer(function(socket){
     socket.on('data', thisClient.data);
 
 }).listen(config.port);
-
-console.log("Initialize Completed.\nServer Port: " + config.port + " | Environment: " + config.environment);
