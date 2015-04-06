@@ -51,9 +51,9 @@
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
   <instances>
-    <instance objName="obj_rock" x="32" y="567" name="inst_55B66385" locked="0" code="hand = &quot;Rock&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_paper" x="178" y="564" name="inst_C02B6AA3" locked="0" code="hand = &quot;Paper&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_scissors" x="325" y="564" name="inst_5A1DC523" locked="0" code="hand = &quot;Scissors&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="obj_rock" x="29" y="565" name="inst_55B66385" locked="0" code="hand = &quot;Rock&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="obj_paper" x="179" y="562" name="inst_C02B6AA3" locked="0" code="hand = &quot;Paper&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="obj_scissors" x="330" y="564" name="inst_5A1DC523" locked="0" code="hand = &quot;Scissors&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="obj_ad_test" x="0" y="724" name="inst_2328F123" locked="0" code="" scaleX="15.0299997329712" scaleY="1.02040815353394" colour="4294967295" rotation="0"/>
     <instance objName="obj_game" x="32" y="32" name="inst_675BA19B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>

@@ -33,7 +33,7 @@ selected_hand = "";
 checking = false;
 
 SELECT_YOUR_HAND = "Select your hand";
-READY_TIMER = 5;
+READY_TIMER = 3;
 
 player_text = SELECT_YOUR_HAND;
 timer_seconds = READY_TIMER;
@@ -81,10 +81,17 @@ timer_seconds = READY_TIMER;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Call timer every 1 second
+            <string>/// Call timer and trigger GAME CHECK
 if (checking == true) {
     if ( timer_seconds &gt; 1 ) {
         timer_seconds -= 1;
+        
+        // Move hands to center when seconds == 2
+        if (timer_seconds == 1) {
+            with(obj_hand) move_to_center = true;
+            obj_cross.move_to_center = true;
+        }
+        
         alarm[0] = room_speed;  
     } else {
         checking = false;  
@@ -175,8 +182,8 @@ if (checking) {
     draw_set_font(fnt_score);
     draw_set_color(c_white);
     draw_set_halign(fa_center);
-    draw_text(view_wview[0]/2, 
-              view_hview[0]/2, 
+    draw_text(view_wview[0] - 100, 
+              view_hview[0]/2 + 5, 
               string(timer_seconds));
 }
 </string>

@@ -29,6 +29,7 @@
 hand = "";
 fade = false;
 move = false;
+move_to_center = false;
 </string>
           </argument>
         </arguments>
@@ -135,6 +136,36 @@ if (move == true) {
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Move to center
+if ( move_to_center == true ) {
+    if (point_distance(x, y, x, view_hview[0]/2 + sprite_height/2 - 15) &gt; 4){
+        move_towards_point(x, view_hview[0]/2 + sprite_height/2 - 15, 4);
+    } else {
+        y = view_hview[0]/2 + sprite_height/2 - 15;
+        move_to_center = false;   
+        speed = 0;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="6" enumb="4">
       <action>
@@ -171,6 +202,11 @@ if (move == true) {
             if (other.id != id){
                 fade = true;
             } else {
+                // create enemy hand
+                var cross = instance_create(view_wview[0]/2,240,obj_cross);
+                cross.image_xscale = 0.5;
+                cross.image_yscale = 0.5;
+                
                 alarm[0] = room_speed/5;
                 with(obj_game) {
                     alarm[0] = room_speed;

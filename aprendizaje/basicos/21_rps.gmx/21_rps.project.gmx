@@ -6,6 +6,7 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprite>sprites\spr_cross</sprite>
     <sprite>sprites\spr_rock</sprite>
     <sprite>sprites\spr_paper</sprite>
     <sprite>sprites\spr_scissors</sprite>
@@ -22,6 +23,7 @@
       <object>objects\obj_paper</object>
       <object>objects\obj_scissors</object>
       <object>objects\obj_hand</object>
+      <object>objects\obj_cross</object>
     </objects>
     <objects name="Ads">
       <object>objects\obj_ad_test</object>
