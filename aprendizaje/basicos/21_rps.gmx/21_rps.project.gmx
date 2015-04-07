@@ -6,14 +6,20 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\spr_sample</sprite>
-    <sprite>sprites\spr_rock</sprite>
-    <sprite>sprites\spr_paper</sprite>
-    <sprite>sprites\spr_scissors</sprite>
-    <sprite>sprites\spr_cross</sprite>
-    <sprite>sprites\spr_logo_rock</sprite>
-    <sprite>sprites\spr_logo_paper</sprite>
-    <sprite>sprites\spr_logo_scissors</sprite>
+    <sprites name="Hands">
+      <sprite>sprites\spr_cross</sprite>
+      <sprite>sprites\spr_paper</sprite>
+      <sprite>sprites\spr_rock</sprite>
+      <sprite>sprites\spr_scissors</sprite>
+    </sprites>
+    <sprites name="Logos">
+      <sprite>sprites\spr_logo_paper</sprite>
+      <sprite>sprites\spr_logo_rock</sprite>
+      <sprite>sprites\spr_logo_scissors</sprite>
+    </sprites>
+    <sprites name="Misc">
+      <sprite>sprites\spr_sample</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -29,9 +35,19 @@
     </scripts>
   </scripts>
   <fonts name="fonts">
+    <font>fonts\fnt_credits</font>
+    <font>fonts\fnt_micro</font>
     <font>fonts\fnt_score</font>
   </fonts>
   <objects name="objects">
+    <objects name="Ads">
+      <object>objects\obj_ad_test</object>
+    </objects>
+    <objects name="Controllers">
+      <object>objects\obj_game</object>
+      <object>objects\obj_home</object>
+      <object>objects\obj_credits</object>
+    </objects>
     <objects name="Hands">
       <object>objects\obj_hand</object>
       <object>objects\obj_rock</object>
@@ -39,20 +55,23 @@
       <object>objects\obj_scissors</object>
       <object>objects\obj_cross</object>
     </objects>
-    <objects name="Ads">
-      <object>objects\obj_ad_test</object>
+    <objects name="Transitions">
+      <object>objects\obj_fade</object>
     </objects>
     <objects name="UI">
-      <object>objects\obj_game</object>
-      <object>objects\obj_button</object>
-      <object>objects\obj_logo_rock</object>
-      <object>objects\obj_logo_paper</object>
-      <object>objects\obj_logo_scissors</object>
+      <objects name="Home">
+        <object>objects\obj_logo_rock</object>
+        <object>objects\obj_logo_scissors</object>
+        <object>objects\obj_logo_paper</object>
+        <object>objects\obj_button</object>
+        <object>objects\obj_sign</object>
+      </objects>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_home</room>
     <room>rooms\rm_game</room>
+    <room>rooms\rm_credits</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

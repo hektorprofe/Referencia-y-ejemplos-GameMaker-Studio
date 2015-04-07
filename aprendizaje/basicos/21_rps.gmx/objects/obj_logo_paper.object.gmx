@@ -28,11 +28,12 @@
             <string>animation = false;
 step = 1;
 ease = 23;
-duration = 60;
+duration = room_speed*2;
 y = -115;
 
-// Animate after 20 steps
-alarm[0] = 20;
+
+// Animate after...
+alarm[0] = room_speed/3 * 2;
 
 /*
 nease[0] = "easeInQuad";

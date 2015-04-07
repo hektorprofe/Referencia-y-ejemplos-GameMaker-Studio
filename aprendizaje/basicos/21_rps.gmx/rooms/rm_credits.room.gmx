@@ -51,14 +51,7 @@
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
   <instances>
-    <instance objName="obj_home" x="10" y="10" name="inst_2D522B59" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_button" x="96" y="432" name="inst_E1B3C4B9" locked="0" code="target = rm_game;&#xA;text = &quot;VS CPU&quot;;&#xA;&#xA;// Animate after...&#xA;alarm[0] = room_speed*3;&#xA;" scaleX="9" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="obj_button" x="96" y="528" name="inst_192CEEBE" locked="0" code="text = &quot;ONLINE&quot;;&#xA;&#xA;&#xA;// Animate after...&#xA;alarm[0] = room_speed*3.25;&#xA;" scaleX="9" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="obj_logo_rock" x="32" y="32" name="inst_FA3D1AB0" locked="0" code="" scaleX="0.884999990463257" scaleY="0.884999990463257" colour="4294967295" rotation="0"/>
-    <instance objName="obj_logo_paper" x="32" y="133" name="inst_97687684" locked="0" code="" scaleX="0.884999990463257" scaleY="0.884999990463257" colour="4294967295" rotation="0"/>
-    <instance objName="obj_logo_scissors" x="34" y="238" name="inst_6B7C38A7" locked="0" code="" scaleX="0.884999990463257" scaleY="0.884999990463257" colour="4294967295" rotation="0"/>
-    <instance objName="obj_button" x="96" y="624" name="inst_4DB8B02C" locked="0" code="target = rm_credits;&#xA;text = &quot;CREDITS&quot;;&#xA;&#xA;// Animate after...&#xA;alarm[0] = room_speed*3.5;&#xA;&#xA;" scaleX="9" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="obj_sign" x="458" y="762" name="inst_2AEE9817" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_credits" x="10" y="10" name="inst_FE7F60F1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
