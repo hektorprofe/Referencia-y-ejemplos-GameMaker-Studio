@@ -178,15 +178,33 @@ if (checking == true) {
             <kind>1</kind>
             <string>/// Draw player scores
 draw_set_font(fnt_score);
-draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_text(30,25,"YOU");
+if (global.p1_score == global.p2_score) {
+    draw_set_color(c_white);
+} else if (global.p1_score &gt; global.p2_score) {
+    draw_set_color(make_color_rgb(0, 128, 0));
+} else {
+    draw_set_color(make_color_rgb(128, 0, 0));
+}
 draw_set_halign(fa_center);
 draw_text(75,75,string(global.p1_score));
+
+draw_set_color(c_white);
 draw_set_halign(fa_right);
 draw_text(view_wview[0]-30,25,"CPU");
+
+if (global.p1_score == global.p2_score) {
+    draw_set_color(c_white);
+} else if (global.p1_score &lt; global.p2_score) {
+    draw_set_color(make_color_rgb(0, 128, 0));
+} else {
+    draw_set_color(make_color_rgb(128, 0, 0));
+}
 draw_set_halign(fa_center);
 draw_text(view_wview[0]-75,75,string(global.p2_score));
+
+draw_set_color(c_white);
 
 
 </string>
@@ -213,7 +231,7 @@ draw_text(view_wview[0]-75,75,string(global.p2_score));
 draw_set_font(fnt_score);
 draw_set_color(c_white);
 draw_set_halign(fa_center);
-draw_text(view_wview[0]/2,495,player_text);
+draw_text(view_wview[0]/2,490,player_text);
 </string>
           </argument>
         </arguments>
@@ -240,7 +258,7 @@ if (checking) {
     draw_set_color(c_white);
     draw_set_halign(fa_center);
     draw_text(view_wview[0] - 100, 
-              view_hview[0]/2 + 5, 
+              view_hview[0]/2 - 64, 
               string(timer_seconds));
 }
 </string>
@@ -278,6 +296,22 @@ if (string_length(final_result) &gt; 0) {
       </action>
     </event>
     <event eventtype="9" enumb="112">
+      <action>
+        <libid>1</libid>
+        <id>331</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_restart_game</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+    </event>
+    <event eventtype="10" enumb="8">
       <action>
         <libid>1</libid>
         <id>331</id>

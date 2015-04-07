@@ -7,20 +7,19 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>1</bbox_left>
-  <bbox_right>242</bbox_right>
-  <bbox_top>1</bbox_top>
-  <bbox_bottom>242</bbox_bottom>
+  <bbox_left>0</bbox_left>
+  <bbox_right>469</bbox_right>
+  <bbox_top>0</bbox_top>
+  <bbox_bottom>119</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>244</width>
-  <height>244</height>
+  <width>500</width>
+  <height>120</height>
   <frames>
-    <frame index="0">images\spr_paper_0.png</frame>
-    <frame index="1">images\spr_paper_1.png</frame>
+    <frame index="0">images\spr_logo_scissors_0.png</frame>
   </frames>
 </sprite>

@@ -154,10 +154,10 @@ if (move == true) {
             <kind>1</kind>
             <string>/// Move to center
 if ( move_to_center == true ) {
-    if (point_distance(x, y, x, view_hview[0]/2 + sprite_height/2 - 15) &gt; 8){
-        move_towards_point(x, view_hview[0]/2 + sprite_height/2 - 15, 8);
+    if (point_distance(x, y, x, view_hview[0]/2 + sprite_height/2 - 80) &gt; 12){
+        move_towards_point(x, view_hview[0]/2 + sprite_height/2 - 80, 12);
     } else {
-        y = view_hview[0]/2 + sprite_height/2 - 15;
+        y = view_hview[0]/2 + sprite_height/2 - 80;
         move_to_center = false;   
         speed = 0;
     }
@@ -206,7 +206,7 @@ if ( move_to_center == true ) {
                 fade = true;
             } else {
                 // create enemy hand
-                var cross = instance_create(view_wview[0]/2-sprite_width/2,240-sprite_height/2,obj_cross);
+                var cross = instance_create(view_wview[0]/2-sprite_width/2,42,obj_cross);
                 cross.image_xscale = 0.5;
                 cross.image_yscale = 0.5;
                 

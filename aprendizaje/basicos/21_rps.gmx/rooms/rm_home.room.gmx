@@ -10,7 +10,9 @@
   <persistent>0</persistent>
   <colour>0</colour>
   <showcolour>-1</showcolour>
-  <code></code>
+  <code>global.p1_score = 0;
+global.p2_score = 0;
+//room_goto_next();</code>
   <enableViews>-1</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
@@ -51,11 +53,12 @@
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
   <instances>
-    <instance objName="obj_rock" x="29" y="565" name="inst_55B66385" locked="0" code="hand = &quot;Rock&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_paper" x="179" y="562" name="inst_C02B6AA3" locked="0" code="hand = &quot;Paper&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_scissors" x="330" y="564" name="inst_5A1DC523" locked="0" code="hand = &quot;Scissors&quot;;&#xA;" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="obj_ad_test" x="0" y="724" name="inst_2328F123" locked="0" code="" scaleX="14.9998998641968" scaleY="2.38000011444092" colour="4294967295" rotation="0"/>
-    <instance objName="obj_game" x="32" y="32" name="inst_675BA19B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button" x="224" y="576" name="inst_E1B3C4B9" locked="0" code="target = rm_game;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button" x="224" y="640" name="inst_192CEEBE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_logo_rock" x="32" y="32" name="inst_FA3D1AB0" locked="0" code="" scaleX="0.884999990463257" scaleY="0.884999990463257" colour="4294967295" rotation="0"/>
+    <instance objName="obj_logo_paper" x="32" y="133" name="inst_97687684" locked="0" code="" scaleX="0.884999990463257" scaleY="0.884999990463257" colour="4294967295" rotation="0"/>
+    <instance objName="obj_logo_scissors" x="34" y="238" name="inst_6B7C38A7" locked="0" code="" scaleX="0.884999990463257" scaleY="0.884999990463257" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button" x="224" y="704" name="inst_4DB8B02C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

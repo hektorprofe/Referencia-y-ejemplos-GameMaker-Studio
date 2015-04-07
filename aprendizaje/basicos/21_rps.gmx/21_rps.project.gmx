@@ -6,11 +6,14 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\spr_cross</sprite>
+    <sprite>sprites\spr_sample</sprite>
     <sprite>sprites\spr_rock</sprite>
     <sprite>sprites\spr_paper</sprite>
     <sprite>sprites\spr_scissors</sprite>
-    <sprite>sprites\spr_banner</sprite>
+    <sprite>sprites\spr_cross</sprite>
+    <sprite>sprites\spr_logo_rock</sprite>
+    <sprite>sprites\spr_logo_paper</sprite>
+    <sprite>sprites\spr_logo_scissors</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -21,16 +24,19 @@
     <scripts name="winner">
       <script>scripts\check_winner.gml</script>
     </scripts>
+    <scripts name="effects">
+      <script>scripts\ease_in.gml</script>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_score</font>
   </fonts>
   <objects name="objects">
     <objects name="Hands">
+      <object>objects\obj_hand</object>
       <object>objects\obj_rock</object>
       <object>objects\obj_paper</object>
       <object>objects\obj_scissors</object>
-      <object>objects\obj_hand</object>
       <object>objects\obj_cross</object>
     </objects>
     <objects name="Ads">
@@ -38,10 +44,14 @@
     </objects>
     <objects name="UI">
       <object>objects\obj_game</object>
+      <object>objects\obj_button</object>
+      <object>objects\obj_logo_rock</object>
+      <object>objects\obj_logo_paper</object>
+      <object>objects\obj_logo_scissors</object>
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_init</room>
+    <room>rooms\rm_home</room>
     <room>rooms\rm_game</room>
   </rooms>
   <help>
