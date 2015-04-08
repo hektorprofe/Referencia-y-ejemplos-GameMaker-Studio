@@ -3,7 +3,9 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <NewExtensions/>
+  <NewExtensions>
+    <extension index="0">extensions\OnlineFramework</extension>
+  </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="Hands">
@@ -20,24 +22,45 @@
     <sprites name="Misc">
       <sprite>sprites\spr_sample</sprite>
     </sprites>
+    <sprites name="UI">
+      <sprites name="Auth">
+        <sprite>sprites\spr_auth_header</sprite>
+      </sprites>
+      <sprite>sprites\spr_ui_toggle_btn</sprite>
+      <sprite>sprites\spr_ui_background</sprite>
+      <sprite>sprites\spr_ui_transparent</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
-    <scripts name="enemy">
+    <scripts name="Effects">
+      <script>scripts\ease_in.gml</script>
+    </scripts>
+    <scripts name="Enemy">
       <script>scripts\ia_get_play.gml</script>
     </scripts>
-    <scripts name="winner">
-      <script>scripts\check_winner.gml</script>
+    <scripts name="Network">
+      <script>scripts\network_write.gml</script>
+      <script>scripts\handle_packet.gml</script>
     </scripts>
-    <scripts name="effects">
-      <script>scripts\ease_in.gml</script>
+    <scripts name="Strings">
+      <script>scripts\format_string.gml</script>
+    </scripts>
+    <scripts name="Winner">
+      <script>scripts\check_winner.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_credits</font>
     <font>fonts\fnt_micro</font>
     <font>fonts\fnt_score</font>
+    <fonts name="UI">
+      <font>fonts\fnt_ui</font>
+      <font>fonts\fnt_ui_richtext</font>
+      <font>fonts\fnt_ui_error</font>
+      <font>fonts\fnt_ui_header</font>
+    </fonts>
   </fonts>
   <objects name="objects">
     <objects name="Ads">
@@ -47,6 +70,8 @@
       <object>objects\obj_game</object>
       <object>objects\obj_home</object>
       <object>objects\obj_credits</object>
+      <object>objects\obj_auth</object>
+      <object>objects\obj_hall</object>
     </objects>
     <objects name="Hands">
       <object>objects\obj_hand</object>
@@ -66,12 +91,67 @@
         <object>objects\obj_button</object>
         <object>objects\obj_sign</object>
       </objects>
+      <objects name="UI Framework">
+        <object>objects\ui_base</object>
+        <object>objects\ui_button_base</object>
+        <object>objects\ui_error_base</object>
+        <object>objects\ui_focus_base</object>
+        <object>objects\ui_header_base</object>
+        <object>objects\ui_richtext_base</object>
+        <object>objects\ui_textbox_base</object>
+        <object>objects\ui_success_base</object>
+        <object>objects\ui_loading</object>
+        <object>objects\ui_toggle_button</object>
+      </objects>
+      <objects name="Room Specific">
+        <objects name="Auth">
+          <object>objects\auth_btn_login</object>
+          <object>objects\auth_btn_register</object>
+          <object>objects\auth_error</object>
+          <object>objects\auth_header</object>
+          <object>objects\auth_success</object>
+          <object>objects\auth_textbox_password</object>
+          <object>objects\auth_textbox_username</object>
+        </objects>
+        <objects name="Hall">
+          <object>objects\hall_btn_request_challenge</object>
+          <object>objects\hall_btn_request_accept</object>
+          <object>objects\hall_btn_request_deny</object>
+          <object>objects\hall_btn_search</object>
+          <object>objects\hall_btn_search_cancel</object>
+          <object>objects\hall_header</object>
+          <object>objects\hall_loading</object>
+          <object>objects\hall_loading_request</object>
+          <object>objects\hall_online_users</object>
+          <object>objects\hall_richtext_duel</object>
+          <object>objects\hall_richtext_users</object>
+          <object>objects\hall_textbox_challenger</object>
+          <object>objects\hall_username</object>
+          <object>objects\hall_toggle_duels</object>
+        </objects>
+        <objects name="Game Online">
+          <object>objects\go_btn_surrender</object>
+          <object>objects\go_challenger</object>
+          <object>objects\go_loading</object>
+          <object>objects\go_monitor</object>
+          <object>objects\go_username</object>
+          <object>objects\go_vs</object>
+        </objects>
+      </objects>
+    </objects>
+    <objects name="Sockets">
+      <object>objects\network</object>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_home</room>
     <room>rooms\rm_game</room>
     <room>rooms\rm_credits</room>
+    <rooms name="Online">
+      <room>rooms\rm_auth</room>
+      <room>rooms\rm_hall</room>
+      <room>rooms\rm_game_online</room>
+    </rooms>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

@@ -25,7 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.p1_score = 0;
+            <string>// gvars
+
+// Multiplayer
+global.online_users = 0;
+global.playing_users = 0;
+global.username = "";
+global.password = "";
+global.challenger = "";
+global.board = "null";
+global.register = false;
+global.duels = true;
+
+// Single player
+global.p1_score = 0;
 global.p2_score = 0;
 </string>
           </argument>

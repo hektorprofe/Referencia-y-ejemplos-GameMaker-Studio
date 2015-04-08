@@ -14,4 +14,3 @@ if (p1 == "Rock" && p2 == "Scissors") || (p1 == "Paper" && p2 == "Rock") || (p1 
     return 1;
 } else return 0;
 
-
