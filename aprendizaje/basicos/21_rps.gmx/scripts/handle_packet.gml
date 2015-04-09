@@ -189,4 +189,14 @@ switch(command){
         global.playing_users = buffer_read(argument0, buffer_u16);
         //show_debug_message(global.playing_users);  
         break;  
+        
+    case "GAME_RPS_HAND":
+        var challenger = buffer_read(argument0, buffer_string);
+        // Definimos la mano y 
+        obj_game_online.enemy_hand = buffer_read(argument0, buffer_string);
+        
+        // Lanzamos el evento que dibujara la jugada sobre las manos,
+        // dentro de este evento se comprobará la jugada cuando se haya
+        // movido todo el escenario poniendo obj_game_online.checking a true
+        with (obj_game_online.current_hand) event_perform(ev_other,ev_user0);
 }

@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>ui_loading</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,17 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>target = rm_auth;
-
-// Reset scores
-global.p1_score = 0;
-global.p2_score = 0;
+            <string>event_inherited();
+syncro = false;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="10" enumb="8">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -52,18 +49,12 @@ global.p2_score = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Room on clic
-
-// Close the socket to be efficient
-if instance_exists(network){
-    with(network) {
-        network_destroy(network.socket);
-        instance_destroy();
-    }
-}
-if (target != noone &amp;&amp; !instance_exists(obj_fade)) {
-    var fade = instance_create(0,0,obj_fade);
-    fade.target = target;
+            <string>if (show &amp;&amp; syncro){
+    draw_set_font(fnt_ui_richtext);
+    draw_set_halign(fa_center);
+    draw_set_color(c_white);
+    draw_text(x,y,text);
+    draw_set_halign(fa_left);
 }
 </string>
           </argument>

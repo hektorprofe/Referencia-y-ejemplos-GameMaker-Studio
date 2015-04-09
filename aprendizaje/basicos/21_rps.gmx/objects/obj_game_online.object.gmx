@@ -25,20 +25,292 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// gvars
-global.online_users = 0;
-global.playing_users = 0;
-global.username = "";
-global.password = "";
-global.challenger = "";
-global.board = "null";
-global.register = false;
-global.duels = true;
+            <string>// SCORES INIT IN RM_INIT CREATION CODE
 
-target = rm_hall;
+select_enabled = true;
+selected_hand = "";
+final_result = "";
+checking = false;
+target = rm_home;
+
+SELECT_YOUR_HAND = "Select your hand";
+READY_TIMER = 3;
+REMATCH_TIMER = 5;
+
+player_text = SELECT_YOUR_HAND;
+timer_seconds = READY_TIMER;
+rematch_seconds = REMATCH_TIMER;
+
+current_hand = noone;
+enemy_hand = "";
+
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>rematch_seconds--;
+if (rematch_seconds == 0) room_restart();
+alarm[1] = room_speed;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Check game result</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Timer and trigger GAME CHECK + IA response
+if (checking == true) {
+    if (!is_string(timer_seconds)){
+        if ( timer_seconds &gt; 0 ) {
+            timer_seconds -= 1;
+            
+            // Move hands to center when seconds == 2
+            if (timer_seconds == 0) {
+                with(obj_hand) move_to_center = true;
+                obj_cross.move_to_center = true;
+            }
+            
+            alarm[0] = room_speed; 
+            if (timer_seconds == 0) {
+            
+                timer_seconds = "GO!"; 
+        
+                // Get ONLINE response
+                multi_get_play();
+            }
+        }
+    } else {
+        checking = false; 
+        
+        // Check winner ONLINE
+        var res = check_winner_online();
+        
+        // Show result
+        if (res == -1) {
+            final_result = "It's a draw!";
+        } else if (res == 0) {
+            final_result = "You lose!";
+            global.p2_score++;
+        } else {
+            final_result = "You win!";
+            global.p1_score++;
+        }
+        
+        // After X seconds restart room to rematch
+        alarm[1] = room_speed;
+    }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw player scores
+draw_set_color(c_white);
+draw_set_font(fnt_score);
+draw_set_halign(fa_left);
+draw_text(30,25, "You"); //global.username
+if (global.p1_score == global.p2_score) {
+    draw_set_color(c_white);
+} else if (global.p1_score &gt; global.p2_score) {
+    draw_set_color(make_color_rgb(0, 128, 0));
+} else {
+    draw_set_color(make_color_rgb(128, 0, 0));
+}
+draw_set_halign(fa_center);
+draw_text(75,75,string(global.p1_score));
+
+draw_set_color(c_white);
+draw_set_halign(fa_right);
+draw_text(view_wview[0]-30,25,global.challenger);
+
+if (global.p1_score == global.p2_score) {
+    draw_set_color(c_white);
+} else if (global.p1_score &lt; global.p2_score) {
+    draw_set_color(make_color_rgb(0, 128, 0));
+} else {
+    draw_set_color(make_color_rgb(128, 0, 0));
+}
+draw_set_halign(fa_center);
+draw_text(view_wview[0]-75,75,string(global.p2_score));
+
+draw_set_color(c_white);
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw hand selection
+draw_set_font(fnt_score);
+draw_set_color(c_white);
+draw_set_halign(fa_center);
+draw_text(view_wview[0]/2,490,player_text);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw timer if checking
+if (checking) {
+    draw_set_font(fnt_score);
+    draw_set_color(c_white);
+    draw_set_halign(fa_center);
+    draw_text(view_wview[0] - 100, 
+              view_hview[0]/2 - 64, 
+              string(timer_seconds));
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw result
+if (string_length(final_result) &gt; 0) {
+    draw_set_font(fnt_score);
+    draw_set_color(c_white);
+    draw_set_halign(fa_center);
+    draw_text(view_wview[0]/2, 
+              view_hview[0] - 200, 
+              final_result + "#Next match in " + string(rematch_seconds));
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="112">
+      <action>
+        <libid>1</libid>
+        <id>331</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_restart_game</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="10" enumb="8">
@@ -59,10 +331,9 @@ target = rm_hall;
           <argument>
             <kind>1</kind>
             <string>/// Room on clic
-
 if (target != noone &amp;&amp; !instance_exists(obj_fade)) {
     var fade = instance_create(0,0,obj_fade);
-    fade.target = target;
+    fade.target = target; // REFACTOR
 }
 </string>
           </argument>

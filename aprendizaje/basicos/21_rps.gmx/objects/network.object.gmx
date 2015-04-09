@@ -40,14 +40,12 @@ cutBuffer = buffer_create(1, buffer_grow, 1);
 
 // Initiate the socket
 socket = network_create_socket(network_socket_tcp);
-//network_connect_raw(socket,"127.0.0.1",8082);
-//network_set_timeout(socket, 3000, 3000);
 
 result = network_connect_raw(socket,"192.168.1.128",8082);
 // If is not register
 if (global.register == false){
-    // Check if HELLO back after 0.3 seconds
-    alarm[2] = 10;
+    // Check if HELLO back after 0.5 seconds
+    alarm[2] = room_speed/2;
 }
 
 </string>

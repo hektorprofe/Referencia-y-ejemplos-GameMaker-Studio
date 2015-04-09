@@ -184,42 +184,139 @@ if ( move_to_center == true ) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (obj_game.select_enabled) {
-    if (obj_game.selected_hand != hand){
-        with(obj_hand) {
-            image_index = 1;
+            <string>/// First Check Online Game
+if instance_exists(obj_game_online) {
+    if (obj_game_online.select_enabled) {
+        if (obj_game_online.selected_hand != hand){
+            with(obj_hand) {
+                image_index = 1;
+            }
+            obj_game_online.selected_hand = hand;
+            image_index = 0;
+            obj_game_online.player_text = "Again to confirm";
+            show_debug_message("Selected hand: " + hand );
+        } else {
+            obj_game_online.select_enabled = false;
+            obj_game_online.player_text = "";
+            // Set as current hand
+            obj_game_online.current_hand = id;
+            show_debug_message("Confirmed hand: " + hand );
+            
+            /// Send play to server
+            if instance_exists(network) {
+                var hand_packet = buffer_create(1, buffer_grow, 1);
+                buffer_write(hand_packet, buffer_string, "game_rps_hand");
+                buffer_write(hand_packet, buffer_string, global.username);
+                buffer_write(hand_packet, buffer_string, hand);
+                network_write(network.socket, hand_packet);
+            }
+            
+            // Check if enemy has already moved
+            if (obj_game_online.enemy_hand != "") {
+                // Continue the game
+                with (obj_game_online.current_hand) event_perform(ev_other,ev_user0);
+            }
         }
-        obj_game.selected_hand = hand;
-        image_index = 0;
-        obj_game.player_text = "Again to confirm";
-        show_debug_message("Selected hand: " + hand );
-    } else {
-        obj_game.select_enabled = false;
-        obj_game.player_text = "";
-        show_debug_message("Confirmed hand: " + hand );
-        // Set as current hand
-        obj_game.current_hand = id;
-        
-        // Now start the game check   
-        with(obj_hand) {
-            if (other.id != id){
-                fade = true;
-            } else {
-                // create enemy hand
-                var cross = instance_create(view_wview[0]/2-sprite_width/2,42,obj_cross);
-                cross.image_xscale = 0.5;
-                cross.image_yscale = 0.5;
-                
-                alarm[0] = room_speed/5;
-                with(obj_game) {
-                    alarm[0] = room_speed;
-                    checking = true;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Then Single player case
+if instance_exists(obj_game) {
+    if (obj_game.select_enabled) {
+        if (obj_game.selected_hand != hand){
+            with(obj_hand) {
+                image_index = 1;
+            }
+            obj_game.selected_hand = hand;
+            image_index = 0;
+            obj_game.player_text = "Again to confirm";
+            show_debug_message("Selected hand: " + hand );
+        } else {
+            obj_game.select_enabled = false;
+            obj_game.player_text = "";
+            show_debug_message("Confirmed hand: " + hand );
+            // Set as current hand
+            obj_game.current_hand = id;
+            
+            // Now start the game check   
+            with(obj_hand) {
+                if (other.id != id){
+                    fade = true;
+                } else {
+                    // create enemy hand
+                    var cross = instance_create(view_wview[0]/2-sprite_width/2,42,obj_cross);
+                    cross.image_xscale = 0.5;
+                    cross.image_yscale = 0.5;
+                    
+                    alarm[0] = room_speed/5;
+                    with(obj_game) {
+                        alarm[0] = room_speed;
+                        checking = true;
+                    }
                 }
             }
         }
     }
 }
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Online start game check   
+with(obj_hand) {
+    if (other.id != id){
+        fade = true;
+    } else {
+        // create enemy hand
+        var cross = instance_create(view_wview[0]/2-sprite_width/2,42,obj_cross);
+        cross.image_xscale = 0.5;
+        cross.image_yscale = 0.5;
+        
+        alarm[0] = room_speed/5;
+        with(obj_game_online) {
+            alarm[0] = room_speed;
+            // Aqui comprobamos la jugada
+            checking = true;
+        }
+    }
+}
 </string>
           </argument>
         </arguments>

@@ -39,6 +39,7 @@
     </scripts>
     <scripts name="Enemy">
       <script>scripts\ia_get_play.gml</script>
+      <script>scripts\multi_get_play.gml</script>
     </scripts>
     <scripts name="Network">
       <script>scripts\network_write.gml</script>
@@ -49,6 +50,7 @@
     </scripts>
     <scripts name="Winner">
       <script>scripts\check_winner.gml</script>
+      <script>scripts\check_winner_online.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">
@@ -68,6 +70,7 @@
     </objects>
     <objects name="Controllers">
       <object>objects\obj_game</object>
+      <object>objects\obj_game_online</object>
       <object>objects\obj_home</object>
       <object>objects\obj_credits</object>
       <object>objects\obj_auth</object>
@@ -133,6 +136,7 @@
           <object>objects\go_btn_surrender</object>
           <object>objects\go_challenger</object>
           <object>objects\go_loading</object>
+          <object>objects\go_syncro</object>
           <object>objects\go_monitor</object>
           <object>objects\go_username</object>
           <object>objects\go_vs</object>
