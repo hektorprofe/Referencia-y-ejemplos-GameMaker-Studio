@@ -193,13 +193,6 @@ if (connected == true) {
     // A los 3 segundos envio el ping y compruebo otra vez
     alarm[1] = room_speed * 3;
 } else {
-    // Close the socket to be efficient
-    if instance_exists(network){
-        with(network) {
-            network_destroy(network.socket);
-            instance_destroy();
-        }
-    }
     show_debug_message("Server disconnected.");
     room_goto(rm_auth);
 }
