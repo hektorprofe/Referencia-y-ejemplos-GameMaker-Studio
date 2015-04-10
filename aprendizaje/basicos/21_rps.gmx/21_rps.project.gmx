@@ -5,6 +5,7 @@
   </Configs>
   <NewExtensions>
     <extension index="0">extensions\OnlineFramework</extension>
+    <extension index="1">extensions\TMC Frame Skip</extension>
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -145,6 +146,9 @@
     </objects>
     <objects name="Sockets">
       <object>objects\network</object>
+    </objects>
+    <objects name="External">
+      <object>objects\TMC_FrameSkip_obj</object>
     </objects>
   </objects>
   <rooms name="rooms">

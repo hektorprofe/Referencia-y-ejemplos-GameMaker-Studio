@@ -50,22 +50,24 @@ show = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
-
-// check if network exists or create
-var cancel_packet = buffer_create(1, buffer_grow, 1);
-buffer_write(cancel_packet, buffer_string, "challenge_search_cancel");
-buffer_write(cancel_packet, buffer_string, global.username);
-network_write(network.socket, cancel_packet);
-
-show = false;
-hall_loading.show = false;
-hall_btn_search.show = true;
-hall_btn_request_challenge.show = true; 
-hall_textbox_challenger.show = true;
-
-// GLOBAL CONTROL OF CHALLENGE
-global.challenging = false; 
+            <string>if (show == true) {
+    event_inherited();
+    
+    // check if network exists or create
+    var cancel_packet = buffer_create(1, buffer_grow, 1);
+    buffer_write(cancel_packet, buffer_string, "challenge_search_cancel");
+    buffer_write(cancel_packet, buffer_string, global.username);
+    network_write(network.socket, cancel_packet);
+    
+    show = false;
+    hall_loading.show = false;
+    hall_btn_search.show = true;
+    hall_btn_request_challenge.show = true; 
+    hall_textbox_challenger.show = true;
+    
+    // GLOBAL CONTROL OF CHALLENGE
+    global.challenging = false; 
+}
 </string>
           </argument>
         </arguments>

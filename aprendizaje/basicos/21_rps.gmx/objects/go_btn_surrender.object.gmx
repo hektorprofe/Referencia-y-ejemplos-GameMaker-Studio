@@ -52,7 +52,7 @@ exit_now = false;
           <argument>
             <kind>1</kind>
             <string>/// Surrender packet or close
-/*
+/*** 
 event_inherited();
 
 if (exit_now == false) {
@@ -75,7 +75,7 @@ global.challenging = false;
 with(ui_base) motion_add(180, 25);
 // Move to HALL room            
 with (network) alarm[0] = 20;
-*/
+***/
 
 </string>
           </argument>

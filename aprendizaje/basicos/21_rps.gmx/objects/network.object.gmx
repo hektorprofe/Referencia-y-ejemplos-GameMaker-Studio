@@ -48,6 +48,9 @@ if (global.register == false){
     alarm[2] = room_speed/2;
 }
 
+// Auto-Disconnect
+alarm[4] = room_speed * 60 * 5;
+
 </string>
           </argument>
         </arguments>
@@ -186,7 +189,7 @@ if (connected == true) {
     network_write(network.socket, ping_packet);
     pings+=1;
     
-    // Compruebo si hay más de 2 pings de retraso
+    // Compruebo si hay más de 3 pings de retraso = 10s
     //show_debug_message(string(pings) + " " + string(pongs));
     if (pings&gt;pongs+1) connected = false;
     

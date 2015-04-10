@@ -49,9 +49,15 @@ switch(command){
                 // Set global username
                 global.username = username;
                 // Add animation to all UI objects XD
-                with(ui_base) motion_add(180, 10);
+                // with(ui_base) motion_add(180, 10);
                 // Move to HALL room            
-                with (network) alarm[0] = room_speed;
+                // with (network) alarm[0] = room_speed;
+            
+                /// Room on clic
+                if (!instance_exists(obj_fade)){
+                    var fade = instance_create(0,0,obj_fade);
+                    fade.target = rm_hall;
+                }
             } else {
                 // Delete the socket to be efficient
                 if (instance_number(network) > 0) {
@@ -73,6 +79,7 @@ switch(command){
         
     case "PONG":
         network.pongs+=1;
+        network.pings=network.pongs;
         break;
         
     case "CHALLENGE_READY":
@@ -84,9 +91,15 @@ switch(command){
         
         if (room == rm_hall){
             // Add animation to all UI objects XD
-            with(ui_base) motion_add(180, 10);
+            // with(ui_base) motion_add(180, 10);
             // Move to HALL room            
-            with (network) alarm[3] = room_speed;
+            // with (network) alarm[3] = room_speed;
+            
+            /// Room on clic
+            if (!instance_exists(obj_fade)){
+                var fade = instance_create(0,0,obj_fade);
+                fade.target = rm_game_online;
+            }
         }
         break;
         

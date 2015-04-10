@@ -50,27 +50,29 @@ show = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
-
-/*show = false;
-hall_loading.show = true;
-hall_btn_search_cancel.show = true;*/
-
-// disable countdown before continue
-hall_btn_request_deny.countdown = false;
-
-// check if network exists or create
-if (instance_number(network) &gt; 0) {
-    var accept_packet = buffer_create(1, buffer_grow, 1);
-    buffer_write(accept_packet, buffer_string, "challenge_request_accept");
-    buffer_write(accept_packet, buffer_string, global.challenger);
-    network_write(network.socket, accept_packet);
+            <string>if (show) {
+    event_inherited();
+    
+    /*show = false;
+    hall_loading.show = true;
+    hall_btn_search_cancel.show = true;*/
+    
+    // disable countdown before continue
+    hall_btn_request_deny.countdown = false;
+    
+    // check if network exists or create
+    if (instance_number(network) &gt; 0) {
+        var accept_packet = buffer_create(1, buffer_grow, 1);
+        buffer_write(accept_packet, buffer_string, "challenge_request_accept");
+        buffer_write(accept_packet, buffer_string, global.challenger);
+        network_write(network.socket, accept_packet);
+    }
+    
+    show = false;
+    hall_btn_request_deny.show = false;
+    hall_richtext_duel.text = "";
+    hall_btn_search.show = true; 
 }
-
-show = false;
-hall_btn_request_deny.show = false;
-hall_richtext_duel.text = "";
-hall_btn_search.show = true; 
 </string>
           </argument>
         </arguments>

@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited();
-text = "Random";
+text = "Find";
 show = true;
 </string>
           </argument>
@@ -50,22 +50,24 @@ show = true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
-
-show = false;
-hall_loading.show = true;
-hall_btn_search_cancel.show = true;
-hall_btn_request_challenge.show = false; 
-hall_textbox_challenger.show = false;
-
-// check if network exists or create
-var search_packet = buffer_create(1, buffer_grow, 1);
-buffer_write(search_packet, buffer_string, "challenge_search");
-buffer_write(search_packet, buffer_string, global.username);
-network_write(network.socket, search_packet);
-
-// GLOBAL CONTROL OF CHALLENGE
-global.challenging = true; 
+            <string>if (show == true) {
+    event_inherited();
+    
+    show = false;
+    hall_loading.show = true;
+    hall_btn_search_cancel.show = true;
+    hall_btn_request_challenge.show = false; 
+    hall_textbox_challenger.show = false;
+    
+    // check if network exists or create
+    var search_packet = buffer_create(1, buffer_grow, 1);
+    buffer_write(search_packet, buffer_string, "challenge_search");
+    buffer_write(search_packet, buffer_string, global.username);
+    network_write(network.socket, search_packet);
+    
+    // GLOBAL CONTROL OF CHALLENGE
+    global.challenging = true; 
+}
 </string>
           </argument>
         </arguments>

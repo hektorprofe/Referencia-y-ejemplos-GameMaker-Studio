@@ -29,6 +29,7 @@
 text = "";
 message = "";
 input= noone;
+show=true;
 </string>
           </argument>
         </arguments>
@@ -52,7 +53,7 @@ input= noone;
           <argument>
             <kind>1</kind>
             <string>event_inherited();
-input = get_string_async(message, text);
+if (show == true) input = get_string_async(message, text);
 </string>
           </argument>
         </arguments>

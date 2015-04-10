@@ -129,33 +129,35 @@ else text = "Deny";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>if (show) {
+    event_inherited();
 
-/*show = false;
-hall_loading.show = true;
-hall_btn_search_cancel.show = true;*/
-
-
-// disable countdown before continue
-countdown = false;
-
-// check if network exists or create
-if (instance_number(network) &gt; 0) {
-    var deny_packet = buffer_create(1, buffer_grow, 1);
-    buffer_write(deny_packet, buffer_string, "challenge_request_deny");
-    buffer_write(deny_packet, buffer_string, global.challenger);
-    network_write(network.socket, deny_packet);
+    /*show = false;
+    hall_loading.show = true;
+    hall_btn_search_cancel.show = true;*/
+    
+    
+    // disable countdown before continue
+    countdown = false;
+    
+    // check if network exists or create
+    if (instance_number(network) &gt; 0) {
+        var deny_packet = buffer_create(1, buffer_grow, 1);
+        buffer_write(deny_packet, buffer_string, "challenge_request_deny");
+        buffer_write(deny_packet, buffer_string, global.challenger);
+        network_write(network.socket, deny_packet);
+    }
+    
+    show = false;
+    hall_btn_request_accept.show = false;
+    hall_richtext_duel.text = "";
+    hall_btn_search.show = true; 
+    hall_btn_request_challenge.show = true;
+    hall_textbox_challenger.show = true;
+    
+    // GLOBAL CONTROL OF CHALLENGE
+    global.challenging = false; 
 }
-
-show = false;
-hall_btn_request_accept.show = false;
-hall_richtext_duel.text = "";
-hall_btn_search.show = true; 
-hall_btn_request_challenge.show = true;
-hall_textbox_challenger.show = true;
-
-// GLOBAL CONTROL OF CHALLENGE
-global.challenging = false; 
 </string>
           </argument>
         </arguments>

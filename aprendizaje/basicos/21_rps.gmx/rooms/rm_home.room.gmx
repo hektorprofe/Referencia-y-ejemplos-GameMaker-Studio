@@ -6,7 +6,7 @@
   <vsnap>10</vsnap>
   <hsnap>10</hsnap>
   <isometric>0</isometric>
-  <speed>60</speed>
+  <speed>30</speed>
   <persistent>0</persistent>
   <colour>0</colour>
   <showcolour>-1</showcolour>
@@ -59,6 +59,7 @@
     <instance objName="obj_logo_scissors" x="34" y="238" name="inst_6B7C38A7" locked="0" code="" scaleX="0.884999990463257" scaleY="0.884999990463257" colour="4294967295" rotation="0"/>
     <instance objName="obj_button" x="96" y="624" name="inst_4DB8B02C" locked="0" code="target = rm_credits;&#xA;text = &quot;Credits&quot;;&#xA;&#xA;// Animate after...&#xA;alarm[0] = room_speed*3.5;&#xA;&#xA;" scaleX="9" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="obj_sign" x="458" y="762" name="inst_2AEE9817" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="TMC_FrameSkip_obj" x="460" y="690" name="inst_B603ADCE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
