@@ -160,6 +160,14 @@ switch(command){
                     network_write(network.socket, deny_packet);
                 }
             }
+        } else {
+            // if not in hall room also decline the duel
+            if (instance_number(network) > 0) {
+                var deny_packet = buffer_create(1, buffer_grow, 1);
+                buffer_write(deny_packet, buffer_string, "challenge_request_deny");
+                buffer_write(deny_packet, buffer_string, the_challenger);
+                network_write(network.socket, deny_packet);
+            }
         }
         break;
         
