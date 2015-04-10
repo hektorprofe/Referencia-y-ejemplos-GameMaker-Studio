@@ -194,6 +194,7 @@ if (connected == true) {
     alarm[1] = room_speed * 3;
 } else {
     show_debug_message("Server disconnected.");
+    room_goto(rm_auth);
 }
 
 

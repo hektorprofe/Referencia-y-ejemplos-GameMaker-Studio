@@ -103,8 +103,10 @@ switch(command){
         global.challenging = false; 
         if (exit_challenger == global.challenger) {
             go_monitor.text = global.challenger + " has abandoned :/#You win.";
-            go_btn_surrender.text = "Exit";
-            go_btn_surrender.exit_now = true;
+            //go_btn_surrender.text = "Exit";
+            //go_btn_surrender.exit_now = true;
+            obj_game_online.exit_now = true;
+            go_btn_surrender.visible = true;
         }
         break;
         
@@ -112,49 +114,51 @@ switch(command){
         var the_challenger = buffer_read(argument0, buffer_string);
         
         // first check if client is in waiting queue and exit it
-        if (hall_loading.show == true) {
-            if (instance_number(network) > 0) {
+        if (room == rm_hall ){
+            if (hall_loading.show == true) {
+                if (instance_number(network) > 0) {
+                    
+                    // GLOBAL CONTROL OF CHALLENGE
+                    global.challenging = false; 
                 
-                // GLOBAL CONTROL OF CHALLENGE
-                global.challenging = false; 
-            
-                // check if network exists or create
-                var cancel_packet = buffer_create(1, buffer_grow, 1);
-                buffer_write(cancel_packet, buffer_string, "challenge_search_cancel");
-                buffer_write(cancel_packet, buffer_string, global.username);
-                network_write(network.socket, cancel_packet);
-                
-                hall_btn_search_cancel.show = false;
-                hall_loading.show = false;
+                    // check if network exists or create
+                    var cancel_packet = buffer_create(1, buffer_grow, 1);
+                    buffer_write(cancel_packet, buffer_string, "challenge_search_cancel");
+                    buffer_write(cancel_packet, buffer_string, global.username);
+                    network_write(network.socket, cancel_packet);
+                    
+                    hall_btn_search_cancel.show = false;
+                    hall_loading.show = false;
+                }
             }
-        }
         
-        // Then process request
-        if (room == rm_hall && global.challenging == false){
-            global.challenger = the_challenger;
-            // THIS CHECK IF IS IN CHALLENGE MODE TO AVOID INVITES
-            global.challenging = true; 
-            show_debug_message("Challenge request from " + global.challenger);  
-            hall_richtext_duel.text = global.challenger + " challenges you!";
-            hall_btn_request_accept.show = true;
-            hall_btn_request_deny.show = true;
-            // hide controls 
-            hall_btn_search.show = false; 
-            hall_btn_request_challenge.show = false;
-            hall_textbox_challenger.show = false;
-            // start countdown accept timer
-            with(hall_btn_request_deny) {
-                alarm[0] = room_speed;
-                countdown = true;
-            }
-        } else {
-            // if not waiting, just playing or dueling
-            // auto decline duels before doing nothing, cause im busy :P
-            if (instance_number(network) > 0) {
-                var deny_packet = buffer_create(1, buffer_grow, 1);
-                buffer_write(deny_packet, buffer_string, "challenge_request_deny");
-                buffer_write(deny_packet, buffer_string, the_challenger);
-                network_write(network.socket, deny_packet);
+            // Then process request
+            if (global.challenging == false){
+                global.challenger = the_challenger;
+                // THIS CHECK IF IS IN CHALLENGE MODE TO AVOID INVITES
+                global.challenging = true; 
+                show_debug_message("Challenge request from " + global.challenger);  
+                hall_richtext_duel.text = global.challenger + " challenges you!";
+                hall_btn_request_accept.show = true;
+                hall_btn_request_deny.show = true;
+                // hide controls 
+                hall_btn_search.show = false; 
+                hall_btn_request_challenge.show = false;
+                hall_textbox_challenger.show = false;
+                // start countdown accept timer
+                with(hall_btn_request_deny) {
+                    alarm[0] = room_speed;
+                    countdown = true;
+                }
+            } else {
+                // if not waiting, just playing or dueling
+                // auto decline duels before doing nothing, cause im busy :P
+                if (instance_number(network) > 0) {
+                    var deny_packet = buffer_create(1, buffer_grow, 1);
+                    buffer_write(deny_packet, buffer_string, "challenge_request_deny");
+                    buffer_write(deny_packet, buffer_string, the_challenger);
+                    network_write(network.socket, deny_packet);
+                }
             }
         }
         break;

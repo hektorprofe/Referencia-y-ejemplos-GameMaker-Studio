@@ -31,7 +31,8 @@ select_enabled = true;
 selected_hand = "";
 final_result = "";
 checking = false;
-target = rm_home;
+exit_now = false;
+target = rm_hall;
 
 SELECT_YOUR_HAND = "Select your hand";
 READY_TIMER = 3;
@@ -331,6 +332,27 @@ if (string_length(final_result) &gt; 0) {
           <argument>
             <kind>1</kind>
             <string>/// Room on clic
+
+/// Surrender packet or close
+event_inherited();
+
+if (exit_now == false) {
+    var surrender_packet = buffer_create(1, buffer_grow, 1);
+    buffer_write(surrender_packet, buffer_string, "challenge_quit");
+    buffer_write(surrender_packet, buffer_string, global.board);
+    network_write(network.socket, surrender_packet);
+} else {
+    var exit_packet = buffer_create(1, buffer_grow, 1);
+    buffer_write(exit_packet, buffer_string, "challenge_exit");
+    buffer_write(exit_packet, buffer_string, global.board);
+    network_write(network.socket, exit_packet);
+
+}
+
+// GLOBAL CONTROL OF CHALLENGE
+global.challenging = false; 
+
+// Animation
 if (target != noone &amp;&amp; !instance_exists(obj_fade)) {
     var fade = instance_create(0,0,obj_fade);
     fade.target = target; // REFACTOR

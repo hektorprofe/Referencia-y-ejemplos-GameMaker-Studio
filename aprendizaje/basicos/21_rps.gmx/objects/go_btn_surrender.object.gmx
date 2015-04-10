@@ -2,7 +2,7 @@
 <object>
   <spriteName>spr_ui_background</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>ui_button_base</parentName>
@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited();
-text = "Surrender";
+text = "";
 show = true;
 exit_now = false;
 </string>
@@ -52,6 +52,7 @@ exit_now = false;
           <argument>
             <kind>1</kind>
             <string>/// Surrender packet or close
+/*
 event_inherited();
 
 if (exit_now == false) {
@@ -74,6 +75,7 @@ global.challenging = false;
 with(ui_base) motion_add(180, 25);
 // Move to HALL room            
 with (network) alarm[0] = 20;
+*/
 
 </string>
           </argument>
