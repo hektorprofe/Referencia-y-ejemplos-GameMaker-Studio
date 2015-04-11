@@ -119,7 +119,11 @@ switch(command){
             //go_btn_surrender.text = "Exit";
             //go_btn_surrender.exit_now = true;
             obj_game_online.exit_now = true;
-            go_btn_surrender.visible = true;
+            obj_game_online.draw_texts = false;
+            go_btn_surrender.show = true;
+            // Hide all icons
+            with (obj_hand) visible = false;
+            if instance_exists(obj_cross) visible = false;
         }
         break;
         

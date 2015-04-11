@@ -2,7 +2,7 @@
 <object>
   <spriteName>spr_ui_background</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
+  <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>ui_button_base</parentName>
@@ -26,9 +26,10 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited();
-text = "";
-show = true;
+text = "Exit";
+show = false;
 exit_now = false;
+target = rm_hall;
 </string>
           </argument>
         </arguments>
@@ -51,10 +52,27 @@ exit_now = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Surrender packet or close
-/*** 
-event_inherited();
+            <string>/// Surrender / Close packet
+if (show == true &amp;&amp; !instance_exists(obj_transition_base)) {
+        
+    event_inherited();
+    var exit_packet = buffer_create(1, buffer_grow, 1);
+    buffer_write(exit_packet, buffer_string, "challenge_exit");
+    buffer_write(exit_packet, buffer_string, global.board);
+    network_write(network.socket, exit_packet);
+    
+    // GLOBAL CONTROL OF CHALLENGE
+    global.challenging = false; 
+    
+    // Animation
+    if (target != noone &amp;&amp; !instance_exists(obj_fade)) {
+        var fade = instance_create(0,0,obj_fade);
+        fade.target = target;
+    }
+}
 
+
+/*
 if (exit_now == false) {
     var surrender_packet = buffer_create(1, buffer_grow, 1);
     buffer_write(surrender_packet, buffer_string, "challenge_quit");
@@ -71,11 +89,12 @@ if (exit_now == false) {
 // GLOBAL CONTROL OF CHALLENGE
 global.challenging = false; 
 
+
 // Add animation to all UI objects XD
 with(ui_base) motion_add(180, 25);
 // Move to HALL room            
 with (network) alarm[0] = 20;
-***/
+*/
 
 </string>
           </argument>
@@ -99,7 +118,14 @@ with (network) alarm[0] = 20;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (show == true) event_inherited();
+            <string>if (show == true) {
+    draw_set_font(fnt_credits);
+    draw_set_color(c_white);
+    draw_set_halign(fa_center);
+    draw_text(view_wview[0]/2, y-40, global.challenger + " left the board");
+    draw_set_halign(fa_left);
+    event_inherited();
+}
 </string>
           </argument>
         </arguments>

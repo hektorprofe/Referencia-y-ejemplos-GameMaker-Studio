@@ -33,6 +33,7 @@ final_result = "";
 checking = false;
 exit_now = false;
 target = rm_hall;
+draw_texts = true;
 
 SELECT_YOUR_HAND = "Select your hand";
 READY_TIMER = 3;
@@ -152,7 +153,8 @@ if (checking == true) {
         }
         
         // After X seconds restart room to rematch
-        alarm[1] = room_speed;
+        // ONLY if enemy has not abandoned surrender_btn is not showing
+        if (go_btn_surrender.show == false) alarm[1] = room_speed;
     }
 }
 
@@ -231,10 +233,12 @@ draw_set_color(c_white);
           <argument>
             <kind>1</kind>
             <string>/// Draw hand selection
-draw_set_font(fnt_score);
-draw_set_color(c_white);
-draw_set_halign(fa_center);
-draw_text(view_wview[0]/2,490,player_text);
+if (draw_texts) {
+    draw_set_font(fnt_score);
+    draw_set_color(c_white);
+    draw_set_halign(fa_center);
+    draw_text(view_wview[0]/2,490,player_text);
+}
 </string>
           </argument>
         </arguments>
@@ -256,7 +260,7 @@ draw_text(view_wview[0]/2,490,player_text);
           <argument>
             <kind>1</kind>
             <string>/// Draw timer if checking
-if (checking) {
+if (checking &amp;&amp; draw_texts) {
     draw_set_font(fnt_score);
     draw_set_color(c_white);
     draw_set_halign(fa_center);
@@ -285,7 +289,7 @@ if (checking) {
           <argument>
             <kind>1</kind>
             <string>/// Draw result
-if (string_length(final_result) &gt; 0) {
+if (string_length(final_result) &gt; 0 &amp;&amp; draw_texts == true) {
     draw_set_font(fnt_score);
     draw_set_color(c_white);
     draw_set_halign(fa_center);
