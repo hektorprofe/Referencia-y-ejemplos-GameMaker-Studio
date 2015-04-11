@@ -52,13 +52,14 @@
   </views>
   <instances>
     <instance objName="obj_auth" x="16" y="16" name="inst_DAE41AF2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="auth_btn_login" x="256" y="368" name="inst_81459A92" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="auth_btn_register" x="32" y="368" name="inst_CBE2328C" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="auth_textbox_username" x="32" y="161" name="inst_DD3A9855" locked="0" code="" scaleX="13" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="auth_textbox_password" x="32" y="256" name="inst_6C7080D0" locked="0" code="" scaleX="13" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="auth_btn_login" x="256" y="528" name="inst_81459A92" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="auth_btn_register" x="32" y="528" name="inst_CBE2328C" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="auth_textbox_username" x="32" y="336" name="inst_DD3A9855" locked="0" code="" scaleX="13" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="auth_textbox_password" x="32" y="432" name="inst_6C7080D0" locked="0" code="" scaleX="13" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="auth_header" x="240" y="48" name="inst_E2D96812" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="auth_error" x="240" y="464" name="inst_DBAEB837" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="auth_success" x="240" y="464" name="inst_81F5A760" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="auth_error" x="240" y="624" name="inst_DBAEB837" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="auth_success" x="240" y="624" name="inst_81F5A760" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_online_logo" x="0" y="144" name="inst_1872ACD9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

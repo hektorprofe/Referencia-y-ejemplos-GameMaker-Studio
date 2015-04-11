@@ -19,6 +19,7 @@
       <sprite>sprites\spr_logo_paper</sprite>
       <sprite>sprites\spr_logo_rock</sprite>
       <sprite>sprites\spr_logo_scissors</sprite>
+      <sprite>sprites\spr_online_logo</sprite>
     </sprites>
     <sprites name="Misc">
       <sprite>sprites\spr_sample</sprite>
@@ -96,17 +97,8 @@
         <object>objects\obj_button</object>
         <object>objects\obj_sign</object>
       </objects>
-      <objects name="UI Framework">
-        <object>objects\ui_base</object>
-        <object>objects\ui_button_base</object>
-        <object>objects\ui_error_base</object>
-        <object>objects\ui_focus_base</object>
-        <object>objects\ui_header_base</object>
-        <object>objects\ui_richtext_base</object>
-        <object>objects\ui_textbox_base</object>
-        <object>objects\ui_success_base</object>
-        <object>objects\ui_loading</object>
-        <object>objects\ui_toggle_button</object>
+      <objects name="Online">
+        <object>objects\obj_online_logo</object>
       </objects>
       <objects name="Room Specific">
         <objects name="Auth">
@@ -143,6 +135,18 @@
           <object>objects\go_username</object>
           <object>objects\go_vs</object>
         </objects>
+      </objects>
+      <objects name="UI Framework">
+        <object>objects\ui_base</object>
+        <object>objects\ui_button_base</object>
+        <object>objects\ui_error_base</object>
+        <object>objects\ui_focus_base</object>
+        <object>objects\ui_header_base</object>
+        <object>objects\ui_richtext_base</object>
+        <object>objects\ui_textbox_base</object>
+        <object>objects\ui_success_base</object>
+        <object>objects\ui_loading</object>
+        <object>objects\ui_toggle_button</object>
       </objects>
     </objects>
     <objects name="Sockets">
