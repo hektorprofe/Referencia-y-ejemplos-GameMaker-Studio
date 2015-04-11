@@ -69,7 +69,7 @@ enemy_hand = "";
           <argument>
             <kind>1</kind>
             <string>rematch_seconds--;
-if (rematch_seconds == 0) room_restart();
+if (rematch_seconds == 0 &amp;&amp; go_btn_surrender.show == false) room_restart();
 alarm[1] = room_speed;
 
 </string>
@@ -153,8 +153,8 @@ if (checking == true) {
         }
         
         // After X seconds restart room to rematch
-        // ONLY if enemy has not abandoned surrender_btn is not showing
-        if (go_btn_surrender.show == false) alarm[1] = room_speed;
+        // ONLY will change if enemy has not abandoned surrender_btn is not showing
+        alarm[1] = room_speed;
     }
 }
 

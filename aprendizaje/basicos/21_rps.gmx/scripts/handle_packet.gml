@@ -123,7 +123,7 @@ switch(command){
             go_btn_surrender.show = true;
             // Hide all icons
             with (obj_hand) visible = false;
-            if instance_exists(obj_cross) visible = false;
+            if instance_exists(obj_cross) obj_cross.visible = false;
         }
         break;
         

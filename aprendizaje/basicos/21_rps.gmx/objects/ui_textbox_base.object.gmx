@@ -119,9 +119,9 @@ if (focused){
     draw_rectangle(x,y,x+sprite_width,y+sprite_height,true);
 }
 if (string_length(text)&gt;0 || focused){
-    draw_text(x+10,y+5,string(text));
+    draw_text(x+10,y+7,string(text));
 } else {
-    draw_text(x+10,y+5,string(placeholder));
+    draw_text(x+10,y+7,string(placeholder));
 }
 </string>
           </argument>

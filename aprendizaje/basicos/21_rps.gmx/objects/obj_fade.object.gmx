@@ -28,6 +28,7 @@
             <string>a = 0;    // En esta variable iremos guardando la transparencia
 fade = 1; // Empezamos con transparencia al máximo: 1 = desaparecer, -1 = aparecer
 target = noone;
+qty = 0.035;
 </string>
           </argument>
         </arguments>
@@ -52,7 +53,13 @@ target = noone;
             <kind>1</kind>
             <string>// En cada Draw vamos aumentando/decrementando un poco la transparencia
 // Nos aseguramos que el valor esté siempre entre 0 y 1 con clamp()
-a = clamp(a + (fade * 0.035),0,1);
+
+// Quiero que la vuelta sea mas rapida
+if (fade == -1) {
+    qty+=0.001;
+}
+
+a = clamp(a + (fade * qty),0,1);
 
 // Si no hay transparencia, entonces nos movemos de room  
 if (a == 1)
