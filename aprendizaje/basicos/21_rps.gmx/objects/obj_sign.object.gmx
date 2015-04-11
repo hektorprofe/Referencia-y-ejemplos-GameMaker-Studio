@@ -28,7 +28,7 @@
             <string>show = false;
 
 // Show after...
-alarm[0] = room_speed*4.5;
+alarm[0] = room_speed*3;
 </string>
           </argument>
         </arguments>
@@ -76,9 +76,10 @@ alarm[0] = room_speed*4.5;
             <kind>1</kind>
             <string>if (show == true) {
     draw_set_font(fnt_micro);
-    draw_set_halign(fa_right);
+    draw_set_halign(fa_left);
     draw_set_color(c_white);
-    draw_text(x,y,"Proudly coded by h3kt0r");
+    draw_sprite(spr_back,0,x-5,y);
+    draw_text(x+50,y+8,"TIP: Use back button to move between screens");
 }
 </string>
           </argument>

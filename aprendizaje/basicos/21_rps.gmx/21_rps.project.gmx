@@ -20,6 +20,7 @@
       <sprite>sprites\spr_logo_rock</sprite>
       <sprite>sprites\spr_logo_scissors</sprite>
       <sprite>sprites\spr_online_logo</sprite>
+      <sprite>sprites\spr_back</sprite>
     </sprites>
     <sprites name="Misc">
       <sprite>sprites\spr_sample</sprite>
