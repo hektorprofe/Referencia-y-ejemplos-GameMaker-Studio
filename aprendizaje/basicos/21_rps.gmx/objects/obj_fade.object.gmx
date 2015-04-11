@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-1</depth>
   <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_transition_base</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -52,7 +52,7 @@ target = noone;
             <kind>1</kind>
             <string>// En cada Draw vamos aumentando/decrementando un poco la transparencia
 // Nos aseguramos que el valor esté siempre entre 0 y 1 con clamp()
-a = clamp(a + (fade * 0.03),0,1);
+a = clamp(a + (fade * 0.035),0,1);
 
 // Si no hay transparencia, entonces nos movemos de room  
 if (a == 1)

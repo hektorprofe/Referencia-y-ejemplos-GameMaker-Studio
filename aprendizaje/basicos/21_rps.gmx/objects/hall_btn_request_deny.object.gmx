@@ -129,7 +129,7 @@ else text = "Deny";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (show) {
+            <string>if (show == true &amp;&amp; !instance_exists(obj_transition_base)) {
     event_inherited();
 
     /*show = false;

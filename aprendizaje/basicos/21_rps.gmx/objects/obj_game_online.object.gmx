@@ -180,9 +180,9 @@ if (checking == true) {
             <kind>1</kind>
             <string>/// Draw player scores
 draw_set_color(c_white);
-draw_set_font(fnt_score);
+draw_set_font(fnt_credits);
 draw_set_halign(fa_left);
-draw_text(30,25, "You"); //global.username
+draw_text(20,15,global.username);
 if (global.p1_score == global.p2_score) {
     draw_set_color(c_white);
 } else if (global.p1_score &gt; global.p2_score) {
@@ -190,12 +190,14 @@ if (global.p1_score == global.p2_score) {
 } else {
     draw_set_color(make_color_rgb(128, 0, 0));
 }
-draw_set_halign(fa_center);
-draw_text(75,75,string(global.p1_score));
+
+draw_set_font(fnt_score);
+draw_text(20,40,string(global.p1_score));
 
 draw_set_color(c_white);
 draw_set_halign(fa_right);
-draw_text(view_wview[0]-30,25,global.challenger);
+draw_set_font(fnt_credits);
+draw_text(view_wview[0]-20,15,global.challenger);
 
 if (global.p1_score == global.p2_score) {
     draw_set_color(c_white);
@@ -204,12 +206,10 @@ if (global.p1_score == global.p2_score) {
 } else {
     draw_set_color(make_color_rgb(128, 0, 0));
 }
-draw_set_halign(fa_center);
-draw_text(view_wview[0]-75,75,string(global.p2_score));
 
+draw_set_font(fnt_score);
+draw_text(view_wview[0]-20,40,string(global.p2_score));
 draw_set_color(c_white);
-
-
 </string>
           </argument>
         </arguments>

@@ -52,8 +52,10 @@ show=true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
-if (show == true) input = get_string_async(message, text);
+            <string>if (show == true &amp;&amp; !instance_exists(obj_transition_base)) {
+    event_inherited();
+    if (show == true) input = get_string_async(message, text);
+}
 </string>
           </argument>
         </arguments>
@@ -143,11 +145,13 @@ if (string_length(text)&gt;0 || focused){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (focused &amp;&amp; keyboard_key != vk_shift){
-    if(keyboard_key == vk_backspace){
-        text = string_copy(text, 0, string_length(text)-1);
-    } else {
-        text += keyboard_lastchar;
+            <string>if (show == true &amp;&amp; !instance_exists(obj_transition_base)) {
+    if (focused &amp;&amp; keyboard_key != vk_shift){
+        if(keyboard_key == vk_backspace){
+            text = string_copy(text, 0, string_length(text)-1);
+        } else {
+            text += keyboard_lastchar;
+        }
     }
 }
 </string>

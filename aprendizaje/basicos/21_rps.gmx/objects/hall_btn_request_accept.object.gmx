@@ -50,7 +50,7 @@ show = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (show) {
+            <string>if (show == true &amp;&amp; !instance_exists(obj_transition_base)) {
     event_inherited();
     
     /*show = false;
@@ -71,7 +71,7 @@ show = false;
     show = false;
     hall_btn_request_deny.show = false;
     hall_richtext_duel.text = "";
-    hall_btn_search.show = true; 
+    //hall_btn_search.show = true; 
 }
 </string>
           </argument>

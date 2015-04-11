@@ -26,7 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>event_inherited();
-syncro = false;
 </string>
           </argument>
         </arguments>
@@ -49,8 +48,8 @@ syncro = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (show &amp;&amp; syncro){
-    draw_set_font(fnt_ui_richtext);
+            <string>if (show){
+    draw_set_font(fnt_score);
     draw_set_halign(fa_center);
     draw_set_color(c_white);
     draw_text(x,y,text);

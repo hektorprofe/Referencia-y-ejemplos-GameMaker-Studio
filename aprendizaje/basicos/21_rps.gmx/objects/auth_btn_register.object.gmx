@@ -49,22 +49,24 @@ text = "Register";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>if (show == true &amp;&amp; !instance_exists(obj_transition_base)) {
+    event_inherited();
 
-if (string_length(auth_textbox_username.text) &gt; 0 &amp;&amp; string_length(auth_textbox_password.text) &gt; 0){
-
-    // check if network exists or create
-    global.register = true;
-    if (instance_number(network) &lt; 1) instance_create(0,0,network);
+    if (string_length(auth_textbox_username.text) &gt; 0 &amp;&amp; string_length(auth_textbox_password.text) &gt; 0){
     
-    var register_packet = buffer_create(1, buffer_grow, 1);
-    buffer_write(register_packet, buffer_string, "register");
-    buffer_write(register_packet, buffer_string, auth_textbox_username.text);
-    buffer_write(register_packet, buffer_string, auth_textbox_password.text);
-    network_write(network.socket, register_packet);
-} else {
-    with(auth_error){
-        text = "Username or password#cannot be blank.";
+        // check if network exists or create
+        global.register = true;
+        if (instance_number(network) &lt; 1) instance_create(0,0,network);
+        
+        var register_packet = buffer_create(1, buffer_grow, 1);
+        buffer_write(register_packet, buffer_string, "register");
+        buffer_write(register_packet, buffer_string, auth_textbox_username.text);
+        buffer_write(register_packet, buffer_string, auth_textbox_password.text);
+        network_write(network.socket, register_packet);
+    } else {
+        with(auth_error){
+            text = "Username or password#cannot be blank.";
+        }
     }
 }
 </string>

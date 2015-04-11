@@ -215,6 +215,10 @@ if instance_exists(obj_game_online) {
             if (obj_game_online.enemy_hand != "") {
                 // Continue the game
                 with (obj_game_online.current_hand) event_perform(ev_other,ev_user0);
+            } else {
+                // If not display the syncro ... dots
+                go_syncro.show = true;
+                // Hide it when receive enemy move
             }
         }
     }

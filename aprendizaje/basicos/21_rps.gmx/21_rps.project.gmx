@@ -85,6 +85,7 @@
       <object>objects\obj_cross</object>
     </objects>
     <objects name="Transitions">
+      <object>objects\obj_transition_base</object>
       <object>objects\obj_fade</object>
     </objects>
     <objects name="UI">

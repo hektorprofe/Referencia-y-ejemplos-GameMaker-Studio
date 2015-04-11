@@ -50,7 +50,7 @@ show = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (show == true) {
+            <string>if (show == true &amp;&amp; !instance_exists(obj_transition_base)) {
     event_inherited();
     
     // check if network exists or create

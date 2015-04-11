@@ -42,6 +42,7 @@ cutBuffer = buffer_create(1, buffer_grow, 1);
 socket = network_create_socket(network_socket_tcp);
 
 result = network_connect_raw(socket,"192.168.1.128",8082);
+
 // If is not register
 if (global.register == false){
     // Check if HELLO back after 0.5 seconds

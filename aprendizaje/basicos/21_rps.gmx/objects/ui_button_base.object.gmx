@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>text = "";
 hover = false;
+show = true;
 </string>
           </argument>
         </arguments>

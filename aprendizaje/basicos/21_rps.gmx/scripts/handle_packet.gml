@@ -115,7 +115,7 @@ switch(command){
         var exit_challenger = buffer_read(argument0, buffer_string);
         global.challenging = false; 
         if (exit_challenger == global.challenger) {
-            go_monitor.text = global.challenger + " has abandoned :/#You win.";
+            //go_monitor.text = global.challenger + " has abandoned :/#You win.";
             //go_btn_surrender.text = "Exit";
             //go_btn_surrender.exit_now = true;
             obj_game_online.exit_now = true;
@@ -219,6 +219,9 @@ switch(command){
         var challenger = buffer_read(argument0, buffer_string);
         // Definimos la mano y 
         obj_game_online.enemy_hand = buffer_read(argument0, buffer_string);
+        
+        // Hide the syncro ... dots
+        go_syncro.show = false;
         
         // Lanzamos el evento que dibujara la jugada sobre las manos,
         // dentro de este evento se comprobará la jugada cuando se haya
