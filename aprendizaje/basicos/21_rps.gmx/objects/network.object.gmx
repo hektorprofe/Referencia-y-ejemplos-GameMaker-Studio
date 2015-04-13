@@ -29,6 +29,7 @@
 connected = false;
 pings = 0;
 pongs = 0;
+login_trys = 0;
 
 // THIS CONTROL GLOBAL CHALLENGE
 global.challenging = false;
@@ -41,11 +42,11 @@ cutBuffer = buffer_create(1, buffer_grow, 1);
 // Initiate the socket
 socket = network_create_socket(network_socket_tcp);
 
-result = network_connect_raw(socket,"192.168.1.128",8082);
+result = network_connect_raw(socket,"osgerps.hcosta.info",8082);
 
 // If is not register
 if (global.register == false){
-    // Check if HELLO back after 0.5 seconds
+    // Check if HELLO back every 0.5 seconds by 5 seconds
     alarm[2] = room_speed/2;
 }
 
@@ -128,16 +129,18 @@ room_goto(rm_auth);
             <kind>1</kind>
             <string>/// Check if connected
 if (global.register==false){
-    
-    if (connected == false){
+    login_trys++;
+    if (connected == false &amp;&amp; login_trys&gt;=10){
         with (auth_error){
             text = "Server is offline.#Please try again later.";
         }
         instance_destroy();
-    } else {
+    } else if (connected == true &amp;&amp; login_trys&lt;10){
         connected = true;
         // Empiezo a enviar pings cada 2 segundos para saber si el servidor sigue ahi
         alarm[1] = room_speed * 2;
+    } else {
+        alarm[2] = room_speed/2;
     }
 }
 </string>
@@ -205,7 +208,8 @@ if (connected == true) {
         }
     }
     show_debug_message("Server disconnected.");
-    room_goto(rm_auth);
+    //room_goto(rm_auth);
+    game_restart();
 }
 
 

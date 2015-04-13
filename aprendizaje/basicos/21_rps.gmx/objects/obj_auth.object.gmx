@@ -29,6 +29,8 @@
 global.challenger = "";
 global.board = "null";
 global.register = false;
+global.online_users = 0;
+global.playing_users = 0;
 
 target = rm_home;
 </string>

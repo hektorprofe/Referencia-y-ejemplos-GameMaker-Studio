@@ -21,13 +21,13 @@ switch(command){
                 global.register=false;
                 show_debug_message("Register Success: Please Login");
             } else {
-                // Delete the socket to be efficient
-                if (instance_number(network) > 0) {
-                    with (network) instance_destroy();
-                }
                 with(auth_error){
                     text = "Register Failed:#Username Taken.";
                 }  
+            }
+            // Delete the socket to be efficient ALWAYS
+            if (instance_number(network) > 0) {
+                with (network) instance_destroy();
             }
         }
         break;
