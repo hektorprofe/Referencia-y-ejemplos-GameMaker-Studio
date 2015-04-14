@@ -6,6 +6,7 @@
   <NewExtensions>
     <extension index="0">extensions\OnlineFramework</extension>
     <extension index="1">extensions\TMC Frame Skip</extension>
+    <extension index="2">extensions\GoogleMobileAdsExt</extension>
   </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -69,12 +70,13 @@
   </fonts>
   <objects name="objects">
     <objects name="Ads">
-      <object>objects\obj_ad_test</object>
+      <object>objects\obj_banner</object>
+      <object>objects\obj_inter</object>
     </objects>
     <objects name="Controllers">
+      <object>objects\obj_home</object>
       <object>objects\obj_game</object>
       <object>objects\obj_game_online</object>
-      <object>objects\obj_home</object>
       <object>objects\obj_credits</object>
       <object>objects\obj_auth</object>
       <object>objects\obj_hall</object>

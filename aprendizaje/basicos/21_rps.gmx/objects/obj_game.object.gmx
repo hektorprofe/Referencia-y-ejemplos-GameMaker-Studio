@@ -42,8 +42,6 @@ timer_seconds = READY_TIMER;
 rematch_seconds = REMATCH_TIMER;
 
 current_hand = noone;
-
-
 </string>
           </argument>
         </arguments>

@@ -5,8 +5,8 @@
     <option_android_GPU_device>0</option_android_GPU_device>
     <option_android_adcolony_enable_V4VC>0</option_android_adcolony_enable_V4VC>
     <option_android_advertising_enable>0</option_android_advertising_enable>
-    <option_android_advertising_key></option_android_advertising_key>
-    <option_android_advertising_type>MoPub</option_android_advertising_type>
+    <option_android_advertising_key>ca-app-pub-1470453329682008/2570440579|0|ca-app-pub-1470453329682008/2849642170|5|</option_android_advertising_key>
+    <option_android_advertising_type>AdMob</option_android_advertising_type>
     <option_android_amazon_game_circle>0</option_android_amazon_game_circle>
     <option_android_amazon_gc_achievements>-1</option_android_amazon_gc_achievements>
     <option_android_amazon_gc_leaderboards>-1</option_android_amazon_gc_leaderboards>
@@ -15,10 +15,10 @@
     <option_android_apk_expansion>0</option_android_apk_expansion>
     <option_android_arch_armv5>True</option_android_arch_armv5>
     <option_android_arch_armv7>True</option_android_arch_armv7>
-    <option_android_arch_mips>False</option_android_arch_mips>
+    <option_android_arch_mips>True</option_android_arch_mips>
     <option_android_arch_mipsr2>false</option_android_arch_mipsr2>
     <option_android_arch_mipsr2sf>false</option_android_arch_mipsr2sf>
-    <option_android_arch_x86>False</option_android_arch_x86>
+    <option_android_arch_x86>True</option_android_arch_x86>
     <option_android_build_version>0</option_android_build_version>
     <option_android_color_depth>0</option_android_color_depth>
     <option_android_display_name>21rps</option_android_display_name>
@@ -56,7 +56,7 @@
     <option_android_push_enable>0</option_android_push_enable>
     <option_android_push_id></option_android_push_id>
     <option_android_scale>-1</option_android_scale>
-    <option_android_set_device_id></option_android_set_device_id>
+    <option_android_set_device_id>610A542CCA030C46E5F179EDC185E729</option_android_set_device_id>
     <option_android_splash_png>Configs\Default\android\splash.png</option_android_splash_png>
     <option_android_texture_page>1024</option_android_texture_page>
     <option_android_use_test_ads>0</option_android_use_test_ads>
@@ -305,7 +305,7 @@
     <option_win8_analytics_id></option_win8_analytics_id>
     <option_win8_build_version>0</option_win8_build_version>
     <option_win8_certificate_location>Windows8_TemporaryKey.pfx</option_win8_certificate_location>
-    <option_win8_display_name>21_rps</option_win8_display_name>
+    <option_win8_display_name>21rps</option_win8_display_name>
     <option_win8_internet_capable>0</option_win8_internet_capable>
     <option_win8_interpolate>-1</option_win8_interpolate>
     <option_win8_landscape_allowed>-1</option_win8_landscape_allowed>

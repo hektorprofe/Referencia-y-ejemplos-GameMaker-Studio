@@ -40,6 +40,10 @@ global.duels = true;
 // Single player
 global.p1_score = 0;
 global.p2_score = 0;
+
+// Remove ads, set test ads
+GoogleMobileAds_RemoveBanner();
+GoogleMobileAds_UseTestAds(1, "ACFDE3464D0C36C98C7952F5F6627592");
 </string>
           </argument>
         </arguments>

@@ -42,7 +42,8 @@ cutBuffer = buffer_create(1, buffer_grow, 1);
 // Initiate the socket
 socket = network_create_socket(network_socket_tcp);
 
-result = network_connect_raw(socket,"osgerps.hcosta.info",8082);
+//result = network_connect_raw(socket,"osgerps.hcosta.info",8082);
+result = network_connect_raw(socket,"192.168.1.128",8082);
 
 // If is not register
 if (global.register == false){
@@ -132,7 +133,7 @@ if (global.register==false){
     login_trys++;
     if (connected == false &amp;&amp; login_trys&gt;=10){
         with (auth_error){
-            text = "Server is offline.#Please try again later.";
+            text = "Server is off or full.#Please try again later.";
         }
         instance_destroy();
     } else if (connected == true &amp;&amp; login_trys&lt;10){

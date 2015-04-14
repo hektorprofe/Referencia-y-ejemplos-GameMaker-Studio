@@ -60,6 +60,7 @@
     <instance objName="auth_error" x="240" y="624" name="inst_DBAEB837" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="auth_success" x="240" y="624" name="inst_81F5A760" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_online_logo" x="0" y="144" name="inst_1872ACD9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_banner" x="16" y="720" name="inst_537A5520" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
