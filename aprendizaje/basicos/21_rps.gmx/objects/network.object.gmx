@@ -42,8 +42,8 @@ cutBuffer = buffer_create(1, buffer_grow, 1);
 // Initiate the socket
 socket = network_create_socket(network_socket_tcp);
 
-//result = network_connect_raw(socket,"osgerps.hcosta.info",8082);
-result = network_connect_raw(socket,"192.168.1.128",8082);
+if (global.debug_mode == 0) result = network_connect_raw(socket,"osgerps.hcosta.info",8082);
+else result = network_connect_raw(socket,"192.168.1.128",8082);
 
 // If is not register
 if (global.register == false){
