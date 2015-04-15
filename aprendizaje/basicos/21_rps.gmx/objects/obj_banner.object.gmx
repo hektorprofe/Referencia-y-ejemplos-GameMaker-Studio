@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -27,16 +27,31 @@
             <kind>1</kind>
             <string>globalvar BANNER_ID;
 global.BANNER_ID = "ca-app-pub-7058896100729698/5216408969";
+    
+var dp_width = display_get_width() / (display_get_dpi_x() / 160);
+var dp_height = display_get_height() / (display_get_dpi_y() / 160);
 
-GoogleMobileAds_Init(global.BANNER_ID);
-GoogleMobileAds_AddBanner(global.BANNER_ID, GoogleMobileAds_Banner); 
+if (instance_number(obj_banner)&gt;1) instance_destroy();
+else {
 
-var bw = GoogleMobileAds_BannerGetWidth();
-var bh = GoogleMobileAds_BannerGetHeight();
-var px = display_get_width()/2-bw/2;
-var py = display_get_height()-bh;
-
-GoogleMobileAds_MoveBanner(px, py); // Banner centrado abajo
+    if (dp_width &lt; 468 ) {
+        GoogleMobileAds_Init(global.BANNER_ID);
+        GoogleMobileAds_AddBanner(global.BANNER_ID, GoogleMobileAds_Banner); 
+    } else if (dp_width &gt;= 468 &amp;&amp; dp_width &lt; 728){
+        GoogleMobileAds_Init(global.BANNER_ID);
+        GoogleMobileAds_AddBanner(global.BANNER_ID, GoogleMobileAds_Full_Banner); 
+    } else {
+        GoogleMobileAds_Init(global.BANNER_ID);
+        GoogleMobileAds_AddBanner(global.BANNER_ID, GoogleMobileAds_Leaderboard);
+    }  
+        
+    var bw = GoogleMobileAds_BannerGetWidth();
+    var bh = GoogleMobileAds_BannerGetHeight();
+    var px = display_get_width()/2-bw/2;
+    var py = display_get_height()-bh;
+    
+    GoogleMobileAds_MoveBanner(px, py);
+}
 </string>
           </argument>
         </arguments>

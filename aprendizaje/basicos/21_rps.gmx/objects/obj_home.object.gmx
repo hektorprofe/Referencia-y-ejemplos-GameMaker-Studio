@@ -46,6 +46,7 @@ global.debug_mode = 0;
 
 // Remove ads, set test ads
 GoogleMobileAds_RemoveBanner();
+with(obj_banner) instance_destroy();
 GoogleMobileAds_UseTestAds(global.debug_mode, "ACFDE3464D0C36C98C7952F5F6627592");
 </string>
           </argument>

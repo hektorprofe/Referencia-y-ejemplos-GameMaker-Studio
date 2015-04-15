@@ -76,10 +76,10 @@
     <objects name="Controllers">
       <object>objects\obj_home</object>
       <object>objects\obj_game</object>
-      <object>objects\obj_game_online</object>
-      <object>objects\obj_credits</object>
       <object>objects\obj_auth</object>
       <object>objects\obj_hall</object>
+      <object>objects\obj_game_online</object>
+      <object>objects\obj_credits</object>
     </objects>
     <objects name="Hands">
       <object>objects\obj_hand</object>
