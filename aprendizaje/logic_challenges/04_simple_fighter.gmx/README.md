@@ -10,7 +10,7 @@ Este cuarto logic challenge es muy especial para mí ya que desde siempre he ten
 
 Esta vez realmente parto de cero y no sé exactamente por dónde comenzar, así que empezaré por crear un background animado a partir de algún sprite sacado de Internet.
 
-He conseguido uno muy guay formado por 24 imágenes, con un tamaño de 800x336. Para crear la animación tengo la idea de 24 backgrounds, uno para cada animación y luego cambiar con una alarma el fondo cada pocas fracciones de segundo para recrear el efecto. 
+He conseguido uno muy guay formado por 24 imágenes [aquí](http://twistedsifter.com/2013/05/animated-gifs-of-fighting-game-backgrounds/), con un tamaño de 800x336. Para crear la animación tengo la idea de 24 backgrounds, uno para cada animación y luego cambiar con una alarma el fondo cada pocas fracciones de segundo para recrear el efecto. 
 
 Una vez tengo los backgrounds preparados creo el objeto para controlar la animación del escenario, obj_scenario_1 (de acuerdo con mi primer escenario):
 
