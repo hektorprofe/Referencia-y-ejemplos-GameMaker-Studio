@@ -25,50 +25,76 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// gvars
+            <string>// Defining frame (with array method):
+frame[1]=G440000
+frame[2]=G440001
+frame[3]=G440002
+frame[4]=G440003
+frame[5]=G440004
+frame[6]=G440005
+frame[7]=G440006
+frame[8]=G440007
+frame[9]=G440008
+frame[10]=G440009
+frame[11]=G440010
+frame[12]=G440011
+frame[13]=G440012
+frame[14]=G440013
+frame[15]=G440014
+frame[16]=G440015
+frame[17]=G440016
+frame[18]=G440017
+frame[19]=G440018
+frame[20]=G440019
+frame[21]=G440020
+frame[22]=G440021
+frame[23]=G440022
+frame[24]=G440023
 
-// Multiplayer
-global.online_users = 0;
-global.playing_users = 0;
-global.username = "";
-global.password = "";
-global.challenger = "";
-global.board = "null";
-global.register = false;
-global.duels = true;
+// The first frame number:
+current_frame=1
 
-// Single player
-global.p1_score = 0;
-global.p2_score = 0;
-
-// Debug mode
-global.debug_mode = 0;
-
-// Remove ads, set test ads
-GoogleMobileAds_RemoveBanner();
-with(obj_banner) instance_destroy();
-GoogleMobileAds_UseTestAds(global.debug_mode, "ACFDE3464D0C36C98C7952F5F6627592");
-
-
+// Time between every frame:
+alarm[0]=room_speed/7
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="112">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
-        <id>331</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_restart_game</functionname>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Step to next frame:
+current_frame+=1
+
+// If there is no next frame (that is the animation is over) then the animation starts from the first frame:
+if current_frame=23
+    {
+    current_frame=1
+    }
+
+// This function assigns a background to another one:
+background_assign(G44GEN,frame[current_frame])
+
+// Time between every frame:
+alarm[0]=room_speed/7;
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
   </events>
