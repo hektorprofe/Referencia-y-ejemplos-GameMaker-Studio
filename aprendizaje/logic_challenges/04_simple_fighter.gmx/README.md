@@ -17,43 +17,42 @@ Una vez tengo los backgrounds preparados creo el objeto para controlar la animac
 ```javascript
 ///obj_scenario_1: Create
 
-frame[1]=G440000
-frame[2]=G440001
-frame[3]=G440002
-frame[4]=G440003
-frame[5]=G440004
-frame[6]=G440005
-frame[7]=G440006
-frame[8]=G440007
-frame[9]=G440008
-frame[10]=G440009
-frame[11]=G440010
-frame[12]=G440011
-frame[13]=G440012
-frame[14]=G440013
-frame[15]=G440014
-frame[16]=G440015
-frame[17]=G440016
-frame[18]=G440017
-frame[19]=G440018
-frame[20]=G440019
-frame[21]=G440020
-frame[22]=G440021
-frame[23]=G440022
-frame[24]=G440023
+frame[1]=G440000;
+frame[2]=G440001;
+frame[3]=G440002;
+frame[4]=G440003;
+frame[5]=G440004;
+frame[6]=G440005;
+frame[7]=G440006;
+frame[8]=G440007;
+frame[9]=G440008;
+frame[10]=G440009;
+frame[11]=G440010;
+frame[12]=G440011;
+frame[13]=G440012;
+frame[14]=G440013;
+frame[15]=G440014;
+frame[16]=G440015;
+frame[17]=G440016;
+frame[18]=G440017;
+frame[19]=G440018;
+frame[20]=G440019;
+frame[21]=G440020;
+frame[22]=G440021;
+frame[23]=G440022;
+frame[24]=G440023;
 
-current_frame=1
+current_frame=1;
 
-alarm[0]=room_speed/7
+alarm[0]=room_speed/7;
 ```
 
 La alarma irá recorriendo el arreglo y otorgando el nuevo background, sépase que G44GEN es una copia de G440000 sobre la que iré substituyendo el fondo:
 
 ```javascript
 ///obj_scenario_1: Alarm 0
-current_frame+=1
-if (current_frame==24) current_frame = 1
-}
+current_frame+=1;
+if (current_frame==24) current_frame = 1;
 background_assign(G44GEN,frame[current_frame]);
 alarm[0]=room_speed/7;
 ```

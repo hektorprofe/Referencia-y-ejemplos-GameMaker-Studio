@@ -82,10 +82,9 @@ alarm[0]=room_speed/7
 current_frame+=1
 
 // If there is no next frame (that is the animation is over) then the animation starts from the first frame:
-if current_frame=24
-    {
+if current_frame=24 {
     current_frame=1
-    }
+}
 
 // This function assigns a background to another one:
 background_assign(G44GEN,frame[current_frame])
