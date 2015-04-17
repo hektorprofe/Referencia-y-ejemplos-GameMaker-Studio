@@ -58,3 +58,41 @@ alarm[0]=room_speed/7;
 ```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/04_simple_fighter.gmx/docs/img1.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/04_simple_fighter.gmx/docs/img1.png)
+
+### Creando animaciones de ataque
+
+### Creando animaciones de movimiento + fricción
+
+### Añadir físicas de movimiento y cambiar el sprite en movimiento
+
+### Cambiar el sprite en movimiento
+
+### Crear los hitboxes para los ataques
+
+### Importar el script que detecta colisiones entre sprites
+I remember having this problem. It's due to an error in the way the original author of CollisionPointIDs made his script. Go to "resources" --> "global game settings" --> Errors and UNcheck "throw an error when arguments aren't initialised correctly."
+
+### Añadir la animación de golpeado + change_sprite
+
+### Crear el objeto obj_attackbox y modificar script scr_drawattack para crear el ostiazo xD (añadir nuevo argumento con el sprite del puño/patada)
+
+### Crear el objeto obj_attackbox
+
+### Añadir las colisiones en p1 y p2 contra obj_attackbox
+
+### Añadir 
+
+### Añadir al P2 un step y el script de cambiar el sprite
+
+### Arreglar la animacion infinita al atacar al enemigo en scr_change_sprite
+if sprite_index == spr_ryu_hit{
+     {if image_index >= image_number -1
+            {action = false; damaged = false}}}
+
+### Arreglar ostiazos
+Es por darle la vuelta al objeto con xscale... hay que hacer lo mismo al crear el objeto de los ostiazos.
+// En scr_drawattack
+// Get current xscale and set it to the attack 
+atkbox.image_xscale = image_xscale;
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/04_simple_fighter.gmx/docs/img10.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/04_simple_fighter.gmx/docs/img10.png)

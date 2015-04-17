@@ -5,7 +5,23 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprites name="Ryu">
+      <sprites name="Move">
+        <sprite>sprites\spr_ryu_stand</sprite>
+        <sprite>sprites\spr_ryu_defend</sprite>
+        <sprite>sprites\spr_ryu_back</sprite>
+        <sprite>sprites\spr_ryu_front</sprite>
+        <sprite>sprites\spr_ryu_hit</sprite>
+      </sprites>
+      <sprites name="Attack">
+        <sprite>sprites\spr_ryu_jab</sprite>
+        <sprite>sprites\spr_ryu_jab_hitbox</sprite>
+        <sprite>sprites\spr_ryu_topkick</sprite>
+        <sprite>sprites\spr_ryu_topkick_hitbox</sprite>
+      </sprites>
+    </sprites>
+  </sprites>
   <backgrounds name="background">
     <backgrounds name="Scenario1">
       <background>background\G44GEN</background>
@@ -36,7 +52,30 @@
     </backgrounds>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_drawplayer.gml</script>
+    <script>scripts\scr_drawattack.gml</script>
+    <script>scripts\scr_move.gml</script>
+    <script>scripts\scr_friction.gml</script>
+    <script>scripts\scr_change_sprite.gml</script>
+    <script>scripts\col_attackbox.gml</script>
+    <scripts name="CollisionPointIDs">
+      <script>scripts\CheapCollisionRectIDs.gml</script>
+      <script>scripts\CollisionArrayIDs.gml</script>
+      <script>scripts\CollisionPointIDs.gml</script>
+      <script>scripts\CollisionRectIDs.gml</script>
+      <script>scripts\FinerCollisionRectIDs.gml</script>
+      <script>scripts\IntersectRectIDs.gml</script>
+    </scripts>
+  </scripts>
   <objects name="objects">
+    <objects name="Attacks">
+      <object>objects\obj_attackbox</object>
+    </objects>
+    <objects name="Players">
+      <object>objects\obj_player_1</object>
+      <object>objects\obj_player_2</object>
+    </objects>
     <objects name="Scenarios">
       <object>objects\obj_scenario_1</object>
     </objects>
