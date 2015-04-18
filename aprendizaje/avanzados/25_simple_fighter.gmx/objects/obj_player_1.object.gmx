@@ -34,6 +34,9 @@ damaged = false
 onground = false;
 ground = 302;
 
+curhp = 100
+maxhp = 100
+
 image_speed = 1/(image_number*2);
 </string>
           </argument>
@@ -403,7 +406,7 @@ y = floor(y);
         <arguments>
           <argument>
             <kind>9</kind>
-            <script>col_attackbox</script>
+            <script>src_col_attackbox</script>
           </argument>
           <argument>
             <kind>0</kind>
@@ -488,6 +491,8 @@ y = floor(y);
             <string>/// Debug
 //draw_set_color(c_blue);
 //draw_rectangle(bbox_left,bbox_bottom,bbox_right,bbox_top,true)
+
+/*
 draw_set_halign(fa_left);
 draw_set_color(c_white);
 draw_text(10,10,"HS: "+string(hspeed));
@@ -496,6 +501,7 @@ draw_text(10,40,"Y : "+string(y));
 draw_text(10,55,"WA: "+string(walking));
 draw_text(10,70,"AC: "+string(action));
 draw_text(10,85,"GR: "+string(onground));
+*/
 
 </string>
           </argument>

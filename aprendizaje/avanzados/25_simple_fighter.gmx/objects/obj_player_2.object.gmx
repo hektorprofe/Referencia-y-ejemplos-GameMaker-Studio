@@ -34,6 +34,9 @@ damaged = false
 onground = false;
 ground = 302;
 
+curhp = 100
+maxhp = 100
+
 image_speed = 1/(image_number*2);
 </string>
           </argument>
@@ -141,7 +144,7 @@ image_speed = 1/(image_number*2);
         <arguments>
           <argument>
             <kind>9</kind>
-            <script>col_attackbox</script>
+            <script>src_col_attackbox</script>
           </argument>
           <argument>
             <kind>0</kind>

@@ -62,13 +62,14 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\col_attackbox.gml</script>
+    <script>scripts\src_col_attackbox.gml</script>
     <script>scripts\scr_change_sprite.gml</script>
     <script>scripts\scr_drawattack.gml</script>
     <script>scripts\scr_drawplayer.gml</script>
     <script>scripts\scr_friction.gml</script>
     <script>scripts\scr_move.gml</script>
     <script>scripts\scr_gravity.gml</script>
+    <script>scripts\scr_healthbar.gml</script>
     <scripts name="CollisionPointIDs">
       <script>scripts\CheapCollisionRectIDs.gml</script>
       <script>scripts\CollisionArrayIDs.gml</script>
@@ -89,6 +90,9 @@
     </objects>
     <objects name="Scenarios">
       <object>objects\obj_scenario_1</object>
+    </objects>
+    <objects name="HUD">
+      <object>objects\obj_hud</object>
     </objects>
   </objects>
   <rooms name="rooms">

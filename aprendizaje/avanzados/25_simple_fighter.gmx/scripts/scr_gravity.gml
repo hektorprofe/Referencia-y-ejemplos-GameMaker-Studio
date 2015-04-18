@@ -1,5 +1,5 @@
 var gforce;
-gforce = 0.5
+gforce = 0.75
 if y >= ground
     {vspeed = 0; y = ground; onground = true}
 if y < ground

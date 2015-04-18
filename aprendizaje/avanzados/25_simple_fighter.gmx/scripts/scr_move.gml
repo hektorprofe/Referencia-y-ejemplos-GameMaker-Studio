@@ -5,6 +5,16 @@ left = argument2;
 spdinc = 5;
 maxhspd = 10;  
 side = 0;
+     
+if onground   
+ {
+     if keyboard_check_pressed(up) {
+            motion_add(90, 10);
+     }
+ } else {
+   spdinc = spdinc/1.25;
+   maxhspd = 8; 
+  } // limito la velocidad hor durante el salto
    
 if abs(hspeed) > 0 and !action {walking = true}
 else {walking = false}
@@ -31,7 +41,3 @@ if abs(hspeed) >= maxhspd// if going faster than max speed
         if keyboard_check(right)
             {motion_add(0, spdinc)}}
      }
-     
-if onground   
- {if keyboard_check_pressed(up)
-      {motion_add(90, 10)}}
