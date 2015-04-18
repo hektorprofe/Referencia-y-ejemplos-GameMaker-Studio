@@ -14,6 +14,8 @@
         <sprite>sprites\spr_ryu_front</sprite>
         <sprite>sprites\spr_ryu_hit</sprite>
         <sprite>sprites\spr_ryu_jump</sprite>
+        <sprite>sprites\spr_ryu_win</sprite>
+        <sprite>sprites\spr_ryu_defeat</sprite>
       </sprites>
       <sprites name="Attack">
         <sprite>sprites\spr_ryu_jab</sprite>
@@ -76,22 +78,24 @@
       <script>scripts\FinerCollisionRectIDs.gml</script>
       <script>scripts\IntersectRectIDs.gml</script>
     </scripts>
-    <script>scripts\src_col_attackbox.gml</script>
+    <script>scripts\scr_attack.gml</script>
     <script>scripts\scr_change_sprite.gml</script>
+    <script>scripts\scr_create_sfx.gml</script>
+    <script>scripts\scr_draw_spritebar.gml</script>
     <script>scripts\scr_drawattack.gml</script>
     <script>scripts\scr_drawplayer.gml</script>
+    <script>scripts\scr_fix_collisions.gml</script>
     <script>scripts\scr_friction.gml</script>
-    <script>scripts\scr_move.gml</script>
     <script>scripts\scr_gravity.gml</script>
-    <script>scripts\scr_draw_spritebar.gml</script>
-    <script>scripts\scr_ini_player.gml</script>
     <script>scripts\scr_healthbar.gml</script>
     <script>scripts\scr_healthbar_old.gml</script>
-    <script>scripts\scr_attack.gml</script>
-    <script>scripts\scr_timer.gml</script>
+    <script>scripts\scr_ini_player.gml</script>
+    <script>scripts\scr_move.gml</script>
     <script>scripts\scr_preventattack.gml</script>
     <script>scripts\scr_quake.gml</script>
-    <script>scripts\scr_create_sfx.gml</script>
+    <script>scripts\scr_target_direction.gml</script>
+    <script>scripts\scr_timer.gml</script>
+    <script>scripts\src_col_attackbox.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Attacks">
@@ -99,6 +103,7 @@
       <object>objects\obj_specialeffect</object>
     </objects>
     <objects name="Players">
+      <object>objects\obj_player</object>
       <object>objects\obj_player_1</object>
       <object>objects\obj_player_2</object>
     </objects>

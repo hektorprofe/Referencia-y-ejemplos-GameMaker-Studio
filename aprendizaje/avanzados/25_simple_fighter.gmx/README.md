@@ -109,7 +109,7 @@ else if hspeed < 0  image_xscale = 1;
 
 ### Crear un obj_specialeffect dentro de col_attackbox cuando CollisionPointIDs == true
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif))](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)
 
 ### Crear las barras de vida, añadir las variables curhp, maxhp y el scr_healthbar en el draw de los jugadores
 
@@ -138,7 +138,7 @@ Juggling es la capacidad de encadenar combos y dejar al enemigo en el aire. Para
 
 ### Editamos el scr_gravity para que le afecte los ostiazos verticales al jugador
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif))](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif)
 
 ### Añadir un timeout de "KO" mientras un jugador está en el aire para previnir sus ataques. Creamos la variable juggle_timer en el scr_ini_player y en el scr_attackbox lo establecemos a 10
 
@@ -154,7 +154,31 @@ Juggling es la capacidad de encadenar combos y dejar al enemigo en el aire. Para
 
 ### Para añadir efectos SFX de salto y carrera creamos los sprites y un script create_sfx que llamaremos en el scr_move justo al saltar o correr
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim3.gif))](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim3.gif)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim3.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim3.gif)
+
+## Parte 7: Animaciones de derrota y victoria
+
+* Empezamos creando las dos animaciones con sus respectivos sprites.
+* Añadimos la variable dead = false en scr_ini_player
+* Creamos un disparador que nos avise cuando el jugador es derrotado en scr_col_attackbox: if curhp <= 0 {dead = true}
+* En el scr_change_sprite añadimos el código para dibujar la animación de derrota y dejarla parada al final (ryu tirado en el suelo).
+* Añadir al scr_preventattack un "or dead" para evitar que el jugador pueda atacar.
+* Lo mismo en scr_move para evitar que se pueda mover.
+* Para la animación de victoria tenemos que saber que jugador es cada personaje, guardaremos sus id en el create para poder comprobar cuando el enemigo ha sido derrotado y mostrar el nuevo sprite al principio del scr_change_sprite.
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img12.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img12.png)
+
+### Detalles propios
+
+* Hacer que no se salga de las paredes (si x < 0 o x > room_width)
+* Añadir un push effect a los golpes con motion_add (se acumula con el motion_set de la patada arriba) dependiendo del lado al que tenemos al jugador que pega moveremos un poco al jugador pegado.
+* Hacer que el jugador 2 mire automáticamente hacia donde esté el jugador 1 (tipo CPU).
+* Hacer que un jugador no pueda pasar a través de otro y se quede parado utilizando place_meeting(x+hspeed,y,other_player).
+* Cambiar el lado de la animación de derrota dependiendo del image_xscale (-1 o 1).
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim4.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim4.gif)
+
+
 
 
 

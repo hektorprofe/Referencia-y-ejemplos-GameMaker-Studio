@@ -12,11 +12,16 @@ if CollisionPointIDs(self.id, other.id, noone, noone, noone, noone , noone)
        curhp -= other.damage;
        last_damage += other.damage;
        last_damage_timer +=5;
+       
+       if curhp <= 0 {dead = true}
         
        if other.type == 'juggle'
-           {motion_set(90, 8);
+           {
+           hspeed = 0;
+           vspeed = 0;
+           motion_add(90, 11);
            juggle_timer = 10;
-       scr_quake(5,5);}
+           scr_quake(5,5);}
            
      }
     
