@@ -13,6 +13,7 @@
         <sprite>sprites\spr_ryu_back</sprite>
         <sprite>sprites\spr_ryu_front</sprite>
         <sprite>sprites\spr_ryu_hit</sprite>
+        <sprite>sprites\spr_ryu_jump</sprite>
       </sprites>
       <sprites name="Attack">
         <sprite>sprites\spr_ryu_jab</sprite>
@@ -24,6 +25,10 @@
         <sprite>sprites\spr_ryu_kneekick</sprite>
         <sprite>sprites\spr_ryu_kneekick_hitbox</sprite>
       </sprites>
+    </sprites>
+    <sprites name="Effects">
+      <sprite>sprites\spr_lowhit</sprite>
+      <sprite>sprites\spr_lrghit</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -57,12 +62,13 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\scr_drawplayer.gml</script>
-    <script>scripts\scr_drawattack.gml</script>
-    <script>scripts\scr_move.gml</script>
-    <script>scripts\scr_friction.gml</script>
-    <script>scripts\scr_change_sprite.gml</script>
     <script>scripts\col_attackbox.gml</script>
+    <script>scripts\scr_change_sprite.gml</script>
+    <script>scripts\scr_drawattack.gml</script>
+    <script>scripts\scr_drawplayer.gml</script>
+    <script>scripts\scr_friction.gml</script>
+    <script>scripts\scr_move.gml</script>
+    <script>scripts\scr_gravity.gml</script>
     <scripts name="CollisionPointIDs">
       <script>scripts\CheapCollisionRectIDs.gml</script>
       <script>scripts\CollisionArrayIDs.gml</script>
@@ -75,6 +81,7 @@
   <objects name="objects">
     <objects name="Attacks">
       <object>objects\obj_attackbox</object>
+      <object>objects\obj_specialeffect</object>
     </objects>
     <objects name="Players">
       <object>objects\obj_player_1</object>

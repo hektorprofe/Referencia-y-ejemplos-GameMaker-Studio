@@ -100,3 +100,13 @@ if hspeed > 0 image_xscale = -1;
 else if hspeed < 0  image_xscale = 1;
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img10.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img10.png)
+
+### Añadir las variables de suelo en los jugadores, tecla de saltar en move, el script de gravedad y añadirlo al end step de los jugadores.
+
+### Añadir animación de salto y modificar scr_change_sprite para mostrarla cuando no está tocando el suelo
+
+### Añadir efectos especiales en ataques, importar sprites y crear el objeto obj_specialeffect con un animation end -> instance_delete
+
+### Crear un obj_specialeffect dentro de col_attackbox cuando CollisionPointIDs == true
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif))](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)

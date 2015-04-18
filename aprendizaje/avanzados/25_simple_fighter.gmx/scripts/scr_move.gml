@@ -31,3 +31,7 @@ if abs(hspeed) >= maxhspd// if going faster than max speed
         if keyboard_check(right)
             {motion_add(0, spdinc)}}
      }
+     
+if onground   
+ {if keyboard_check_pressed(up)
+      {motion_add(90, 10)}}
