@@ -17,7 +17,7 @@ if sprite_index == spr_atk//if currently attacking
 //this entire section is new
 //if action{exit}  
 if scr_preventattack(){exit}  // prevenimos el ataque enemigo durante un momento
-if keyboard_check(key)
+if keyboard_check_pressed(key)
     {var atkbox;
     atkbox = instance_create(x, y, obj_attackbox)
     atkbox.owner = self.id
@@ -34,7 +34,7 @@ if keyboard_check(key)
 //This section switched to bottom.
 //if currently not attacking, and a key has been pressed
 //change sprite to attack sprite
-if keyboard_check(key) //and !action
+if keyboard_check_pressed(key) //and !action
     {if sprite_index != spr_atk
         {image_index = 0; //set to beginning of animation
         sprite_index = spr_atk; 
