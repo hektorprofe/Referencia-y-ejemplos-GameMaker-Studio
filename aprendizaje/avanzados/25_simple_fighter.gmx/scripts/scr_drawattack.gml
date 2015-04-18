@@ -3,6 +3,8 @@ key = argument0
 spr_base = argument1
 spr_atk = argument2
 spr_atk_hitbox = argument3//new argument introduced
+damage = argument4;
+type = argument5;
 
 
 //This section was switched to the top.
@@ -23,6 +25,10 @@ if keyboard_check(key)
     atkbox.image_index = 0
     // Get current xscale and set it to the attack :)
     atkbox.image_xscale = image_xscale;
+    
+    // Attack damage and type
+    atkbox.damage = damage;
+    atkbox.type = type;
     }
 
 //This section switched to bottom.

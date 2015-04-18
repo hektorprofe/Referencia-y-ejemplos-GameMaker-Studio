@@ -30,6 +30,10 @@
       <sprite>sprites\spr_lowhit</sprite>
       <sprite>sprites\spr_lrghit</sprite>
     </sprites>
+    <sprites name="HUD">
+      <sprite>sprites\spr_healthbar</sprite>
+      <sprite>sprites\spr_dmgbar</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="Scenario1">
@@ -62,14 +66,6 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\src_col_attackbox.gml</script>
-    <script>scripts\scr_change_sprite.gml</script>
-    <script>scripts\scr_drawattack.gml</script>
-    <script>scripts\scr_drawplayer.gml</script>
-    <script>scripts\scr_friction.gml</script>
-    <script>scripts\scr_move.gml</script>
-    <script>scripts\scr_gravity.gml</script>
-    <script>scripts\scr_healthbar.gml</script>
     <scripts name="CollisionPointIDs">
       <script>scripts\CheapCollisionRectIDs.gml</script>
       <script>scripts\CollisionArrayIDs.gml</script>
@@ -78,6 +74,18 @@
       <script>scripts\FinerCollisionRectIDs.gml</script>
       <script>scripts\IntersectRectIDs.gml</script>
     </scripts>
+    <script>scripts\src_col_attackbox.gml</script>
+    <script>scripts\scr_change_sprite.gml</script>
+    <script>scripts\scr_drawattack.gml</script>
+    <script>scripts\scr_drawplayer.gml</script>
+    <script>scripts\scr_friction.gml</script>
+    <script>scripts\scr_move.gml</script>
+    <script>scripts\scr_gravity.gml</script>
+    <script>scripts\scr_draw_spritebar.gml</script>
+    <script>scripts\scr_ini_player.gml</script>
+    <script>scripts\scr_healthbar.gml</script>
+    <script>scripts\scr_healthbar_old.gml</script>
+    <script>scripts\scr_attack.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Attacks">

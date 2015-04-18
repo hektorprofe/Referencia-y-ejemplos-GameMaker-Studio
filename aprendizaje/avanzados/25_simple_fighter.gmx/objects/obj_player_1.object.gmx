@@ -11,34 +11,41 @@
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>601</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <exetype>1</exetype>
+        <functionname>action_execute_script</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>1</kind>
-            <string>//States
-
-action = false
-walking = false
-damaged = false
-
-onground = false;
-ground = 302;
-
-curhp = 100
-maxhp = 100
-
-image_speed = 1/(image_number*2);
-</string>
+            <kind>9</kind>
+            <script>scr_ini_player</script>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -102,143 +109,23 @@ image_speed = 1/(image_number*2);
         <arguments>
           <argument>
             <kind>9</kind>
-            <script>scr_drawattack</script>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>ord('X')</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_stand</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_jab</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_jab_hitbox</string>
+            <script>scr_attack</script>
           </argument>
           <argument>
             <kind>0</kind>
             <string></string>
           </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>601</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_execute_script</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>9</kind>
-            <script>scr_drawattack</script>
-          </argument>
           <argument>
             <kind>0</kind>
-            <string>ord('Z')</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_stand</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_topkick</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_topkick_hitbox</string>
+            <string></string>
           </argument>
           <argument>
             <kind>0</kind>
             <string></string>
           </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>601</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_execute_script</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>9</kind>
-            <script>scr_drawattack</script>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>ord('C')</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_stand</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_flykick</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_flykick_hitbox</string>
-          </argument>
           <argument>
             <kind>0</kind>
             <string></string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>601</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_execute_script</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>9</kind>
-            <script>scr_drawattack</script>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>ord('V')</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_stand</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_kneekick</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>spr_ryu_kneekick_hitbox</string>
           </argument>
           <argument>
             <kind>0</kind>

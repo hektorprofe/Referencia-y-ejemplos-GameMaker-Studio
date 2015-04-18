@@ -118,3 +118,32 @@ else if hspeed < 0  image_xscale = 1;
 ### Añadir control de daños. En el scr_col_attackbox restar vida en el CollisionPointsIds == true
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img11.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img11.png)
+
+### Crear unas gradients (en sprites) para las nuevas barras de vida
+
+### Crear un script scr_draw_spritebar y las nuevas variables en scr_ini_player para manegar el damage
+
+### Modificar el script scr_healthbar con las nuevas barras
+
+### Modificar el scr_coll_attackbox para guardar el daño del último ataque y un timer para esconderlo dentro de CollisionPointsIDs == true
+
+### Añadir juggling
+Juggling es la capacidad de encadenar combos y dejar al enemigo en el aire. Para hacerlo tenemos que dejar al enemigo en el aire cada vez que recibe un ataque.
+
+### Substituir los ataques del step por un sólo script scr_attack
+
+### Editamos el scr_drawattack para añadir un daño y un tipo de ataque
+
+### Editamos scr_col_attackbox para aplicar el daño especifico del ataque y si es de tipo juggling aplicamos un motion
+
+### Editamos el scr_gravity para que le afecte los ostiazos verticales al jugador
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif))](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif)
+
+
+
+
+
+
+
+
