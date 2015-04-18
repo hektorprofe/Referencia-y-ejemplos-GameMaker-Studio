@@ -78,8 +78,6 @@ I remember having this problem. It's due to an error in the way the original aut
 
 ### Añadir las colisiones en p1 y p2 contra obj_attackbox
 
-### Añadir 
-
 ### Añadir al P2 un step y el script de cambiar el sprite
 
 ### Arreglar la animacion infinita al atacar al enemigo en scr_change_sprite
@@ -101,7 +99,4 @@ y = floor(y);
 if hspeed > 0 image_xscale = -1;
 else if hspeed < 0  image_xscale = 1;
 
-
-
-
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/04_simple_fighter.gmx/docs/img10.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/logic_challenges/04_simple_fighter.gmx/docs/img10.png)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img10.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img10.png)
