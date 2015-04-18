@@ -1,6 +1,6 @@
 # Simple Fighter
 
-Después de mucho buscar como plantear el desarrollo de un juego de lucha tipos street fighter he dado con el tutorial de [Jamjam](http://jamjamtutorials.blogspot.ca/2012/08/making-your-first-2d-fighter.html). Realmente no tiene desperdicio, así que utilizándolo como base voy a intentar crear mi propia implementación de un juego de lucha, just for fun :)
+Después de mucho buscar como plantear el desarrollo de un juego de lucha tipos street fighter he dado con el tutorial de [Jamjam](http://jamjamtutorials.blogspot.ca/2012/08/making-your-first-2d-fighter.html). Realmente no tiene desperdicio, así que utilizándolo como base voy a intentar crear mi propia implementación de un juego de lucha, just for fun (todos los sprites son propiedad de Capcom).
 
 ### Creando un background animado
 
@@ -139,6 +139,24 @@ Juggling es la capacidad de encadenar combos y dejar al enemigo en el aire. Para
 ### Editamos el scr_gravity para que le afecte los ostiazos verticales al jugador
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif))](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif)
+
+### Añadir un timeout de "KO" mientras un jugador está en el aire para previnir sus ataques. Creamos la variable juggle_timer en el scr_ini_player y en el scr_attackbox lo establecemos a 10
+
+### Creamos el scr_timer y lo añadimos al step de cada jugador
+
+### Creamos el scr_preventattack, editamos el scr_drawattack y lo modificamos para añadir if scr_preventattack(){exit} en lugar de sólo if action{exit}
+
+### Para implementar sacudidas de cámara al golpear hay que activar las views y creamos el obj_camera con su create y step
+
+### Ahora creamos un scr_quake para generar un movimiento en la cámara
+
+### Añadimos la camara a la room y en el scr_col_attackbox llamamos al scr_quake cuando hay un golpe (por ejemplo patada alta que manda volar al otro jugador)
+
+### Para añadir efectos SFX de salto y carrera creamos los sprites y un script create_sfx que llamaremos en el scr_move justo al saltar o correr
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim3.gif))](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim3.gif)
+
+
 
 
 

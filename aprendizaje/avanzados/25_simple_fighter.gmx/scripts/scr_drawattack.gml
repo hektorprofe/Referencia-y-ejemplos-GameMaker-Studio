@@ -6,7 +6,6 @@ spr_atk_hitbox = argument3//new argument introduced
 damage = argument4;
 type = argument5;
 
-
 //This section was switched to the top.
 //this code looks to see if attack animation has completed
 //if so, return back to base sprite       
@@ -16,7 +15,8 @@ if sprite_index == spr_atk//if currently attacking
          action = false}}
 
 //this entire section is new
-if action{exit}
+//if action{exit}  
+if scr_preventattack(){exit}  // prevenimos el ataque enemigo durante un momento
 if keyboard_check(key)
     {var atkbox;
     atkbox = instance_create(x, y, obj_attackbox)

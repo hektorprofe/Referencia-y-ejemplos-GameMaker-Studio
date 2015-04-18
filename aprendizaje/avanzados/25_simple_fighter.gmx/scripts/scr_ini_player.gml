@@ -14,3 +14,4 @@ image_speed = 1/(image_number*2);
 
 last_damage = 0
 last_damage_timer = 0
+juggle_timer = 0;

@@ -14,7 +14,10 @@ if CollisionPointIDs(self.id, other.id, noone, noone, noone, noone , noone)
        last_damage_timer +=5;
         
        if other.type == 'juggle'
-           {motion_set(90, 8)}
+           {motion_set(90, 8);
+           juggle_timer = 10;
+       scr_quake(5,5);}
+           
      }
     
 with (other.id) {instance_destroy()}

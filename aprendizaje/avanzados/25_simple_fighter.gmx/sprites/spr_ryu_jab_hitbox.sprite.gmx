@@ -7,7 +7,7 @@
   <coltolerance>0</coltolerance>
   <sepmasks>-1</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>0</bbox_left>
+  <bbox_left>7</bbox_left>
   <bbox_right>21</bbox_right>
   <bbox_top>23</bbox_top>
   <bbox_bottom>35</bbox_bottom>

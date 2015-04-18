@@ -5,12 +5,12 @@ left = argument2;
 spdinc = 5;
 maxhspd = 10;  
 side = 0;
-     
-if onground   
- {
-     if keyboard_check_pressed(up) {
-            motion_add(90, 10);
-     }
+
+if onground { 
+    if keyboard_check_pressed(up){
+       motion_add(90, 12)
+       scr_create_sfx(x, y, spr_jump);
+    } 
  } else {
    spdinc = spdinc/1.25;
    maxhspd = 8; 
@@ -26,10 +26,12 @@ if action{hspeed = 0}
 
 if abs(hspeed) < maxhspd// if going slower than max speed
     {if keyboard_check(left)
-        {motion_add(180, spdinc)}
+        {motion_add(180, spdinc);
+         scr_create_sfx(x, y, spr_move)}
 
     if keyboard_check(right)
-        {motion_add(0, spdinc)}
+        {motion_add(0, spdinc);
+         scr_create_sfx(x, y, spr_move)}
     }   
     
 if abs(hspeed) >= maxhspd// if going faster than max speed
@@ -41,3 +43,6 @@ if abs(hspeed) >= maxhspd// if going faster than max speed
         if keyboard_check(right)
             {motion_add(0, spdinc)}}
      }
+     
+     
+

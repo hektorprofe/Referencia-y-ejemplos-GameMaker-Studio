@@ -29,6 +29,8 @@
     <sprites name="Effects">
       <sprite>sprites\spr_lowhit</sprite>
       <sprite>sprites\spr_lrghit</sprite>
+      <sprite>sprites\spr_jump</sprite>
+      <sprite>sprites\spr_move</sprite>
     </sprites>
     <sprites name="HUD">
       <sprite>sprites\spr_healthbar</sprite>
@@ -86,6 +88,10 @@
     <script>scripts\scr_healthbar.gml</script>
     <script>scripts\scr_healthbar_old.gml</script>
     <script>scripts\scr_attack.gml</script>
+    <script>scripts\scr_timer.gml</script>
+    <script>scripts\scr_preventattack.gml</script>
+    <script>scripts\scr_quake.gml</script>
+    <script>scripts\scr_create_sfx.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Attacks">
@@ -98,6 +104,7 @@
     </objects>
     <objects name="Scenarios">
       <object>objects\obj_scenario_1</object>
+      <object>objects\obj_camera</object>
     </objects>
     <objects name="HUD">
       <object>objects\obj_hud</object>
