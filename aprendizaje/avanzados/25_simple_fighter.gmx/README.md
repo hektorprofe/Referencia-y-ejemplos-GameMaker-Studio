@@ -110,3 +110,11 @@ else if hspeed < 0  image_xscale = 1;
 ### Crear un obj_specialeffect dentro de col_attackbox cuando CollisionPointIDs == true
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif))](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)
+
+### Crear las barras de vida, añadir las variables curhp, maxhp y el scr_healthbar en el draw de los jugadores
+
+### Crear un obj_hud y llamar scr_healthbar en su draw, poner en la room el hud
+
+### Añadir control de daños. En el scr_col_attackbox restar vida en el CollisionPointsIds == true
+
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img11.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img11.png)
