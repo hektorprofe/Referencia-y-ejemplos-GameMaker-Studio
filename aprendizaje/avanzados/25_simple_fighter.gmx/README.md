@@ -2,6 +2,8 @@
 
 Después de mucho buscar como plantear el desarrollo de un juego de lucha tipos street fighter he dado con el tutorial de [Jamjam](http://jamjamtutorials.blogspot.ca/2012/08/making-your-first-2d-fighter.html). Realmente no tiene desperdicio, así que utilizándolo como base voy a intentar crear mi propia implementación de un juego de lucha, just for fun (todos los sprites son propiedad de Capcom).
 
+## Parte 1: Backgrounds y sprites
+
 ### Creando un background animado
 
 Empezaré con un background que he conseguido formado por 24 imágenes [aquí](http://twistedsifter.com/2013/05/animated-gifs-of-fighting-game-backgrounds/), con un tamaño de 800x336. Para crear la animación tengo la idea de 24 backgrounds, uno para cada animación y luego cambiar con una alarma el fondo cada pocas fracciones de segundo para recrear el efecto. 
@@ -53,11 +55,61 @@ alarm[0]=room_speed/7;
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img1.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img1.png)
 
-### Creando animaciones de ataque
+### Creando las animaciones
+
+He creado varias animaciones para el personaje Ryu utilizando unos sprites que he encontrado en [Internet](http://www.deviantart.com/morelikethis/297399988):
+
+* **Stand**: animación de pié en espera.
+* **Walk**: animación caminando/corriendo.
+* **Jump**: animación de salto.
+* **Jab**: animación de puñetazo.
+* **Knee**: animación de rodillazo.
+* **High kick**: animación de patada alta.
+* **Flying kick**: animación de patada voladora.
+* **Hit**: animación al recibir un ataque.
+* **Win**: animación al ganar un combate.
+* **Defeat**: animación de derrota.
+
+Todos tendrán el centro en medio y justo debajo de los pies.
+
+### Creando script de ataque del jugador
+
+Como tendremos muchos ataques vamos a organizar el código de una forma entendible. Para ello crearemos un script drawplayer que se encargará de dibujar el sprite en cada caso:
+
+```javascript
+draw_sprite_ext(sprite_index, image_index, x,y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
+```
+
+A parte del script para dibujar al jugador, por ahora vamos a crear otro script para dibujar el ataque llamado drawattack:
+
+```javascript
+var key, spr_base, spr_atk;
+key = argument0
+spr_base = argument1
+spr_atk = argument2
+
+// si no estamos atacando y se presiona un ataque
+// cambiamos al sprite de ataque
+if keyboard_check_pressed(key) and !action
+    {if sprite_index != spr_atk
+        {image_index = 0; //establecemos el inicio de la animación
+        sprite_index = spr_atk; 
+        action = true}
+    }
+    
+// luego comprobaremos que la animación se ha ejecutado del todo
+// a partir de la subimage actual y el número total de subimages
+// y si ha acabado volveremos a otorgar el sprite base
+if sprite_index == spr_atk//if currently attacking
+    {if image_index == image_number - 1//check if animation finished
+        {sprite_index = spr_base; //if animation finished return to base
+         action = false}
+    }
+```
+
+Para crear los ataques lanzaremos el script al apretar una tecla y pasaremos como argumentos: la tecla, el sprite base (de pié) y el sprite de ataque. Podemos llamar el script tantas veces como ataques queramos definir. 
 
 ### Creando script de dibujo del jugador
-
-### Creando script de movimiento del jugador
 
 ### Creando script de fricción del jugador
 
