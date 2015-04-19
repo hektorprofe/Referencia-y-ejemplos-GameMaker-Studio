@@ -1,14 +1,16 @@
 if dead{
-    if sprite_index != spr_ryu_defeat
-    {sprite_index = spr_ryu_defeat;
-     image_index = 0; 
-     image_speed = image_speed / 2; 
-     if image_xscale == -1 motion_set(200, 12);
-     else motion_set(20, 12);
-     }
-   else
-    {if image_index = image_number -1 {image_speed = 0}}
-   exit
+    if sprite_index != spr_ryu_defeat {
+        sprite_index = spr_ryu_defeat;
+        image_index = 0; 
+        image_speed = image_speed / 2; 
+        if image_xscale == -1 motion_set(200, 12);
+        else motion_set(20, 12);
+   } else {
+        if image_index = image_number -1{
+            image_speed = 0;
+        }
+   }
+   exit;
 }
 
 if other_player.dead {
@@ -16,7 +18,6 @@ if other_player.dead {
         if (sprite_index != spr_ryu_win){ 
               sprite_index = spr_ryu_win;
               image_speed = image_speed / 2;
-              show_debug_message(string(sprite_index) + " " + string(spr_ryu_win) + " " + string(image_index));
         }
         if image_index = image_number -1 {
               image_speed = 0

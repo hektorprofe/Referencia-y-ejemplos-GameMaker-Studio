@@ -6,7 +6,5 @@ if (x < 50) {
     x = 50;
 }
 
-
 y = floor(y);
 x = floor(x);
-
