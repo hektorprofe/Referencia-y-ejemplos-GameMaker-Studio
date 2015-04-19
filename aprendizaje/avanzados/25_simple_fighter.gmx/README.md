@@ -1,6 +1,6 @@
 # Simple Fighter
 
-Después de mucho buscar como plantear el desarrollo de un juego de lucha tipos street fighter he dado con el tutorial de [Jamjam](http://jamjamtutorials.blogspot.ca/2012/08/making-your-first-2d-fighter.html). Realmente no tiene desperdicio, así que utilizándolo como base voy a intentar crear mi propia implementación de un juego de lucha, just for fun (todos los sprites son propiedad de Capcom).
+Después de mucho buscar como plantear el desarrollo de un juego de lucha tipos street fighter he dado con el tutorial de [2D Fighter de Jamjam](http://jamjamtutorials.blogspot.ca/2012/08/making-your-first-2d-fighter.html). Realmente no tiene desperdicio, así que utilizándolo como base voy a intentar crear mi propia implementación de un juego de lucha, just for fun (todos los sprites son propiedad de Capcom).
 
 ## Parte 1: Backgrounds y sprites
 
@@ -109,20 +109,159 @@ if sprite_index == spr_atk//if currently attacking
 
 Para crear los ataques lanzaremos el script al apretar una tecla y pasaremos como argumentos: la tecla, el sprite base (de pié) y el sprite de ataque. Podemos llamar el script tantas veces como ataques queramos definir. 
 
-### Creando script de dibujo del jugador
+## Parte 2: Físicas de movimiento y animaciones onHit
 
-### Creando script de fricción del jugador
+Para hacer que se mueva nuestro personaje utilizaremos físicas de movimiento en horizontal y en vertical, así como una aceleración y una fricción con un "suelo".
 
-### Añadir físicas de movimiento y cambiar el sprite en movimiento
+### Crear el script de movimiento
 
-### Cambiar el sprite en movimiento
+A partir de las teclas izquierda y derecha, este script se encargará de añadir un movimiento horizontal y moverá nuestro sprite por la pantalla.
+
+```javascript
+var right, up, left, down, spdinc, maxhspd;
+right = argument0;
+up = argument1;
+left = argument2;
+spdinc = 5;
+maxhspd = 10;
+
+if abs(hspeed) > 0 and !action {walking = true}
+else {walking = false}
+
+{if hspeed < -maxhspd{hspeed = -maxhspd}
+if hspeed >= maxhspd{hspeed = maxhspd}}//límite de velocidad máxima
+
+if action{hspeed = 0}
+
+if abs(hspeed) < maxhspd// si vamos más lentos que la velocidad máxima
+    {if keyboard_check(left)
+        {motion_add(180, spdinc)}
+
+    if keyboard_check(right)
+        {motion_add(0, spdinc)}
+    }   
+    
+if abs(hspeed) >= maxhspd// si vamos más rápidos que la velocidad máxima
+    {if hspeed > 0{//si vamos a la derecha
+        if keyboard_check(left)
+            {motion_add(180, spdinc)}}
+            
+     if hspeed < 0{//si vamos a la izquierda
+        if keyboard_check(right)
+            {motion_add(0, spdinc)}}
+     }
+```
+
+Los tres argumentos son las tres teclas de movimiento izquierda, salto o derecha.
+
+### Creando script de fricción
+
+El problema que tenemos al añadir movimiento horizontal es que no nos dejaremos de mover, por lo que vamos a añadir un nuevo script que detecte si la velocidad horizontal es diferente de 0 y poco a poco la deje a 0, simulando fricción contra el suelo.
+
+```javascript
+var fric;
+fric = 1
+if hspeed > 0
+    {if hspeed -fric > 0 {hspeed -=fric} else {hspeed = 0}}
+  
+if hspeed < 0
+    {if hspeed +fric < 0 {hspeed +=fric} else {hspeed = 0}}
+```
+
+### Script de cambio de sprite
+
+Aprovechando las variables walking y action que quedan establecidas en el jugador podemos cambiar dinámicamente el sprite entre estar caminando y estar quieto utilizando un script change_sprite:
+
+```javascript
+if walking and !action
+    {sprite_index = spr_ryu_walk}
+if !walking and !action
+    {sprite_index = spr_ryu_stand}
+```
 
 ### Crear los hitboxes para los ataques
 
-### Importar el script que detecta colisiones entre sprites
-I remember having this problem. It's due to an error in the way the original author of CollisionPointIDs made his script. Go to "resources" --> "global game settings" --> Errors and UNcheck "throw an error when arguments aren't initialised correctly." .... EN GMS: poner noone en los argumentos y au.
+Los hitboxes son las áreas de colisión entre un ataque y el sprite del jugador, eso significa que cada animación de ataque (sprite) tiene unas áreas de colisión diferentes allá donde recaerá el golpe, ya sea con el pié, el puño, etc. Sin embargo la máscara de colisión queda establecida en la figura del personaje y en todo su contorno, por lo que esta forma no nos sirve.
 
-### Añadir la animación de golpeado + change_sprite
+La técnica utilizada es muy simple: crear una copia de la animación de ataque y borrar todo el contenido de los sprites excepto el puño durante el puñetazo, o la rodilla si es un rodillazo. A continuación activar las máscaras de colisión precisas y separadas para cada subimagen del sprite.
+
+### Importar el script que detecta colisiones entre sprites
+
+Dado que es un poco difícil detectar las colisiones entre sprites con máscaras precisas podemos utilizar [esta librería](http://gmc.yoyogames.com/index.php?showtopic=389110) publicada en los foros de yoyo para determinar colisiones entre dos instancias. 
+
+### El script de detección de golpes y animación de golpe
+
+Vamos a utilizar la librería anterior en un nuevo script col_attackbox que nos permitirá saber en todo momento del evento Step si hay una colisión entre dos objetos.
+
+```javascript
+if other.owner == self.id
+    {exit}
+if CollisionPointIDs(self.id, other.id, noone, noone, noone, noone , noone)
+    {damaged = true}
+with (other.id) {instance_destroy()}
+```
+
+Si hay una colisión entonces establecemos damaged a true y en el script change_sprite añadiremos el siguiente bloque para cambiar la animación como si nos hubieran pegado:
+
+```javascript
+if damaged and sprite_index != spr_ryu_hit
+    {sprite_index = spr_ryu_hit;
+      action = true
+      image_index = 0}
+```
+
+### Creando una instancia de hitbox
+
+Ahora crearemos un nuevo objeto llamado attackbox sin nada dentro y modificaremos nuestro script drawattack para crear una instancia del attackbox en el momento del ataque y en el que añadiremos el sprite del golpe relacionado (que pasamos como cuarto argumento):
+
+```javascript
+var key, spr_base, spr_atk;
+key = argument0
+spr_base = argument1
+spr_atk = argument2
+spr_atk_hitbox = argument3//nuevo argumento
+
+if sprite_index == spr_atk//if currently attacking
+    {if image_index == image_number - 1//check if animation finished
+        {sprite_index = spr_base; //if animation finished return to base
+         action = false}}
+
+//esta sección es nueva
+if action{exit}
+if keyboard_check_pressed(key)
+    {var atkbox;
+    atkbox = instance_create(x, y, obj_attackbox)
+    atkbox.owner = self.id
+    atkbox.sprite_index = spr_atk_hitbox
+    atkbox.image_index = 0
+    }
+
+if keyboard_check_pressed(key)
+    {if sprite_index != spr_atk
+        {image_index = 0;
+        sprite_index = spr_atk; 
+        action = true}
+    }
+```
+
+A continuación abrimos de nuevo el attackbox, desactivamos su visibilidad y en el evento step añadimos:
+
+```javascript
+x = owner.x
+image_index = owner.image_index
+if image_index == image_number-1
+    {instance_destroy()}
+```
+
+En su Draw añadimos el drawplayer y añadimos un evento de colisión entre el jugador y el obj_attackbox, estando seguros también que el jugador2 tiene un evento step con su change_sprite para que cambie al ser golpeado.
+
+Por último para evitar que al recibir un ataque la animación se repita hasta el infinito añadiremos una condición para desactivar el estado damaged y la acción en el change_sprite:
+
+```javascript
+if sprite_index == spr_ryu_hit{
+     {if image_index >= image_number -1
+            {action = false; damaged = false}}}
+```
 
 ### Crear el objeto obj_attackbox y modificar script scr_drawattack para crear el ostiazo xD (añadir nuevo argumento con el sprite del puño/patada)
 
