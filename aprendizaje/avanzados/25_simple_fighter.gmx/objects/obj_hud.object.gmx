@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>9</kind>
-            <script>scr_healthbar_old</script>
+            <script>scr_healthbar</script>
           </argument>
           <argument>
             <kind>0</kind>

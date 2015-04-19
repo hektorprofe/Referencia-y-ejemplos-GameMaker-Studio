@@ -359,6 +359,8 @@ if CollisionPointIDs(self.id, other.id)
 
 Tengamos en cuenta que la posición donde ocurre la colisión se hereda del script y son __x e __y, que es el sitio donde crearemos el objeto de efectos especiales y que durará hasta que acaba su animación.
 
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)
+
 ## Barras de vida simples
 
 Para crear las barras de vida añadimos las variables curhp, maxhp y el scr_healthbar en el draw de los jugadores:
@@ -390,34 +392,170 @@ Y restamos un poco de vida cuando ocurre la colisión en el CollisionPointIDs de
 curhp -= 5
 ```
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)
+[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img11.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img11.png)
 
 ## Parte 4: Barras de vida avanzadas y juggling
 
-### Añadir control de daños. En el scr_col_attackbox restar vida en el CollisionPointsIds == true
+Empezaremos creando unas gradients (en sprites) para las nuevas barras de vida.
 
-[![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img11.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img11.png)
+A continuación creamos un script draw_spritebar:
 
-### Crear unas gradients (en sprites) para las nuevas barras de vida
+```javascript
+draw_sprite_ext(argument0, -1, argument1, argument2, argument3, argument4, image_angle, image_blend, image_alpha)
+```
 
-### Crear un script scr_draw_spritebar y las nuevas variables en scr_ini_player para manegar el damage
+Y otro ini_player para refactorizar un poco de código, y en este último añadimos unas variables para manejar el damage:
 
-### Modificar el script scr_healthbar con las nuevas barras
+```javascript
+action = false
+walking = false
+damaged = false
 
-### Modificar el scr_coll_attackbox para guardar el daño del último ataque y un timer para esconderlo dentro de CollisionPointsIDs == true
+onground = false;
+ground = 302;
+
+curhp = 100
+maxhp = 100
+
+last_damage = 0
+last_damage_timer = 0
+```
+
+Y modificamos el script scr_healthbar con las nuevas barras avanzadas en las que el daño irá aparciendo poco a poco:
+
+```javascript
+var height;
+height = 0.5;
+
+//player1
+with(obj_player1) {
+draw_rectangle(15, 15, 317, 16 + (16 * height), false)
+    scr_draw_spritebar(spr_dmgbar, 16, 16, 300 * ((curhp + last_damage) / maxhp), height)
+    scr_draw_spritebar(spr_healthbar, 16, 16, 300 * (curhp / maxhp), height)
+    if last_damage_timer > 1
+       {last_damage_timer -=1}
+    else{if last_damage > 0 {last_damage -=1}}
+    if (curhp < 0) curhp = 0; // Min live  = 0
+}
+
+//player2
+with(obj_player2)
+{
+    draw_rectangle(room_width - 317, 15, room_width - 16, 16 + (16 * height), false)
+    scr_draw_spritebar(spr_dmgbar,  room_width - 316, 16, 300 * ((curhp + last_damage) / maxhp), height)
+    scr_draw_spritebar(spr_healthbar, room_width - 316, 16, 300 * (curhp / maxhp), height)
+    if last_damage_timer > 1
+       {last_damage_timer -=1}
+    else{if last_damage > 0 {last_damage -=1}}
+    if (curhp < 0) curhp = 0; // Min live  = 0
+   
+}
+```
+
+También tendremos que modificar el col_attackbox para guardar el daño del último ataque y un timer para esconderlo dentro de CollisionPointsIDs == true:
+
+```javascript
+last_damage +=5
+last_damage_timer +=5
+```
 
 ### Añadir juggling
+
 Juggling es la capacidad de encadenar combos y dejar al enemigo en el aire. Para hacerlo tenemos que dejar al enemigo en el aire cada vez que recibe un ataque.
 
-### Substituir los ataques del step por un sólo script scr_attack
+Empezaremos substituyendo los ataques del step por un sólo script scr_attack para poder jugar con un daño específico para cada ataque, además de indicarle un tipo. Si este tipo es juggling significa que mandará al enemigo volar y podremos encadenar otros ataques:
 
-### Editamos el scr_drawattack para añadir un daño y un tipo de ataque
+```javascript
+///Key, basesprite, attacksprite, hitbox, damage, type
+if object_index == obj_player_1 && dead == false{
+    scr_drawattack(ord('X'), spr_ryu_stand, spr_ryu_jab, spr_ryu_jab_hitbox, 5, 'normal')
+    scr_drawattack(ord('V'), spr_ryu_stand, spr_ryu_kneekick, spr_ryu_kneekick_hitbox, 5, 'normal')
+    scr_drawattack(ord('Z'), spr_ryu_stand, spr_ryu_flykick, spr_ryu_flykick_hitbox, 5, 'normal')
+    scr_drawattack(ord('C'), spr_ryu_stand, spr_ryu_topkick, spr_ryu_topkick_hitbox, 5, 'juggle')}
+else{
+    scr_drawattack(ord('G'), spr_ryu_stand, spr_ryu_jab, spr_ryu_jab_hitbox, 5, 'normal')
+    scr_drawattack(ord('Y'), spr_ryu_stand, spr_ryu_kneekick, spr_ryu_kneekick_hitbox, 5, 'normal')
+    scr_drawattack(ord('U'), spr_ryu_stand, spr_ryu_flykick, spr_ryu_flykick_hitbox, 5, 'normal')
+    scr_drawattack(ord('H'), spr_ryu_stand, spr_ryu_topkick, spr_ryu_topkick_hitbox, 5, 'juggle')
+}
+```
 
-### Editamos scr_col_attackbox para aplicar el daño especifico del ataque y si es de tipo juggling aplicamos un motion
+También editamos el drawattack para añadir un daño y el nuevo tipo de ataque:
 
-### Editamos el scr_gravity para que le afecte los ostiazos verticales al jugador
+```javascript
+var key, spr_base, spr_atk, spr_atk_hitbox, damage, type;
+key = argument0;
+spr_base = argument1;
+spr_atk = argument2;
+spr_atk_hitbox = argument3;
+damage = argument4;
+type = argument5;
+    
+if sprite_index == spr_atk//if currently attacking
+    {if image_index == image_number - 1;//check if animation finished
+        {sprite_index = spr_base;
+         action = false}
+    }//if animation finished return to base
+  
+if action{exit}
+
+if keyboard_check_pressed(key)
+    {var atkbox;
+    atkbox = instance_create(x, y, obj_attackbox)
+    atkbox.owner = self.id;
+    atkbox.sprite_index = spr_atk_hitbox;
+    atkbox.image_index = 0;
+    atkbox.damage = damage;
+    atkbox.type = type;
+    }
+
+if keyboard_check_pressed(key)
+    {if sprite_index != spr_atk;
+        {image_index = 0;
+        sprite_index = spr_atk;
+        action = true}
+    }
+```
+
+Ahora editamos el col_attackbox para aplicar el daño especifico del ataque y si es de tipo juggling aplicamos un motion:
+
+```javascript
+if other.owner == self.id
+    {exit}
+
+if CollisionPointIDs(self.id, other.id)
+    {damaged = true;
+    var sfx;
+    sfx = instance_create(__x, __y, obj_specialeffect);
+    sfx.sprite_index = spr_lowhit;
+  
+    curhp -= other.damage;
+    last_damage += other.damage;
+    last_damage_timer +=5;
+    
+    if other.type == 'juggle'
+        {motion_set(90, 8)}
+    }
+
+with (other.id){instance_destroy()}
+```
+
+También el scr_gravity para que le afecten los ostiazos verticales al jugador:
+
+```javascript
+var gforce;
+gforce = 0.5;
+
+if y >= ground
+    {if vspeed > 0{vspeed = 0}; y = ground; onground = true}
+
+if y < ground
+    {motion_add(270, gforce); onground = false}
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim2.gif)
+
+## Parte 5: Contra juggling, sacudidas de cámara y más efectos
 
 ### Añadir un timeout de "KO" mientras un jugador está en el aire para previnir sus ataques. Creamos la variable juggle_timer en el scr_ini_player y en el scr_attackbox lo establecemos a 10
 
