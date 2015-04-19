@@ -557,52 +557,238 @@ if y < ground
 
 ## Parte 5: Contra juggling, sacudidas de cámara y más efectos
 
-### Añadir un timeout de "KO" mientras un jugador está en el aire para previnir sus ataques. Creamos la variable juggle_timer en el scr_ini_player y en el scr_attackbox lo establecemos a 10
+Vamos a añadir un "KO" timer mientras un jugador está en el aire para previnir sus ataques. Creamos la variable juggle_timer en el scr_ini_player y en el scr_attackbox lo establecemos a 10.
 
-### Creamos el scr_timer y lo añadimos al step de cada jugador
+Ahora creamos el scr_timer y lo añadimos al step de cada jugador:
 
-### Creamos el scr_preventattack, editamos el scr_drawattack y lo modificamos para añadir if scr_preventattack(){exit} en lugar de sólo if action{exit}
+```javascript
+if juggle_timer > 0
+    {juggle_timer -= 1}
+```
 
-### Para implementar sacudidas de cámara al golpear hay que activar las views y creamos el obj_camera con su create y step
+También creamos el nuevo script preventattack:
 
-### Ahora creamos un scr_quake para generar un movimiento en la cámara
+```javascript
+if action or juggle_timer > 0
+    {return true}
+else
+    {return false}
+```
 
-### Añadimos la camara a la room y en el scr_col_attackbox llamamos al scr_quake cuando hay un golpe (por ejemplo patada alta que manda volar al otro jugador)
+Y editamos el scr_drawattack para añadir if scr_preventattack(){exit} en lugar de sólo if action{exit}.
 
-### Para añadir efectos SFX de salto y carrera creamos los sprites y un script create_sfx que llamaremos en el scr_move justo al saltar o correr
+## Sacudidas de cámara
+
+Este efecto es muy divertido para simular un golpe muy fuerte o algo así. Para poder implementarlo hay que activar las views y creamos un obj_camera con su create:
+
+```javascript
+shake = false; // Si vamos a sacudir o no
+maxshake = 0; //Intensidad de la sacudidad (maximos-pixel-por-lado)
+curshake = 0; //Intensidad actual
+shake_length = 100
+goright = false
+```
+
+Y su Step:
+
+```javascript
+//el script mueve la view de lado a lado
+if shake
+{//cambiamos la dirección
+    if curshake >= maxshake
+        {goright = false}   
+    if curshake <= -maxshake
+        {goright = true}
+
+    if goright
+        {curshake += maxshake}
+    else
+        {curshake -= maxshake}
+  
+    //esta funcion verifica que la intensidad no es 0
+    if curshake == 0
+        {if goright
+            {curshake += maxshake}
+        else{curshake -= maxshake}}
+
+    //cambiamos x (sacudida)
+    view_xview[0] = curshake
+    shake_length -= 1
+  
+    //quake reset
+    if shake_length <= 0
+        {view_xview[0] = 0
+        curshake = 0} 
+}
+```
+
+Ahora creamos un scr_quake para generar un movimiento en la cámara:
+
+```javascript
+obj_camera.shake = true
+obj_camera.maxshake = argument0
+obj_camera.shake_length = argument1
+```
+
+Añadimos la camara a la room y en el col_attackbox llamamos al scr_quake cuando hay un golpe (por ejemplo patada alta que manda volar al otro jugador).
+
+```javascript
+quake(5, 10)
+```
+
+## Efectos SFX al saltar y al correr
+
+Para añadir estos efectos creamos los sprites y un script create_sfx:
+
+```javascript
+var sfx;
+sfx = instance_create(argument0, argument1, obj_specialeffect)
+sfx.sprite_index = argument2
+```
+
+Y lo llamaremos en el scr_move justo al saltar:
+
+```javascript
+if onground 
+{if keyboard_check_pressed(up){motion_add(90, 10)}}
+replace it with:
+if onground
+    {if keyboard_check_pressed(up)
+        {motion_add(90, 10)
+        create_sfx(x, y, spr_jump)
+        }    
+    }
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim3.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim3.gif)
 
-## Parte 7: Animaciones de derrota y victoria
+## Parte 6: Animaciones de derrota y victoria
 
-* Empezamos creando las dos animaciones con sus respectivos sprites.
-* Añadimos la variable dead = false en scr_ini_player
-* Creamos un disparador que nos avise cuando el jugador es derrotado en scr_col_attackbox: if curhp <= 0 {dead = true}
-* En el scr_change_sprite añadimos el código para dibujar la animación de derrota y dejarla parada al final (ryu tirado en el suelo).
-* Añadir al scr_preventattack un "or dead" para evitar que el jugador pueda atacar.
-* Lo mismo en scr_move para evitar que se pueda mover.
-* Para la animación de victoria tenemos que saber que jugador es cada personaje, guardaremos sus id en el create para poder comprobar cuando el enemigo ha sido derrotado y mostrar el nuevo sprite al principio del scr_change_sprite.
+Empezamos creando las dos animaciones con sus respectivos sprites.
+
+Luego añadimos la variable dead = false en scr_ini_player y un disparador que nos avise cuando el jugador es derrotado en scr_col_attackbox: if curhp <= 0 {dead = true}.
+
+En el scr_change_sprite añadimos el código para dibujar la animación de derrota y dejarla parada al final (ryu tirado en el suelo):
+
+```javascript
+if dead
+    {if sprite_index != spr_ryu_dead
+        {sprite_index = spr_ryu_dead;
+         image_index = 0; motion_set(90, 5)}
+     else
+        {if image_index = image_number -1 {image_speed = 0}}
+     exit}
+```
+
+Añadimos al scr_preventattack un "or dead" para evitar que el jugador pueda atacar y lo mismo en scr_move para evitar que se pueda mover.
+
+Finalmente para la animación de victoria tenemos que saber qué jugador es cada personaje, guardaremos sus id en el create para poder comprobar cuando el enemigo ha sido derrotado:
+
+```javascript
+if self.id = obj_player1.id
+    {other_player = obj_player2.id}
+else
+    {other_player = obj_player1.id}
+```
+
+Y mostramos el nuevo sprite al principio del scr_change_sprite:
+
+```javascript
+if other_player.dead and sprite_index != spr_ryu_win
+    {sprite_index = spr_ryu_win}
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img12.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img12.png)
 
-### Detalles propios
+### Parte Extra: Detalles propios
 
-* Hacer que no se salga de las paredes (si x < 0 o x > room_width)
-* Añadir un push effect a los golpes con motion_add (se acumula con el motion_set de la patada arriba) dependiendo del lado al que tenemos al jugador que pega moveremos un poco al jugador pegado.
-* Hacer que el jugador 2 mire automáticamente hacia donde esté el jugador 1 (tipo CPU).
-* Hacer que un jugador no pueda pasar a través de otro y se quede parado utilizando place_meeting(x+hspeed,y,other_player).
-* Cambiar el lado de la animación de derrota dependiendo del image_xscale (-1 o 1).
+Hacer que no se salga de las paredes (si x < 0 o x > room_width):
+
+```javascript
+/// Fix x position
+if (x > view_wview[0]-50) {
+    x = view_wview[0]-50; 
+}
+if (x < 50) {
+    x = 50;
+}
+
+y = floor(y);
+x = floor(x);
+```
+
+Añadir un push effect a los golpes con motion_add (se acumula con el motion_set de la patada arriba) dependiendo del lado al que tenemos al jugador que pega moveremos un poco al jugador pegado.
+
+```javascript
+if damaged and sprite_index != spr_ryu_hit
+{sprite_index = spr_ryu_hit;
+	action = true
+	image_index = 0;
+  
+	// Push effect from enemy
+	if (other_player.x < x && other_player.onground == true) motion_add(0, 6);  
+	if (other_player.x > x && other_player.onground == true) motion_add(180, 6);  
+}
+```
+
+Hacer que los jugadores miren automáticamente hacia donde estña el otro jugador:
+
+```javascript
+if (other_player.x > x) image_xscale = -1;
+else image_xscale = 1;
+```
+
+Hacer que un jugador no pueda pasar a través de otro y se quede parado utilizando place_meeting(x+hspeed,y,other_player):
+
+```javascript
+// Si estamos a la izq y nos movemos a la derecha, o a la derecha y amos a la izq
+// Entonces solo dejo que el jugador se mueva al lado contrario, pero no a través del otro pnj
+if place_meeting(x+hspeed,y,other_player) {
+    if (x < other_player.x && sign(hspeed) == 1) or (x > other_player.x && sign(hspeed) == -1){
+        walking = false;
+        hspeed = 0;
+    }
+} else {
+  	if abs(hspeed) > 0 scr_create_sfx(x,y,spr_move);
+}
+```
+
+Cambiar el lado de la animación de derrota dependiendo del image_xscale (-1 o 1):
+
+```javascript
+if dead{
+    if sprite_index != spr_ryu_defeat {
+        sprite_index = spr_ryu_defeat;
+        image_index = 0; 
+        image_speed = image_speed / 2; 
+        if image_xscale == -1 motion_set(200, 12);
+        else motion_set(20, 12);
+   } else {
+        if image_index = image_number -1{
+            image_speed = 0;
+        }
+   }
+   exit;
+}
+```
+
+Lanzar la animación de victoria al acabar la de derrota y quedarse quieto en la última subimagen:
+
+```javascript
+if other_player.dead {
+    if (other_player.dead && (other_player.image_index == other_player.image_number-1)){
+        if (sprite_index != spr_ryu_win){ 
+              sprite_index = spr_ryu_win;
+              image_speed = image_speed / 2;
+        }
+        if image_index = image_number -1 {
+              image_speed = 0
+        }
+    }
+    exit;
+}
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim4.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim4.gif)
 
-
-
-
-
-
-
-
-
-
-
-
+Y hasta aquí el tutorial del juego de Jamjam realizado a mi manera. He aprendido muchos conceptos nuevos, como los hitboxes o el juggling y estoy seguro que algún día los pondré a prueba en alguno de mis futuros juegos.
