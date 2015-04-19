@@ -263,48 +263,136 @@ if sprite_index == spr_ryu_hit{
             {action = false; damaged = false}}}
 ```
 
-### Crear el objeto obj_attackbox y modificar script scr_drawattack para crear el ostiazo xD (añadir nuevo argumento con el sprite del puño/patada)
+### Arreglar la dirección de los ataques
 
-### Crear el objeto obj_attackbox
+Si hemos cambiado de lado el jugador 2 (con un xscale = -1) entonces habrá que hacer lo mismo para los ataques. 
 
-### Añadir las colisiones en p1 y p2 contra obj_attackbox
-
-### Añadir al P2 un step y el script de cambiar el sprite
-
-### Arreglar la animacion infinita al atacar al enemigo en scr_change_sprite
-if sprite_index == spr_ryu_hit{
-     {if image_index >= image_number -1
-            {action = false; damaged = false}}}
-
-### Arreglar ostiazos
-Es por darle la vuelta al objeto con xscale... hay que hacer lo mismo al crear el objeto de los ostiazos.
+```javascript
 // En scr_drawattack
 // Get current xscale and set it to the attack 
 atkbox.image_xscale = image_xscale;
+```
 
-### Corrección de Y para evitar distorsion de sprite
-/// Fix Y position
+### Corrección de posición para evitar distorsion de sprite
+
+Puede ocurrir que al cambiar entre sprites poco a poco se vuelvan borrosos los sprites, eso es porque se modifica ligeramente su posición. Para arreglar basta con arreglar sus posiciones x e y borrando sus posibles decimales.
+
+```javascript
+/// Fix positions
 y = floor(y);
+x = floor(x);
+```
 
 ### Cambiar xscale dependiendo del movimiento en drawplayer
+
+Como añadido extra podemos cambiar la dirección del sprite al caminar dependiendo de si lo hacemos hacia la izquierda o a la derecha, utilizando el xscale y el hspeed: 
+
+```javascript
 if hspeed > 0 image_xscale = -1;
 else if hspeed < 0  image_xscale = 1;
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img10.png)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/img10.png)
 
-### Añadir las variables de suelo en los jugadores, tecla de saltar en move, el script de gravedad y añadirlo al end step de los jugadores.
+## Parte 3: Gravedad, efectos especiales y barras de vida simples
 
-### Añadir animación de salto y modificar scr_change_sprite para mostrarla cuando no está tocando el suelo
+## Animación de salto
 
-### Añadir efectos especiales en ataques, importar sprites y crear el objeto obj_specialeffect con un animation end -> instance_delete
+Para hacer que el jugador pueda saltar añadimos las variables de suelo en los jugadores, la tecla de saltar en move y el script de gravedad en su End Step:
 
-### Crear un obj_specialeffect dentro de col_attackbox cuando CollisionPointIDs == true
+```javascript
+    // animación de salto en el script de movimiento
+    {if keyboard_check_pressed(up)
+        {motion_add(90, 10)}}
+```
+
+```javascript
+/// Script de gravedad 
+var gforce;
+gforce = 0.5
+if y >= ground
+    {vspeed = 0; y = ground; onground = true}
+if y < ground
+    {motion_add(270, gforce); onground = false}
+```
+
+Ahora añadimos animación de salto:
+
+```javascript
+if !onground
+    {if sprite_index == spr_ryu_walk 
+    or sprite_index == spr_ryu_stand
+        {image_index = 0
+        sprite_index = spr_ryu_jump}
+    }
+
+if sprite_index == spr_ryu_jump
+    {if image_index > image_number -1
+        {image_index = image_number -1}
+    }
+```
+
+Y modificamos el change_sprite para mostrarla cuando no está tocando el suelo:
+
+```javascript
+if walking and !action and onground
+    { sprite_index = spr_ryu_back }
+
+if !walking and !action and onground
+    { sprite_index = spr_ryu_stand }
+```
+
+### Efectos especiales
+
+Añadimos efectos especiales en ataques, importamos los sprites y creamos el objeto specialeffect con un animation end -> instance_delete.
+
+Ahora creamos obj_specialeffect dentro de col_attackbox cuando CollisionPointIDs == true:
+
+```javascript
+if CollisionPointIDs(self.id, other.id)
+    {  damaged = true;
+       var sfx;
+       sfx = instance_create(__x, __y, obj_specialeffect);
+       sfx.sprite_index = spr_lowhit;
+    }
+```
+
+Tengamos en cuenta que la posición donde ocurre la colisión se hereda del script y son __x e __y, que es el sitio donde crearemos el objeto de efectos especiales y que durará hasta que acaba su animación.
+
+## Barras de vida simples
+
+Para crear las barras de vida añadimos las variables curhp, maxhp y el scr_healthbar en el draw de los jugadores:
+
+```javascript
+curhp = 100
+maxhp = 100
+```
+
+```javascript
+///scr_healthbar
+//player 1
+with(obj_player1){
+draw_healthbar(16, 16, 316, 32, curhp/maxhp * 100, 
+                      c_black, c_green, c_green, 180, true, true)}
+
+//player 2
+with(obj_player2){
+draw_healthbar(room_width - 16, 16, room_width - 316, 
+                      32, curhp/maxhp * 100, c_black, c_green, 
+                      c_green, 0, true, true)}
+```
+
+Ahora creamos un obj_hud y llamamamos scr_healthbar en su draw y ponemos en la room el obj_hud.
+
+Y restamos un poco de vida cuando ocurre la colisión en el CollisionPointIDs de col_attackbox:
+
+```javascript
+curhp -= 5
+```
 
 [![Imagen](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)](https://github.com/hcosta/referencia-gml/raw/master/aprendizaje/avanzados/25_simple_fighter.gmx/docs/anim1.gif)
 
-### Crear las barras de vida, añadir las variables curhp, maxhp y el scr_healthbar en el draw de los jugadores
-
-### Crear un obj_hud y llamar scr_healthbar en su draw, poner en la room el hud
+## Parte 4: Barras de vida avanzadas y juggling
 
 ### Añadir control de daños. En el scr_col_attackbox restar vida en el CollisionPointsIds == true
 
