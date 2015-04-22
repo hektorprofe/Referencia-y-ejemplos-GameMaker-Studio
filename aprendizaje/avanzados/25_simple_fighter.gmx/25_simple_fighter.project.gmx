@@ -38,6 +38,7 @@
       <sprite>sprites\spr_healthbar</sprite>
       <sprite>sprites\spr_dmgbar</sprite>
     </sprites>
+    <sprite>sprites\spr_black</sprite>
   </sprites>
   <backgrounds name="background">
     <backgrounds name="Scenario1">
@@ -114,8 +115,12 @@
     <objects name="HUD">
       <object>objects\obj_hud</object>
     </objects>
+    <object>objects\obj_test</object>
+    <object>objects\obj_test_player</object>
+    <object>objects\obj_test_gui_button</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_test</room>
     <room>rooms\rm_main</room>
   </rooms>
   <help>
